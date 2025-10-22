@@ -1,0 +1,38 @@
+/* styles/global.css */
+
+:root {
+  --primary-color: #6f4e37; /* dark coffee */
+  --secondary-color: #c8a165; /* caramel latte */
+  --background-color: #f3ece4; /* light cream */
+  --text-color: #3e2c23; /* roasted text */
+
+  --font-size-base: 16px;
+  --border-radius: 6px;
+
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", sans-serif;
+  background-color: #f9f9f9;
+  color: #222;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  font: inherit;
+}
