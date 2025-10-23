@@ -3,12 +3,19 @@ import { HiOutlineSearch } from "react-icons/hi";
 
 const StyledSearchBar = styled.div`
   display: flex;
+
   align-items: center;
   background-color: var(--background-color);
   border-radius: 25px;
   border: 1px solid #ccc;
   padding: 0.3rem 1rem;
-  width: fit-content;
+  width: 40%;
+  margin-left: 1rem;
+  margin-right: 1rem;
+
+  @media (max-width: 1300px) {
+    flex: 1;
+  }
 `;
 
 const StyledInput = styled.input`
@@ -18,7 +25,7 @@ const StyledInput = styled.input`
   background: transparent;
   font-size: 1rem;
   outline: none;
-  width: 36rem;
+  width: 100%;
   color: var(--primary-color);
 `;
 

@@ -11,6 +11,7 @@ import SearchPage from "./pages/SearchPage.jsx";
 import CommunityPage from "./pages/CommunityPage.jsx";
 import PopularPage from "./pages/PopularPage.jsx";
 import CreatePostPage from "./pages/CreatePostPage.jsx";
+import { SidebarProvider } from "./context/SidebarContext.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -50,6 +51,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <SidebarProvider>
+      <RouterProvider router={router} />
+    </SidebarProvider>
   </StrictMode>
 );

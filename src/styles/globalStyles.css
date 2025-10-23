@@ -21,6 +21,15 @@
   box-sizing: border-box;
 }
 
+@media (max-width: 768px) {
+  /* or your mobile breakpoint */
+  html,
+  body {
+    overflow-x: hidden; /* hide horizontal scroll */
+    overflow-y: hidden; /* hide vertical scroll if you want */
+  }
+}
+
 body {
   font-family: "Segoe UI", sans-serif;
   background-color: #f9f9f9;

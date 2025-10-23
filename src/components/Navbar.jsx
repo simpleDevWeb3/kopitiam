@@ -3,6 +3,7 @@ import Logo from "./Logo";
 
 import {
   HiOutlineBell,
+  HiOutlineMenu,
   HiOutlinePlusCircle,
   HiOutlineUser,
   HiOutlineUserCircle,
@@ -10,22 +11,32 @@ import {
 import ButtonIcon from "./ButtonIcon";
 import Search from "./Search";
 import { useNavigate } from "react-router-dom";
+import Menu from "./Menu";
 
 const StyledNavbar = styled.nav`
   display: flex;
+  width: 100%;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   justify-content: space-between;
   align-items: center;
   text-align: center;
-  padding-left: 2rem;
+  padding-left: 1rem;
   padding-right: 2rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  gap: 0.5rem;
 `;
-
+const IconText = styled.span`
+  @media (max-width: 468px) {
+    display: none;
+  }
+`;
 const CreatePostIcon = styled(HiOutlinePlusCircle)`
   color: var(--primary-color);
   text-align: center;
   font-size: 1.5rem;
 `;
+
 const Notification = styled(HiOutlineBell)`
   color: var(--primary-color);
   text-align: center;
@@ -33,7 +44,7 @@ const Notification = styled(HiOutlineBell)`
 `;
 const Grouped = styled.div`
   display: flex;
-  gap: 0.5rem;
+
   text-align: center;
   justify-content: center;
   align-items: center;
@@ -41,13 +52,18 @@ const Grouped = styled.div`
 const User = styled(HiOutlineUserCircle)`
   color: var(--primary-color);
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 1.7rem;
 `;
+
 function Navbar() {
   const navigate = useNavigate();
+
   return (
     <StyledNavbar>
-      <Logo />
+      <Grouped>
+        <Menu />
+        <Logo />
+      </Grouped>
       <Search />
 
       <Grouped>
@@ -55,11 +71,12 @@ function Navbar() {
           icon={<CreatePostIcon />}
           action={() => navigate("/create")}
         >
-          <span>Create</span>
+          <IconText>Create</IconText>
         </ButtonIcon>
 
         <ButtonIcon icon={<Notification />} />
-        <User />
+
+        <ButtonIcon icon={<User />} />
       </Grouped>
     </StyledNavbar>
   );

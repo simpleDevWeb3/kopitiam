@@ -12,8 +12,8 @@ const StyledButton = styled.button`
   border: none;
   cursor: pointer;
 
-  padding: 0.5rem 1rem;
-  border-radius: 25px;
+  padding: 0.6rem;
+  border-radius: ${({ $type }) => ($type === "round" ? "50%" : "25px")};
   &:hover {
     background-color: var(--secondary-color);
     transition: background 0.2s;
@@ -23,9 +23,9 @@ const StyledButton = styled.button`
   }
 `;
 
-function ButtonIcon({ icon, children, action }) {
+function ButtonIcon({ icon, children, action, type }) {
   return (
-    <StyledButton onClick={action}>
+    <StyledButton onClick={action} $type={type}>
       {icon} {children}
     </StyledButton>
   );
