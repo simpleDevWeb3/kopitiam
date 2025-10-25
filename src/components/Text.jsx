@@ -12,7 +12,7 @@ const textType = {
   `,
   Body: css`
     font-weight: 500;
-    color: var(--secondary-color);
+    color: var(--text-color);
   `,
 };
 
@@ -43,13 +43,13 @@ const variantSize = {
     `,
     Body: css`
       @media (min-width: 1300px) {
-        font-size: 1rem;
+        font-size: 0.9rem;
       }
       @media (min-width: 600px) and (max-width: 900px) {
-        font-size: 0.95rem;
+        font-size: 0.8rem;
       }
       @media (max-width: 468px) {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
       }
     `,
   },
@@ -66,7 +66,7 @@ const variantSize = {
         font-size: 0.9rem;
       }
     `,
-   
+
     Body: css`
       @media (min-width: 1300px) {
         font-size: 1rem;

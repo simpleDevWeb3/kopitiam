@@ -16,11 +16,11 @@ const StyledContainer = styled.div`
   }
 `;
 function HomePosts() {
-  const { posts } = forumData;
+  const { posts,comments } = forumData;
 
   return (
     <StyledContainer>
-      <PostList posts={posts} />
+      <PostList posts={posts} comments={comments} />
     </StyledContainer>
   );
 }

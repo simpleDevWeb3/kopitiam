@@ -47,7 +47,8 @@ function CommentPage() {
   return (
     <StyledContainer>
       <ContentWrapper>
-        <Post post={post}>
+        <Post post={post} comments={comments}>
+          <Post.Avatar size="medium" />
           <Post.Title />
           <SocialFeatures>
             <Post.Vote />

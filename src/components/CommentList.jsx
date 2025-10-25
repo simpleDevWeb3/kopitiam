@@ -39,7 +39,8 @@ function CommentList({ comments }) {
       {comments.map((comment) => (
         <PostWrapper key={comment.id}>
           <Post post={comment} type={"comment"} variant="comment">
-            <Post.Title />
+            <Post.Avatar />
+            <Post.Title variant="body" />
             <SocialFeatures>
               <Post.Vote />
               <Post.Comment />

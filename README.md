@@ -1,16 +1,75 @@
-# React + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+src/
+ ├─ app/
+ │   ├─ store.js               # Redux / Zustand / React Query setup
+ │   ├─ App.jsx
+ │   └─ routes.jsx             # All routes configuration (React Router)
+ │
+ ├─ components/                # Reusable, dumb/presentational components
+ │   ├─ Button.jsx
+ │   ├─ Text.jsx
+ │   ├─ Avatar.jsx
+ │   ├─ Card.jsx
+ │   └─ Modal.jsx
+ │
+ ├─ features/                  # Domain / feature modules
+ │   ├─ post/
+ │   │   ├─ Post.jsx
+ │   │   ├─ PostList.jsx
+ │   │   ├─ PostVote.jsx
+ │   │   ├─ PostForm.jsx
+ │   │   ├─ usePost.js
+ │   │   └─ postSlice.js       # (if using Redux) or postApi.js (if using React Query)
+ │   │
+ │   ├─ comment/
+ │   │   ├─ Comment.jsx
+ │   │   ├─ CommentList.jsx
+ │   │   ├─ CommentForm.jsx
+ │   │   └─ useComment.js
+ │   │
+ │   ├─ auth/
+ │   │   ├─ LoginForm.jsx
+ │   │   ├─ RegisterForm.jsx
+ │   │   ├─ AuthProvider.jsx
+ │   │   └─ useAuth.js
+ │   │
+ │   ├─ community/
+ │   │   ├─ CommunityList.jsx
+ │   │   ├─ CommunityCard.jsx
+ │   │   ├─ useCommunity.js
+ │   │   └─ CreateCommunityForm.jsx
+ │
+ ├─ pages/                     # Pages for routing
+ │   ├─ HomePage.jsx
+ │   ├─ PopularPage.jsx
+ │   ├─ PostDetailPage.jsx
+ │   ├─ CommunityPage.jsx
+ │   ├─ CreatePostPage.jsx
+ │   └─ LoginPage.jsx
+ │
+ ├─ layouts/                   # Layouts shared by multiple pages
+ │   ├─ MainLayout.jsx
+ │   ├─ AuthLayout.jsx
+ │   └─ Sidebar.jsx
+ │
+ ├─ hooks/                     # Global custom hooks
+ │   ├─ useTheme.js
+ │   ├─ useModal.js
+ │   └─ useScrollLock.js
+ │
+ ├─ utils/                     # Helper functions / formatters
+ │   ├─ dateFormatter.js
+ │   ├─ voteUtils.js
+ │   └─ constants.js
+ │
+ ├─ assets/                    # Images, icons, fonts, etc.
+ │   ├─ images/
+ │   └─ icons/
+ │
+ ├─ styles/                    # Global styles, themes, variables
+ │   ├─ GlobalStyle.js
+ │   └─ theme.js
+ │
+ ├─ data/                      # Optional mock/fake data (for development)
+ │   └─ forumData.js
+ │
+ └─ index.js                   # React entry point
