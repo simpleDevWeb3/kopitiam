@@ -69,7 +69,7 @@ const variantSize = {
 
     Body: css`
       @media (min-width: 1300px) {
-        font-size: 1rem;
+        font-size: 0.9rem;
       }
       @media (min-width: 600px) and (max-width: 900px) {
         font-size: 0.9rem;

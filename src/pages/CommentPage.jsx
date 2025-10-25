@@ -1,8 +1,6 @@
-import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import Post from "../components/Post";
-import CommentList from "../components/CommentList";
-import forumData from "../data/post";
+import CommentPost from "../features/Comment/CommentPost";
+import Comment from "../features/Comment/Comment";
 
 const StyledContainer = styled.div`
   display: flex;
@@ -25,38 +23,12 @@ const ContentWrapper = styled.div`
   gap: 1rem;
 `;
 
-const SocialFeatures = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-  margin-top: 0.6rem;
-`;
-
 function CommentPage() {
-  const { postId } = useParams();
-  const id = Number(postId);
-
-  const post = forumData.posts.find((post) => post.id === id);
-  if (!post) return <div>Post not found</div>;
-
-  const comments = forumData.comments.filter(
-    (comment) => comment.postId === post.id
-  );
-
   return (
     <StyledContainer>
       <ContentWrapper>
-        <Post post={post} comments={comments}>
-          <Post.Avatar size="medium" />
-          <Post.Title />
-          <SocialFeatures>
-            <Post.Vote />
-            <Post.Comment />
-            <Post.Share />
-          </SocialFeatures>
-          <CommentList comments={comments} />
-        </Post>
+        <CommentPost />
+        <Comment />
       </ContentWrapper>
     </StyledContainer>
   );

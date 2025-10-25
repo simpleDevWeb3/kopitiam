@@ -1,55 +1,42 @@
 import styled from "styled-components";
-import Post from "./Post";
+import PostCard from "./PostCard";
 
-const StyledPosts = styled.div`
+const CommentWrapper = styled.div`
   width: 100%;
-  min-height: 100%;
-  overflow-y: auto;
-
+  max-width: 700px; /* Match post width */
   display: flex;
   flex-direction: column;
-  align-items: center; /* center posts horizontally */
-  padding: 1rem;
-  @media (max-width: 1300px) {
-    max-width: 100%;
-    padding: 0;
+  align-items: start;
+  border-radius: 25px;
+  padding: 1rem 1rem 0rem 1rem;
+  &:hover {
+    background-color: rgba(160, 158, 158, 0.05);
   }
-`;
-
-const PostWrapper = styled.div`
-  width: 100%;
-
+  transition: background-color 0.15s;
   cursor: pointer;
+  gap: 0.5rem;
+
   @media (max-width: 1300px) {
     max-width: 100%;
   }
 `;
 
-const SocialFeatures = styled.div`
-  display: flex;
-  margin-top: 0.6rem;
-  gap: 0.7rem;
-`;
-
-function CommentList({ comments }) {
-  console.log(comments);
-
+function CommentList({ comments, onClickVote, onClickComment, onClickShare }) {
   return (
-    <StyledPosts>
+    <>
       {comments.map((comment) => (
-        <PostWrapper key={comment.id}>
-          <Post post={comment} type={"comment"} variant="comment">
-            <Post.Avatar />
-            <Post.Title variant="body" />
-            <SocialFeatures>
-              <Post.Vote />
-              <Post.Comment />
-              <Post.Share />
-            </SocialFeatures>
-          </Post>
-        </PostWrapper>
+        <CommentWrapper key={comment.id}>
+          <PostCard
+            postData={comment}
+            variant="comment"
+            avatarSize="small"
+            onClickVote={(voteType) => onClickVote?.(comment.id, voteType)}
+            onClickComment={() => onClickComment?.(comment.id)}
+            onClickShare={() => onClickShare?.(comment.id)}
+          />
+        </CommentWrapper>
       ))}
-    </StyledPosts>
+    </>
   );
 }
 

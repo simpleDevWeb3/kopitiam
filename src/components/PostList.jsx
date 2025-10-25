@@ -1,21 +1,7 @@
+//Display recommended Post
+
 import styled from "styled-components";
-import Post from "./Post";
-import Avatar from "./Avatar";
-
-const StyledPosts = styled.div`
-  width: 100%;
-  min-height: 100%;
-  overflow-y: auto;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* center posts horizontally */
-
-  @media (max-width: 1300px) {
-    max-width: 100%;
-    padding: 0;
-  }
-`;
+import PostCard from "./PostCard";
 
 const PostWrapper = styled.div`
   width: 100%;
@@ -39,35 +25,36 @@ const PostWrapper = styled.div`
   gap: 0.5rem;
 `;
 
-const SocialFeatures = styled.div`
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 1rem;
-`;
 const BreakLine = styled.hr`
   border: 1px solid rgba(0, 0, 0, 0.1);
   width: 100%;
   margin-top: 1rem;
 `;
 
-function PostList({ posts, comments }) {
+function PostList({
+  postData,
+  onClickPost,
+  onClickVote,
+  onClickComment,
+  onClickShare,
+}) {
   return (
-    <StyledPosts>
-      {posts.map((post) => (
-        <PostWrapper key={post.id}>
-          <Post post={post} toComment={true} comments={comments}>
-            <Post.Avatar size="small" />
-            <Post.Title />
-            <SocialFeatures>
-              <Post.Vote />
-              <Post.Comment />
-              <Post.Share />
-            </SocialFeatures>
-            <BreakLine />
-          </Post>
+    <>
+      {postData.map((post) => (
+        <PostWrapper>
+          <PostCard
+            key={post.id}
+            postData={post}
+            variant="post"
+            avatarSize="medium"
+            onClickPost={() => onClickPost?.(post.id)}
+            onClickVote={(voteType) => onClickVote?.(post.id, voteType)}
+            onClickComment={() => onClickComment?.(post.id)}
+            onClickShare={() => onClickShare?.(post.id)}
+          />
         </PostWrapper>
       ))}
-    </StyledPosts>
+    </>
   );
 }
 
