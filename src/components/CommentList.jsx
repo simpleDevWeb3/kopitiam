@@ -27,6 +27,7 @@ function CommentList({ comments, onClickVote, onClickComment, onClickShare }) {
       {comments.map((comment) => (
         <CommentWrapper key={comment.id}>
           <PostCard
+            showCommentField={true}
             postData={comment}
             variant="comment"
             avatarSize="small"

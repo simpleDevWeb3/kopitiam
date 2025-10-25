@@ -24,23 +24,21 @@ function CommentPost() {
     // call API or update state
   };
 
-  const handleComment = (postId) => {
-    console.log("Comment clicked for post", postId);
-  };
-
   const handleShare = (postId) => {
     console.log("Share clicked for post", postId);
   };
 
   return (
-    <PostCard
-      postData={postData}
-      variant="post"
-      avatarSize="medium"
-      onClickVote={(voteType) => handleVote(post.id, voteType)}
-      onClickComment={() => handleComment(post.id)}
-      onClickShare={() => handleShare(post.id)}
-    />
+    <>
+      <PostCard
+        showCommentField={true}
+        postData={postData}
+        variant="post"
+        avatarSize="medium"
+        onClickVote={(voteType) => handleVote(post.id, voteType)}
+        onClickShare={() => handleShare(post.id)}
+      />
+    </>
   );
 }
 

@@ -43,6 +43,7 @@ function PostList({
       {postData.map((post) => (
         <PostWrapper>
           <PostCard
+           
             key={post.id}
             postData={post}
             variant="post"

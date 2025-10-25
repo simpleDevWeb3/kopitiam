@@ -19,7 +19,7 @@ const CommentSection = styled.div`
   }
 `;
 
-function Comment() {
+function Comments() {
   const { postId } = useParams();
   const id = Number(postId);
 
@@ -27,7 +27,7 @@ function Comment() {
   const comments = forumData.comments.filter(
     (comment) => comment.postId === id
   );
-
+  
   return (
     <CommentSection>
       <CommentList comments={comments} />
@@ -35,4 +35,4 @@ function Comment() {
   );
 }
 
-export default Comment;
+export default Comments;

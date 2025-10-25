@@ -5,6 +5,24 @@ import VoteBtn from "./VoteBtn";
 import CommentBtn from "./CommentBtn";
 import ShareBtn from "./ShareBtn";
 import Avatar from "./Avatar";
+import { useState } from "react";
+import TextFields from "./TextFields";
+
+const ShareYourThougt = styled.div`
+  border: solid 1px rgba(0, 0, 0, 0.1);
+  border-radius: 25px;
+
+  padding: 0.5rem;
+  padding-left: 1rem;
+  color: rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  transition: background-color 0.15s;
+`;
 
 const StyledPost = styled.div`
   width: 100%;
@@ -58,6 +76,12 @@ const UserName = styled.div`
   font-weight: 700;
   font-size: ${({ $size }) => usernameSizes[$size] || usernameSizes.medium};
 `;
+const CommentWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+`;
 const SocialFeatures = styled.div`
   display: flex;
   gap: 0.5rem;
@@ -66,6 +90,7 @@ const SocialFeatures = styled.div`
 // Main Post component
 function PostCard({
   postData,
+  showCommentField = false,
   variant = "post",
   avatarSize = "small",
   onClickPost,
@@ -73,37 +98,58 @@ function PostCard({
   onClickVote,
   onClickShare,
 }) {
-  //Postdata => post join comment table
-  const { title, content, votes, postComments } = postData;
+  const { id, title, content, votes, postComments } = postData;
+  const [isShowTextField, setIsShowTextField] = useState(false);
+
+  function toggleCommentField(postId) {
+    console.log("Comment clicked for post", postId);
+    setIsShowTextField((show) => !show);
+  }
+  console.log(showCommentField);
   console.log(postData);
   return (
-    <StyledPost $variant={variant} onClick={() => onClickPost?.()}>
-      <ProfileContainer>
-        <AvatarContainer $size={avatarSize}>
-          <Avatar src="/avatar.jpg" />
-        </AvatarContainer>
-        <UserName $size={avatarSize}>@c/MalaysiaKini</UserName>
-      </ProfileContainer>
+    <>
+      <StyledPost $variant={variant} onClick={() => onClickPost?.()}>
+        <ProfileContainer>
+          <AvatarContainer $size={avatarSize}>
+            <Avatar src="/avatar.jpg" />
+          </AvatarContainer>
+          <UserName $size={avatarSize}>@c/MalaysiaKini</UserName>
+        </ProfileContainer>
 
-      <TextWrapper $vertical={true} $variant={variant}>
-        {title && <Text as="Title">{title}</Text>}
-        <Text variant={variant}>{content}</Text>
-      </TextWrapper>
+        <TextWrapper $vertical={true} $variant={variant}>
+          {title && <Text as="Title">{title}</Text>}
+          <Text variant={variant}>{content}</Text>
+        </TextWrapper>
 
-      <SocialFeatures>
-        <VoteBtn
-          variant={variant}
-          votes={votes}
-          onVote={() => onClickVote?.()}
-        />
-        <CommentBtn
-          variant={variant}
-          commentCount={postComments?.length}
-          onComment={() => onClickComment?.()}
-        />
-        <ShareBtn variant={variant} onShare={() => onClickShare?.()} />
-      </SocialFeatures>
-    </StyledPost>
+        <SocialFeatures>
+          <VoteBtn
+            variant={variant}
+            votes={votes}
+            onVote={() => onClickVote?.()}
+          />
+          <CommentBtn
+            variant={variant}
+            commentCount={postComments?.length}
+            onComment={() => {
+              onClickComment?.();
+              toggleCommentField(id);
+            }}
+          />
+          <ShareBtn variant={variant} onShare={() => onClickShare?.()} />
+        </SocialFeatures>
+      </StyledPost>
+      {showCommentField &&
+        (isShowTextField ? (
+          <TextFields />
+        ) : (
+          variant === "post" && (
+            <ShareYourThougt onClick={toggleCommentField}>
+              Share Your Thought
+            </ShareYourThougt>
+          )
+        ))}
+    </>
   );
 }
 export default PostCard;

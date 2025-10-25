@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import CommentPost from "../features/Comment/CommentPost";
-import Comment from "../features/Comment/Comment";
+import Comments from "../features/Comment/Comments";
 
 const StyledContainer = styled.div`
   display: flex;
@@ -28,7 +28,7 @@ function CommentPage() {
     <StyledContainer>
       <ContentWrapper>
         <CommentPost />
-        <Comment />
+        <Comments />
       </ContentWrapper>
     </StyledContainer>
   );
