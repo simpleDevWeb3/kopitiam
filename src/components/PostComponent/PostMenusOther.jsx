@@ -1,3 +1,11 @@
+import styled from "styled-components";
+import Menus from "../Menus";
+import { HiEllipsisVertical } from "react-icons/hi2";
+import ButtonIcon from "../ButtonIcon";
+import { BiBell, BiBookmark } from "react-icons/bi";
+import { BsEyeSlash } from "react-icons/bs";
+import { MdReportProblem } from "react-icons/md";
+
 function PostMenusOther({ id }) {
   return (
     <MenusContainer>
@@ -26,4 +34,10 @@ function PostMenusOther({ id }) {
     </MenusContainer>
   );
 }
+
+const MenusContainer = styled.div``;
+const BtnText = styled.span`
+  margin: 0.5rem;
+`;
+
 export default PostMenusOther;

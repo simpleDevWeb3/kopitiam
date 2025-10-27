@@ -4,52 +4,6 @@ import { BsFillSendFill, BsFillTrashFill } from "react-icons/bs";
 import { useRef, useState } from "react";
 import { useFieldText } from "../hook/useFieldText";
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  border: solid 1px rgba(0, 0, 0, 0.2);
-  border-radius: 25px;
-  padding-bottom: 0.2rem;
-  width: 100%;
-
-  background-color: white;
-`;
-const Field = styled.p.attrs({ contentEditable: true })`
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 1rem; /* no vertical padding */
-  width: 100%;
-  min-height: 38px; /* Reddit-style starting height */
-  max-height: 400px; /* max resize height */
-  resize: vertical;
-  margin: 0px;
-  border: 1px solid #ccc; /* subtle border */
-  border-top-right-radius: 25px; /* rounded corners */
-  border-top-left-radius: 25px; /* rounded corners */
-  border: none;
-  outline: none;
-  font-size: 14px; /* Reddit-like font size */
-  line-height: 1.4;
-  box-sizing: border-box;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  cursor: text;
-  &:focus {
-    border-color: #0079d3; /* Reddit focus color */
-  }
-`;
-
-const Features = styled.div`
-  border-top: solid 1px rgba(0, 0, 0, 0.1);
-
-  display: flex;
-  justify-content: end;
-  gap: 0.5rem;
-  padding-top: 0.3rem;
-  padding-right: 0.5rem;
-`;
 function TextFields() {
   const [text, setText] = useState("");
   const { toggleTextField } = useFieldText();
@@ -98,5 +52,50 @@ function TextFields() {
     </Container>
   );
 }
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border: solid 1px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  padding-bottom: 0.2rem;
+  width: 100%;
+
+  background-color: white;
+`;
+const Field = styled.p.attrs({ contentEditable: true })`
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1rem; /* no vertical padding */
+  width: 100%;
+  min-height: 38px; /* Reddit-style starting height */
+  max-height: 400px; /* max resize height */
+  resize: vertical;
+  margin: 0px;
+  border: 1px solid #ccc; /* subtle border */
+  border: none;
+  outline: none;
+  font-size: 14px; /* Reddit-like font size */
+  line-height: 1.4;
+  box-sizing: border-box;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  cursor: text;
+  &:focus {
+    border-color: #0079d3; /* Reddit focus color */
+  }
+`;
+
+const Features = styled.div`
+  border-top: solid 1px rgba(0, 0, 0, 0.1);
+
+  display: flex;
+  justify-content: end;
+  gap: 0.5rem;
+  padding-top: 0.3rem;
+  padding-right: 0.5rem;
+`;
 
 export default TextFields;

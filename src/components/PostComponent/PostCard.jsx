@@ -1,17 +1,15 @@
-//Component
-import VoteBtn from "../VoteBtn";
-import CommentBtn from "../CommentBtn";
+
 
 //SubComponent
 
 import PostMenusOther from "./PostMenusOther";
 import PostContent from "./PostContent";
+import PostProfile from "./PostProfile";
+import PostSocialFeatures from "./PostSocialFeatures";
 
 //css
 import { variantSize } from "../../styles/VariantSize";
 import styled from "styled-components";
-import PostProfile from "./PostProfile";
-import PostSocialFeatures from "./PostSocialFeatures";
 
 function PostCard({
   postData,
@@ -48,6 +46,11 @@ const StyledPost = styled.div`
   height: 100%;
   margin-bottom: 1rem;
   ${({ $variant }) => variantSize[$variant] || variantSize.post}
+`;
+
+const PostHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
 export default PostCard;

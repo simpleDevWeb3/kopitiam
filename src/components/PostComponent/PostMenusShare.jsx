@@ -1,3 +1,7 @@
+import { HiLink, HiUpload } from "react-icons/hi";
+import Menus from "../Menus";
+import ShareBtn from "../ShareBtn";
+import styled from "styled-components";
 function PostMenusShare({ variant, onClickShare, id }) {
   return (
     <>
@@ -18,4 +22,9 @@ function PostMenusShare({ variant, onClickShare, id }) {
     </>
   );
 }
+
+const BtnText = styled.span`
+  margin: 0.5rem;
+`;
+
 export default PostMenusShare;

@@ -114,16 +114,16 @@ const StyledMenu = styled.ul`
   position: absolute;
   right: ${(props) =>
     props.$placement === "right"
-      ? props.position.x - "75"
+      ? props.position.x - "65"
       : props.position.x}px;
   top: ${(props) => props.position.y}px;
   list-style: none;
   background: white;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 5px 5px rgba(150, 147, 147, 0.1);
   border-radius: 0.5rem;
   padding: 0.4rem 0;
   margin: 0;
-  width: 160px;
+  width: 9rem;
   z-index: 100;
 
   display: flex;
@@ -155,6 +155,10 @@ const StyledMenu = styled.ul`
       transform: translateY(-8px);
     }
   }
+
+  @media (max-width: 468px) {
+    width: 7rem;
+  }
 `;
 
 const StyledItem = styled.li`
@@ -166,5 +170,9 @@ const StyledItem = styled.li`
   gap: 0.5rem;
   &:hover {
     background-color: rgba(0, 0, 0, 0.05);
+  }
+  font-size: 0.8rem;
+  @media (max-width: 468px) {
+    font-size: 0.6rem;
   }
 `;
