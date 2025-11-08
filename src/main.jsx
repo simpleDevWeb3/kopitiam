@@ -17,6 +17,7 @@ import NotificationPage from "./pages/NotificationPage.jsx";
 import CommunitiesPage from "./pages/CommunitiesPage.jsx";
 import { AuthProvider } from "./features/Auth/AuthContext.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
+import { DarkThemeProvider } from "./context/DarkThemeContext.jsx";
 
 const router = createBrowserRouter([
   {
@@ -66,11 +67,13 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider>
-      <ModalProvider>
-        <SidebarProvider>
-          <RouterProvider router={router} />
-        </SidebarProvider>
-      </ModalProvider>
+      <DarkThemeProvider>
+        <ModalProvider>
+          <SidebarProvider>
+            <RouterProvider router={router} />
+          </SidebarProvider>
+        </ModalProvider>
+      </DarkThemeProvider>
     </AuthProvider>
   </StrictMode>
 );

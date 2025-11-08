@@ -43,22 +43,19 @@ function CommentPage() {
 
 const StyledContainer = styled.div`
   display: flex;
-
   width: 80%;
-
   justify-content: center;
   padding: 2rem 1rem;
   transform: ${(props) =>
     props.isSidebarOpen ? "translateX(17rem)" : "translateX(5rem)"};
   transition: all 0.3s ease;
-
   box-sizing: border-box;
- 
+  align-items: flex-start;
+  min-height: 100vh; /* 👈 ensures full screen height */
 
   @media (max-width: 1300px) {
     justify-content: left;
   }
-  align-items: start;
 `;
 const ContentGrid = styled.div`
   display: grid;
@@ -74,6 +71,7 @@ const ContentGrid = styled.div`
 `;
 const ContentWrapper = styled.div`
   width: 100%;
+  height: 100%;
   max-width: 740px; /* Reddit post column width */
   display: flex;
   flex-direction: column;
@@ -84,14 +82,15 @@ const NavigateBack = styled.div`
   margin-right: 0.2rem;
 `;
 const Sidebar = styled.div`
-  top: 0.1rem;
+  top: 5rem;
   align-self: start; /* ensures sticky works in grid */
+  position: sticky;
   height: fit-content;
   width: 100%;
-  background-color: #efefef;
+  background-color: var(--secondary-color);
   border-radius: 8px;
   padding: 1rem;
-
+  border: solid 1px var(--tertiary-color);
   @media (max-width: 1000px) {
     display: none;
   }

@@ -6,8 +6,6 @@ import PostCard from "./PostCard";
 const PostWrapper = styled.div`
   width: 100%;
 
-  border: solid 1px rgba(0, 0, 0, 0.1);
-  box-shadow: 5px 6px 0px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -27,9 +25,8 @@ const PostWrapper = styled.div`
 `;
 
 const BreakLine = styled.hr`
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--tertiary-color);
   width: 100%;
-  margin-top: 1rem;
 `;
 
 function PostList({
@@ -40,22 +37,24 @@ function PostList({
   onClickShare,
   onClickProfile,
 }) {
-  console.log(postData);
   return (
     <>
       {postData.map((post) => (
-        <PostWrapper key={post.id}>
-          <PostCard
-            postData={post}
-            variant="post"
-            avatarSize="medium"
-            onClickPost={() => onClickPost?.(post.id)}
-            onClickVote={(voteType) => onClickVote?.(post.id, voteType)}
-            onClickComment={() => onClickComment?.(post.id)}
-            onClickShare={() => onClickShare?.(post.id)}
-            onClickProfile={(e) => onClickProfile?.(e, post.communityId)}
-          />
-        </PostWrapper>
+        <>
+          <PostWrapper key={post.id}>
+            <PostCard
+              postData={post}
+              variant="post"
+              avatarSize="medium"
+              onClickPost={() => onClickPost?.(post.id)}
+              onClickVote={(voteType) => onClickVote?.(post.id, voteType)}
+              onClickComment={() => onClickComment?.(post.id)}
+              onClickShare={() => onClickShare?.(post.id)}
+              onClickProfile={(e) => onClickProfile?.(e, post.communityId)}
+            />
+          </PostWrapper>
+          <BreakLine />
+        </>
       ))}
     </>
   );

@@ -59,6 +59,7 @@ const Container = styled.div`
   width: 100%;
   border-radius: 10px;
   padding: 1rem;
+  color: var(--text-color);
 `;
 
 const Name = styled.p`
@@ -70,11 +71,10 @@ const Row = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #555;
+
   font-size: 0.9rem;
 
   svg {
-    color: #777;
   }
 `;
 
@@ -91,7 +91,7 @@ const Stat = styled.div`
   font-weight: 500;
 
   svg {
-    color: #e36414;
+    color: var(--text-color);
   }
 `;
 
@@ -109,7 +109,6 @@ const ModeratorSection = styled.div`
 
 const ModeratorTitle = styled.p`
   font-weight: 600;
-  color: #333;
 `;
 
 const ModeratorList = styled.ul`
@@ -120,7 +119,7 @@ const ModeratorList = styled.ul`
 
 const ModeratorItem = styled.li`
   font-size: 0.9rem;
-  color: #555;
+
   cursor: pointer;
   transition: color 0.2s ease;
 

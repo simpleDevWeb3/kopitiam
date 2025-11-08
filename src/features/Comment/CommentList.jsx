@@ -29,7 +29,7 @@ function CommentList({ comments }) {
 }
 
 function CommentItem({ comment }) {
-  const { isShowTextField, toggleTextField } = useFieldText();
+  const { toggleTextField } = useFieldText();
   return (
     <CommentWrapper commentLvl={comment.commentLvl} key={comment.id}>
       <PostCard
@@ -43,7 +43,6 @@ function CommentItem({ comment }) {
         )}
       </PostCard>
 
-      {isShowTextField === comment.id && <TextFields />}
       {comment.replies.map((comment) => (
         <CommentItem comment={comment} />
       ))}
@@ -64,9 +63,9 @@ export const CommentRootLevel0 = styled.span`
   position: absolute;
   display: block;
   left: 2rem;
-  top: 2rem;
+  top: 3rem;
   bottom: 0rem;
-  border-right: 1.5px solid rgba(0, 0, 0, 0.1);
+  border-right: 1.5px solid var(--tertiary-color);
   border-radius: 25px;
 `;
 
@@ -87,7 +86,7 @@ export const CommentRootNested = styled.span`
     width: 10px;
     height: 2px;
     border-radius: 25px;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: var(--tertiary-color);
   }
 `;
 

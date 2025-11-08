@@ -8,7 +8,7 @@ import {
 
 const IComment = styled(HiOutlineChatBubbleOvalLeft)``;
 const CountComment = styled.span`
-  color: var(--secondary-color);
+
 `;
 
 function CommentBtn({ variant, commentCount, onComment }) {

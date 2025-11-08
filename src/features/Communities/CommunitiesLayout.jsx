@@ -48,8 +48,10 @@ export default CommunitiesLayout;
 
 const Container = styled.div`
   padding: 1.5rem;
+  padding-top: 0rem;
   height: 100%;
   margin: 2rem auto;
+  max-width: 80rem;
 `;
 
 const Header = styled.div`

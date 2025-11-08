@@ -1,17 +1,15 @@
 /* styles/global.css */
 
 :root {
-  --primary-color: #0e1014; /* dark coffee */
-  --secondary-color: #191818; /* 
-  caramel latte */
-  --tertiary-color: rgb(234, 237, 240);
+  --primary-color: #0e1014;
+  --secondary-color: #f3f3f3;
+  --tertiary-color: rgb(212, 212, 212);
   --button-color: rgb(232, 230, 230);
-  --background-color: #f4f4f4; /* light cream */
-  --text-color: #161210; /* roasted text */
+  --background-color: #f4f4f4;
+  --text-color: #161210;
 
   --font-size-base: 16px;
   --border-radius: 6px;
-
   --spacing-xs: 4px;
   --spacing-sm: 8px;
   --spacing-md: 16px;
@@ -19,6 +17,20 @@
 
   --hover-color: rgba(0, 0, 0, 0.1);
 }
+
+/* 🌙 Dark Mode Variables */
+.dark-mode {
+  --primary-color: #d7dadc;
+  --secondary-color: #29292c;
+  --tertiary-color: #444446;
+  --button-color: #343536;
+  --background-color: #141414;
+  --text-color: #d7dadc;
+  --hover-color: rgba(255, 255, 255, 0.1);
+}
+
+
+
 
 * {
   margin: 0;

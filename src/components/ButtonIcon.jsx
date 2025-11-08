@@ -77,7 +77,7 @@ const sizeStyles = {
 const variantStyles = {
   primary: css`
     background-color: var(--button-color);
-    color: var(--secondary-color, #f5f5f5);
+    color: var(--primary-color);
     border: none;
 
     &:hover {
@@ -86,7 +86,7 @@ const variantStyles = {
   `,
   secondary: css`
     background-color: var(--secondary-color, #f5f5f5);
-    color: var(--text-color, #333);
+    color: var(--primary-color);
     border: 1px solid rgba(0, 0, 0, 0.2);
 
     &:hover {
@@ -95,12 +95,12 @@ const variantStyles = {
   `,
   outline: css`
     background: none;
-    color: var(--secondary-color);
+    color: var(--text-color);
     border: 1px solid var(--hover-color);
-    box-shadow: 0px 3px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 3px 0px var(--tertiary-color);
 
     &:hover {
-      box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.4);
+      box-shadow: 0px 3px 3px var(--hover-color);
     }
   `,
   text: css`
@@ -116,6 +116,7 @@ const variantStyles = {
 
 const StyledButton = styled.button`
   display: flex;
+
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
@@ -123,6 +124,12 @@ const StyledButton = styled.button`
   cursor: pointer;
   border-radius: ${({ $shape }) => ($shape === "circle" ? "50%" : "25px")};
   transition: all 0.15s ease;
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+  max-width: 100%;
+  min-width: fit-content;
+  width: auto;
 
   ${({ $size }) => sizeStyles[$size] || sizeStyles.medium}
   ${({ $variant }) => variantStyles[$variant] || variantStyles.primary};

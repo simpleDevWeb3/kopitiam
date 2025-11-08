@@ -5,18 +5,17 @@ import styled from "styled-components";
 import TextFields from "../../components/TextFields";
 import { useFieldText } from "../../hook/useFieldText";
 
-
 const ShareYourThougt = styled.div`
-  border: solid 1px rgba(0, 0, 0, 0.1);
+  border: solid 1px var(--tertiary-color);
   border-radius: 25px;
 
   padding: 0.5rem;
   padding-left: 1rem;
-  color: rgba(0, 0, 0, 0.6);
+  color: var(--text-color);
   cursor: pointer;
 
   &:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: var(--hover-color);
   }
 
   transition: background-color 0.15s;
@@ -41,8 +40,6 @@ function CommentPost() {
   //Join table
   const postData = { ...post, postComments: comments };
 
- 
-
   return (
     <>
       <PostCard
@@ -50,11 +47,10 @@ function CommentPost() {
         variant="post"
         avatarSize="medium"
         onClickComment={() => toggleTextField(post.id)}
-
       ></PostCard>
 
       {isShowTextField === post.id ? (
-        <TextFields/>
+        <TextFields />
       ) : (
         <ShareYourThougt onClick={() => toggleTextField(post.id)}>
           Share Your Thought

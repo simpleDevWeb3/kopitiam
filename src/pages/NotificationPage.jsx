@@ -18,6 +18,6 @@ const PageContainer = styled.div`
   height: 100vh;
   max-width: 80%;
   transform: ${(props) =>
-    props.isSidebarOpen ? "translateX(18rem)" : "15rem"};
+    props.isSidebarOpen ? "translateX(10rem)" : "translateX(5rem)"};
   transition: transform 0.3s ease-in-out;
 `;

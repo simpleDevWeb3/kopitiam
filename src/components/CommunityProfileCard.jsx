@@ -104,7 +104,7 @@ const GroupName = styled.p`
 `;
 const StyledContainer = styled.div`
   display: flex;
-
+  color: var(--text-color);
   flex-direction: column;
   width: 100%;
 `;
@@ -167,7 +167,7 @@ const AvatarContainer = styled.div`
   top: 6rem;
   left: 1rem;
   border-radius: 50%;
-  border: solid 0.2rem white;
+  border: solid 0.2rem var(--tertiary-color);
 `;
 
 const AvatarContainerMobile = styled.div`

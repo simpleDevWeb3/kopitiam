@@ -17,8 +17,8 @@ const StyledSidebar = styled.aside`
   padding: 1rem;
 
   gap: 0.2rem;
-  border-right: 1px solid rgba(0, 0, 0, 0.2);
-  top: 4rem;
+  border-right: 1px solid var(--tertiary-color);
+  top: 3.5rem;
   bottom: 0;
   z-index: 99;
   width: 100%;
@@ -26,10 +26,10 @@ const StyledSidebar = styled.aside`
 
   transform: ${(props) =>
     props.isSidebarOpen ? "translateX(0rem)" : "translateX(-20rem)"};
-  transition: all 0.4s ease;
-  /* For screens smaller than 1300px, allow toggle */
+
+  transition: transform 0.4s ease, background-color 0.15s ease;
+
   @media (max-width: 1300px) {
- 
     z-index: 1000;
   }
 `;

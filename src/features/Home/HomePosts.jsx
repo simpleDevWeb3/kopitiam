@@ -35,13 +35,19 @@ function HomePosts() {
 
 const StyledContainer = styled.div`
   display: flex;
-  width: 80%;
+  width: 70%;
 
   justify-content: center;
-  padding: 2rem 1rem;
-  transform: ${(props) =>
-    props.isSidebarOpen ? "translateX(17rem)" : "translateX(5rem)"};
-  transition: all 0.3s ease;
+  @media (min-width: 1000px) {
+    transform: ${(props) =>
+      props.isSidebarOpen ? "translateX(13rem)" : "translateX(5rem)"};
+    transition: all 0.3s ease;
+  }
+  @media (max-width: 800px) {
+    width: 100%;
+    padding-top: 3rem;
+  }
+
   box-sizing: border-box;
   overflow-y: visible;
   @media (max-width: 1300px) {
@@ -52,7 +58,7 @@ const StyledContainer = styled.div`
 
 const PostWrapper = styled.div`
   width: 100%;
-  max-width: 900px; /* limit width for each post */
+  max-width: 45rem;
 
   display: flex;
   flex-direction: column;
@@ -64,13 +70,7 @@ const PostWrapper = styled.div`
     max-width: 100%;
   }
 
-  gap: 1rem;
-`;
-
-const BreakLine = styled.hr`
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  width: 100%;
-  margin-top: 1rem;
+  gap: 0.2rem;
 `;
 
 export default HomePosts;

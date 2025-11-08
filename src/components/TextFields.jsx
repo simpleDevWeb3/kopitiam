@@ -57,12 +57,12 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  border: solid 1px rgba(0, 0, 0, 0.2);
+  border: solid 1px var(--tertiary-color);
   border-radius: 20px;
   padding-bottom: 0.2rem;
   width: 100%;
 
-  background-color: white;
+  background-color: inherit;
 `;
 const Field = styled.p.attrs({ contentEditable: true })`
   padding-left: 1rem;
@@ -70,10 +70,10 @@ const Field = styled.p.attrs({ contentEditable: true })`
   padding-top: 1rem; /* no vertical padding */
   width: 100%;
   min-height: 38px; /* Reddit-style starting height */
-  max-height: 400px; /* max resize height */
+  color: var(--text-color);
   resize: vertical;
   margin: 0px;
-  border: 1px solid #ccc; /* subtle border */
+  border: 1px solid var(--tertiary-color); /* subtle border */
   border: none;
   outline: none;
   font-size: 14px; /* Reddit-like font size */
@@ -82,15 +82,13 @@ const Field = styled.p.attrs({ contentEditable: true })`
   white-space: pre-wrap;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  cursor: text;
+  word-break: break-all;
   &:focus {
     border-color: #0079d3; /* Reddit focus color */
   }
 `;
 
 const Features = styled.div`
-  border-top: solid 1px rgba(0, 0, 0, 0.1);
-
   display: flex;
   justify-content: end;
   gap: 0.5rem;

@@ -58,7 +58,7 @@ const PageContainer = styled.div`
 
   /* SLIDE ANIMATION */
   transform: ${(props) =>
-    props.isSidebarOpen ? "translateX(15rem)" : "translateX(10rem)"};
+    props.isSidebarOpen ? "translateX(17rem)" : "translateX(10rem)"};
   transition: transform 0.3s ease;
 `;
 
@@ -100,12 +100,12 @@ const MainSection = styled.div`
 const Sidebar = styled.div`
   width: 20rem;
   position: sticky;
-  top: 2rem;
+  top: 5rem;
   align-self: flex-start;
-  background: rgba(181, 180, 180, 0.1);
+  background: var(--secondary-color);
   border-radius: 8px;
   padding: 1rem;
-
+  border: solid 1px var(--tertiary-color);
   @media (max-width: 1300px) {
     display: none;
   }

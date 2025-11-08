@@ -15,14 +15,15 @@ import LoginForm from "./features/Auth/LoginForm";
 const StyledApp = styled.div`
   display: grid;
   grid-template-rows: auto 1fr; /* Header 20%, rest 80% */
-  height: 100vh;
+  height: 100%;
+  background-color: var(--background-color);
+  transition: background-color 0.15s ease-in;
 `;
 
 const Layout = styled.div`
   display: grid;
   position: relative;
   height: 100%;
-  
 
   @media (max-width: 1300px) {
     grid-template-columns: 1fr;
@@ -36,7 +37,7 @@ const OverlayDiv = styled.div`
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.4);
-  z-index: 900;
+  z-index: 70;
 
   @media (min-width: 1300px) {
     display: none; /* hide overlay on desktop/large screens */

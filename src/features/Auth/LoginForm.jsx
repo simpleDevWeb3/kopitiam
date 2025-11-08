@@ -1,12 +1,16 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom"; // make sure react-router-dom is installed
+import { useAuth } from "./AuthContext";
+import { useModal } from "../../context/ModalContext";
+import ButtonIcon from "../../components/ButtonIcon";
 
 function LoginForm({ onLogin }) {
   const [formData, setFormData] = useState({ username: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
-
+  const { logIn } = useAuth();
+  const { closeModal } = useModal();
   function handleChange(e) {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -21,7 +25,11 @@ function LoginForm({ onLogin }) {
     }
 
     setError("");
-    if (onLogin) onLogin(formData);
+    if (onLogin) {
+      onLogin(formData);
+    }
+    logIn();
+    closeModal();
   }
 
   return (
@@ -62,7 +70,7 @@ function LoginForm({ onLogin }) {
         </PasswordWrapper>
       </FormGroup>
 
-      <LoginButton type="submit">Login</LoginButton>
+      <ButtonIcon>Login</ButtonIcon>
 
       <SignupPrompt>
         Don’t have an account? <StyledLink to="/signup">Sign up</StyledLink>
@@ -76,18 +84,18 @@ export default LoginForm;
 /* ---------- Styled Components ---------- */
 
 const FormContainer = styled.form`
-
-
   padding: 2rem;
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
+  background-color: inherit;
+  color: var(--text-color);
 `;
 
 const Title = styled.h2`
   text-align: center;
   margin-bottom: 1rem;
-  color: var(--text-color, #333);
+  color: var(--text-color);
 `;
 
 const FormGroup = styled.div`
@@ -98,16 +106,18 @@ const FormGroup = styled.div`
 
 const Label = styled.label`
   font-weight: 600;
+  color: var(--text-color);
 `;
 
 const Input = styled.input`
   padding: 0.6rem 0.8rem;
   border-radius: 6px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--tertiary-color);
   font-size: 1rem;
-
+  color: var(--text-color);
+  background: inherit;
   &:focus {
-    border-color: var(--primary-color, #6f4e37);
+    border-color: var(--tertiary-color);
     outline: none;
   }
 `;
@@ -132,20 +142,6 @@ const ShowButton = styled.button`
   }
 `;
 
-const LoginButton = styled.button`
-  background-color: var(--primary-color, #6f4e37);
-  color: white;
-  padding: 0.8rem;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 1rem;
-
-  &:hover {
-    background-color: var(--secondary-color, #c8a165);
-  }
-`;
-
 const ErrorMsg = styled.div`
   background: #ffe5e5;
   color: #b30000;
@@ -158,7 +154,7 @@ const ErrorMsg = styled.div`
 const SignupPrompt = styled.p`
   text-align: center;
   font-size: 0.9rem;
-  color: #555;
+  color: var(--text-color);
 `;
 
 const StyledLink = styled(Link)`

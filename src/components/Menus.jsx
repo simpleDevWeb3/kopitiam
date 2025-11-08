@@ -117,14 +117,14 @@ const StyledMenu = styled.ul`
       : props.position.x}px;
   top: ${(props) => props.position.y}px;
   list-style: none;
-  background: white;
+  background: var(--secondary-color);
   box-shadow: 0 5px 5px rgba(150, 147, 147, 0.1);
   border-radius: 0.5rem;
   padding: 0.4rem 0;
   margin: 0;
   width: 9rem;
   z-index: 100;
-
+  color: var(--text-color);
   display: flex;
   flex-direction: column;
 
@@ -151,7 +151,7 @@ const StyledItem = styled.li`
   align-items: center;
   gap: 0.5rem;
   &:hover {
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: var(--hover-color);
   }
   font-size: 0.8rem;
   @media (max-width: 468px) {

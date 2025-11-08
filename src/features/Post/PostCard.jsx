@@ -11,6 +11,8 @@ import styled from "styled-components";
 import PostContext from "./PostContext";
 import { usePostNavigation } from "./usePostNavigation";
 import Avatar from "../../components/Avatar";
+import TextFields from "../../components/TextFields";
+import { useFieldText } from "../../hook/useFieldText";
 
 function PostCard({
   postData,
@@ -35,19 +37,7 @@ function PostCard({
         }
       >
         {variant === "comment" ? (
-          <>
-            <AvatarContainer>
-              <Avatar src="/avatar.jpg" />
-              {children}
-            </AvatarContainer>
-            <PostBody>
-              <PostHeader>
-                <UserName>@c/MalaysiaKini</UserName>
-              </PostHeader>
-              <PostContent />
-              <PostSocialFeatures />
-            </PostBody>
-          </>
+          <CommentPost children={children} postData={postData} />
         ) : (
           <PostBody>
             <PostHeader>
@@ -62,7 +52,27 @@ function PostCard({
     </PostContext.Provider>
   );
 }
+function CommentPost({ children, postData }) {
+  const { isShowTextField } = useFieldText();
 
+  return (
+    <>
+      <AvatarContainer>
+        <Avatar src="/avatar.jpg" />
+        {children}
+      </AvatarContainer>
+      <PostBody>
+        <PostHeader>
+          <UserName>@c/MalaysiaKini</UserName>
+        </PostHeader>
+        <PostContent />
+        <PostSocialFeatures />
+
+        {isShowTextField === postData.id && <TextFields />}
+      </PostBody>
+    </>
+  );
+}
 const UserName = styled.div`
   color: var(--primary-color);
   font-weight: 700;
@@ -85,14 +95,13 @@ const AvatarContainer = styled.div`
 const StyledPost = styled.div`
   width: 100%;
   height: 100%;
-  margin-bottom: 1rem;
+
   display: flex;
   flex-direction: ${({ $variant }) =>
     $variant === "comment" ? `columns` : " "};
 
   align-items: start;
   ${({ $variant }) => variantSize[$variant] || variantSize.post};
- 
 `;
 
 const PostHeader = styled.div`

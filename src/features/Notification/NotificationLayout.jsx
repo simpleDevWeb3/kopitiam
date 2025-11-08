@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { HiBell, HiOutlineCheckCircle } from "react-icons/hi";
+import { HiOutlineCheckCircle } from "react-icons/hi";
 
 function NotificationLayout() {
   const [notifications, setNotifications] = useState([
@@ -37,9 +37,7 @@ function NotificationLayout() {
   return (
     <Wrapper>
       <Header>
-        <Title>
-          <HiBell /> Notifications
-        </Title>
+        <Title>Notifications</Title>
         <MarkAllButton onClick={markAllAsRead}>
           <HiOutlineCheckCircle />
           Mark all as read
@@ -68,14 +66,10 @@ function NotificationLayout() {
 
 export default NotificationLayout;
 
-
-
 const Wrapper = styled.div`
-
   margin: 2rem auto;
-  padding: 1.5rem;
 
-
+  max-width: 50rem;
 `;
 
 const Header = styled.div`
@@ -96,38 +90,35 @@ const MarkAllButton = styled.button`
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  background: var(--secondary-color, #c8a165);
-  color: white;
+  background: inherit;
+  color: var(--text-color);
   border: none;
   padding: 0.5rem 0.8rem;
-  border-radius: 6px;
+  border-radius: 20px;
   cursor: pointer;
   font-size: 0.9rem;
-
+  transition: background 0.15s;
   &:hover {
-    background: var(--primary-color, #6f4e37);
+    background: var(--hover-color);
   }
 `;
 
 const NotificationList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  color: var(--text-color);
 `;
 
 const NotificationItem = styled.div`
-  background: ${({ $isRead }) =>
-    $isRead ? "white" : "rgba(255, 240, 220, 0.5)"};
-  border-left: 4px solid
-    ${({ $isRead }) =>
-      $isRead ? "transparent" : "var(--primary-color, #6f4e37)"};
+  background: ${({ $isRead }) => ($isRead ? "inherit" : "rgba(0,0,0,0.1)")};
+
   padding: 1rem;
-  border-radius: 6px;
+
   cursor: pointer;
   transition: all 0.2s;
 
   &:hover {
-    background: #fff5e9;
+    background: var(--hover-color);
   }
 `;
 
@@ -138,12 +129,12 @@ const Message = styled.div`
 
 const Time = styled.div`
   font-size: 0.8rem;
-  color: gray;
+
   margin-top: 0.2rem;
 `;
 
 const EmptyState = styled.div`
   text-align: center;
-  color: gray;
+
   padding: 2rem 0;
 `;

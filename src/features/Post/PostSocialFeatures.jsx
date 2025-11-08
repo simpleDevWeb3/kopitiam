@@ -37,10 +37,8 @@ const SocialFeatures = styled.div`
   display: flex;
   gap: 0.5rem;
   margin-top: 1rem;
-
+  margin-bottom: 0.5rem;
   margin-top: ${({ $variant }) => ($variant === "comment" ? "0.5rem" : "1rem")};
-
-
 
   text-align: center;
 `;
