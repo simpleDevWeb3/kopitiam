@@ -12,18 +12,20 @@ function Selector({ children, limit = 3 }) {
   const [labelMap, setLabelMap] = useState({}); // for mapping values → labels
   const isExceeded = selectedItems.length >= limit;
 
-  function handleSelect(value, label) {
+  function handleSelect(value, label, onChange) {
     const isSelected = selectedItems.includes(value);
 
     if (isSelected) {
       setSelectedItems((prev) => prev.filter((item) => item !== value));
+      onChange(selectedItems.filter((item) => item !== value));
       return;
     }
-    if (isExceeded) return;
+    if (limit > 0 && isExceeded) return;
 
     // store mapping so we can show selected labels later
     setLabelMap((prev) => ({ ...prev, [value]: label }));
     setSelectedItems((prev) => [...prev, value]);
+    onChange([...selectedItems, value]);
   }
 
   const value = {
@@ -58,7 +60,7 @@ function Group({ title, children }) {
   );
 }
 
-function Option({ value, children }) {
+function Option({ value, children, onChange }) {
   const { selectedItems, handleSelect, limit } = useSelector();
   const isSelected = selectedItems.includes(value);
   const isLimitReached = selectedItems.length >= limit && !isSelected;
@@ -68,7 +70,7 @@ function Option({ value, children }) {
       $selected={isSelected}
       disabled={isLimitReached}
       onClick={() => {
-        handleSelect(value, children);
+        handleSelect(value, children, onChange);
       }}
       size="small"
     >
@@ -81,11 +83,7 @@ function Option({ value, children }) {
 //  Count Component
 function Count() {
   const { selectedItems, limit } = useSelector();
-  return (
-    <span>
-      {selectedItems.length}/{limit}
-    </span>
-  );
+  return <span>{limit > 0 && `${selectedItems.length}/${limit}`}</span>;
 }
 
 // Selected Labels Component
@@ -131,6 +129,7 @@ const ButtonIconStyled = styled.span`
 `;
 
 const SelectedList = styled.div`
+  max-width: 50rem;
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;

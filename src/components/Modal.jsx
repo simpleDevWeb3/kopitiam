@@ -6,7 +6,7 @@ import ButtonIcon from "./ButtonIcon";
 
 function Modal({ children, id }) {
   const { isModalOpen, closeModal } = useModal(null);
-
+  if (isModalOpen !== id) return null;
   return (
     <>
       {isModalOpen === id && <OverlayDiv onClick={closeModal} />}
@@ -63,6 +63,7 @@ const ModalContainer = styled.div`
     width: 100%;
     max-width: 500px;
     height: 100%;
+    overflow-y: scroll;
   }
 
   box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);

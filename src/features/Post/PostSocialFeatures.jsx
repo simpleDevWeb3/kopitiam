@@ -28,7 +28,7 @@ function PostSocialFeatures() {
         onClickShare={() => handleShare(id)}
         id={id}
       />
-      {variant === "comment" && <PostMenusOther variant={"comment"} />}
+      {variant === "comment"  && <PostMenusOther variant={"comment"} />}
     </SocialFeatures>
   );
 }

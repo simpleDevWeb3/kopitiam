@@ -13,6 +13,14 @@ import { usePostNavigation } from "./usePostNavigation";
 import Avatar from "../../components/Avatar";
 import TextFields from "../../components/TextFields";
 import { useFieldText } from "../../hook/useFieldText";
+import { HiChatAlt, HiDotsCircleHorizontal } from "react-icons/hi";
+import {
+  HiMiniCircleStack,
+  HiMiniInformationCircle,
+  HiMiniQuestionMarkCircle,
+} from "react-icons/hi2";
+import { VscTriangleLeft } from "react-icons/vsc";
+import { GoTriangleLeft } from "react-icons/go";
 
 function PostCard({
   postData,
@@ -36,9 +44,11 @@ function PostCard({
           variant !== "post" ? "" : handleClickPost(e, postData.id)
         }
       >
-        {variant === "comment" ? (
+        {variant === "comment" && (
           <CommentPost children={children} postData={postData} />
-        ) : (
+        )}
+        {variant === "userCommented" && <UserCommented />}
+        {variant === "post" && (
           <PostBody>
             <PostHeader>
               <PostProfile />
@@ -69,6 +79,43 @@ function CommentPost({ children, postData }) {
         <PostSocialFeatures />
 
         {isShowTextField === postData.id && <TextFields />}
+      </PostBody>
+    </>
+  );
+}
+
+function UserCommented() {
+  return (
+    <>
+      <AvatarContainer>
+        <Avatar src="/avatar.jpg" />
+      </AvatarContainer>
+      <PostBody>
+        <PostHeader>
+          <div
+            style={{ display: "flex", gap: "1rem", alignItems: "self-start" }}
+          >
+            <UserName>@c/MalaysiaKini</UserName>
+
+            <span
+              style={{
+                fontSize: "0.8rem",
+                display: "flex",
+                gap: "0.5rem",
+                textAlign: "center",
+                alignItems: "center",
+              }}
+            >
+              <GoTriangleLeft /> Who know how to make coffe.
+            </span>
+          </div>
+        </PostHeader>
+        <p style={{ fontSize: "0.8rem" }}>
+          <b> SuperSimple </b>replied to <b> u/Elex</b>
+        </p>
+        <br />
+        <PostContent />
+        <PostSocialFeatures />
       </PostBody>
     </>
   );

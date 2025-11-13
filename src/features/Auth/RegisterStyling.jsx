@@ -5,7 +5,7 @@ import { PiPictureInPicture } from "react-icons/pi";
 import { FcPicture } from "react-icons/fc";
 import { AiFillPicture } from "react-icons/ai";
 
-function CommunityStyling({ formData, onChange }) {
+function RegisterStyling({ formData, onChange }) {
   const [bannerImage, setBannerImage] = useState(null);
   const [iconImage, setIconImage] = useState("/avatar.jpg");
 
@@ -30,8 +30,8 @@ function CommunityStyling({ formData, onChange }) {
   return (
     <Wrapper>
       <Header>
-        <h2>Style Your Community</h2>
-        <p>Personalize your community’s look to make it stand out.</p>
+        <h2>Style Your Profile</h2>
+        <p>Personalize your profile’s look to make it stand out.</p>
       </Header>
 
       <MainSection>
@@ -57,7 +57,7 @@ function CommunityStyling({ formData, onChange }) {
 
           {/* Icon Upload */}
           <OptionGroup>
-            <label style={{ flex: 1 }}>Community Icon</label>
+            <label style={{ flex: 1 }}>Profile Icon</label>
             <UploadInput
               type="file"
               accept="image/*"
@@ -84,15 +84,15 @@ function CommunityStyling({ formData, onChange }) {
                 <Avatar src={iconImage} />
               </AvatarContainer>
 
-              <CommunityDetails>
-                <h3>g/{formData.communityName || "YourCommunity"}</h3>
-                <p>1 member</p>
-              </CommunityDetails>
+              <ProfileDetails>
+                <h3>u/{formData?.username || "Your Username"}</h3>
+                <p>1 follows</p>
+              </ProfileDetails>
             </ProfileContent>
 
             <Description>
-              {formData.communityDescription ||
-                "This is where your community description will appear."}
+              {formData?.userDescription ||
+                "This is where your Profile description will appear."}
             </Description>
           </PreviewCard>
         </RightPanel>
@@ -101,7 +101,7 @@ function CommunityStyling({ formData, onChange }) {
   );
 }
 
-export default CommunityStyling;
+export default RegisterStyling;
 
 // ---------- STYLES ----------
 
@@ -220,7 +220,7 @@ const AvatarContainer = styled.div`
   background-color: #fff;
 `;
 
-const CommunityDetails = styled.div`
+const ProfileDetails = styled.div`
   display: flex;
   flex-direction: column;
   & h3 {

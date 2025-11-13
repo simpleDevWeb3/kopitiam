@@ -7,21 +7,21 @@ import {
 } from "react-icons/hi2";
 
 const IComment = styled(HiOutlineChatBubbleOvalLeft)``;
-const CountComment = styled.span`
-
-`;
+const CountComment = styled.span``;
 
 function CommentBtn({ variant, commentCount, onComment }) {
   return (
     <ButtonIcon
       data-allowpostclick
       action={onComment}
-      variant={variant === "comment" ? "text" : ""}
+      variant={
+        variant === "comment" || variant === "userCommented" ? "text" : ""
+      }
       size="small"
       hover="background"
       icon={<IComment />}
     >
-      {variant === "comment" ? (
+      {variant === "comment" || variant === "userCommented" ? (
         <span>Reply</span>
       ) : (
         <CountComment>{commentCount}</CountComment>

@@ -70,7 +70,9 @@ function VoteBtn({ variant, votes, userVote = null, onVote }) {
     <VoteWrapper $center={true} $variant={variant}>
       <ButtonIcon
         action={(e) => handleVote(e, "up")}
-        variant={variant === "comment" ? "text" : ""}
+        variant={
+          variant === "comment" || variant === "userCommented" ? "text" : ""
+        }
         size="rounded_small"
         hover="outline"
         icon={currentVote === "up" ? <BiSolidUpvote /> : <BiUpvote />}
@@ -81,7 +83,9 @@ function VoteBtn({ variant, votes, userVote = null, onVote }) {
 
       <ButtonIcon
         action={(e) => handleVote(e, "down")}
-        variant={variant === "comment" ? "text" : ""}
+        variant={
+          variant === "comment" || variant === "userCommented" ? "text" : ""
+        }
         size="rounded_small"
         hover="icon"
         icon={currentVote === "down" ? <BiSolidDownvote /> : <BiDownvote />}

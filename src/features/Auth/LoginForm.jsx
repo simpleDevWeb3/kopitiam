@@ -4,16 +4,17 @@ import { Link } from "react-router-dom"; // make sure react-router-dom is instal
 import { useAuth } from "./AuthContext";
 import { useModal } from "../../context/ModalContext";
 import ButtonIcon from "../../components/ButtonIcon";
+import Input from "../../components/Input";
 
-function LoginForm({ onLogin }) {
+function LoginForm({ onLogin, onClick }) {
   const [formData, setFormData] = useState({ username: "", password: "" });
-  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const { logIn } = useAuth();
   const { closeModal } = useModal();
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+  function handleChange(e, field) {
+    const { value } = e.target;
+
+    setFormData((prev) => ({ ...prev, [field]: value }));
   }
 
   function handleSubmit(e) {
@@ -38,42 +39,27 @@ function LoginForm({ onLogin }) {
 
       {error && <ErrorMsg>{error}</ErrorMsg>}
 
-      <FormGroup>
-        <Label htmlFor="username">Username</Label>
-        <Input
-          type="text"
-          id="username"
-          name="username"
-          value={formData.username}
-          onChange={handleChange}
-          placeholder="Enter your username"
-        />
-      </FormGroup>
+      <Input handleInput={(e) => handleChange(e, "username")}>Username</Input>
 
-      <FormGroup>
-        <Label htmlFor="password">Password</Label>
-        <PasswordWrapper>
-          <Input
-            type={showPassword ? "text" : "password"}
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            placeholder="Enter your password"
-          />
-          <ShowButton
-            type="button"
-            onClick={() => setShowPassword((prev) => !prev)}
-          >
-            {showPassword ? "Hide" : "Show"}
-          </ShowButton>
-        </PasswordWrapper>
-      </FormGroup>
+      <Input handleInput={(e) => handleChange(e, "password")}>Password</Input>
 
       <ButtonIcon>Login</ButtonIcon>
 
       <SignupPrompt>
-        Don’t have an account? <StyledLink to="/signup">Sign up</StyledLink>
+        Don’t have an account?{" "}
+        <label
+          style={{
+            color: "var(--text-color)",
+            fontWeight: 700,
+            cursor: "pointer",
+            opacity: 1,
+          }}
+          onClick={() => onClick?.()}
+          onMouseEnter={(e) => (e.target.style.textDecoration = "underline")}
+          onMouseLeave={(e) => (e.target.style.textDecoration = "none")}
+        >
+          Sign up
+        </label>
       </SignupPrompt>
     </FormContainer>
   );
@@ -100,50 +86,6 @@ const Title = styled.h2`
   text-align: center;
   margin-bottom: 1rem;
   color: var(--text-color);
-`;
-
-const FormGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-`;
-
-const Label = styled.label`
-  font-weight: 600;
-  color: var(--text-color);
-`;
-
-const Input = styled.input`
-  padding: 0.6rem 0.8rem;
-  border-radius: 6px;
-  border: 1px solid var(--tertiary-color);
-  font-size: 1rem;
-  color: var(--text-color);
-  background: inherit;
-  &:focus {
-    border-color: var(--tertiary-color);
-    outline: none;
-  }
-`;
-
-const PasswordWrapper = styled.div`
-  position: relative;
-  display: flex;
-  align-items: center;
-`;
-
-const ShowButton = styled.button`
-  position: absolute;
-  right: 0.5rem;
-  background: none;
-  border: none;
-  color: var(--primary-color, #6f4e37);
-  cursor: pointer;
-  font-size: 0.9rem;
-
-  &:hover {
-    text-decoration: underline;
-  }
 `;
 
 const ErrorMsg = styled.div`

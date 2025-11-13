@@ -1,9 +1,12 @@
 import styled from "styled-components";
+import forumData from "../../data/post";
+import PostList from "../Post/PostList";
 
 function History() {
+  const { posts } = forumData;
   return (
     <StyledContainer>
-      <h1>History</h1>
+      <PostList postData={posts} />
     </StyledContainer>
   );
 }

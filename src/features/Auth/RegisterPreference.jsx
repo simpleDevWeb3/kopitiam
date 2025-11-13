@@ -1,6 +1,6 @@
 import { Selector } from "../../components/Selector";
 
-function CommunityTopic({ onChange }) {
+function RegisterPreference({onChange }) {
   const topicOptions = [
     {
       label: "Uni Life",
@@ -41,11 +41,11 @@ function CommunityTopic({ onChange }) {
 
   return (
     <>
-      <h2>Add Topics</h2>
-      <p>Add up 3 topic to let student find your community</p>
+      <h2>Add Interest Topics</h2>
+      <p>Add up interested topic to recommendation</p>
       <br />
       <span>Topic </span>
-      <Selector.Count />
+
       <Selector.Selected />
       <br />
       {topicOptions.map((topic) => (
@@ -65,4 +65,4 @@ function CommunityTopic({ onChange }) {
   );
 }
 
-export default CommunityTopic;
+export default RegisterPreference;

@@ -3,7 +3,7 @@ import { FaCoffee } from "react-icons/fa";
 import { HiChatAlt2 } from "react-icons/hi";
 
 function Logo() {
-  return <Styledlogo>Kopitiam</Styledlogo>;
+  return <Styledlogo>AskSenior</Styledlogo>;
 }
 const Styledlogo = styled.h3`
   color: var(--text-color);

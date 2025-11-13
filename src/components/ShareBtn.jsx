@@ -9,7 +9,9 @@ function ShareBtn({ variant, onShare }) {
   return (
     <ButtonIcon
       action={onShare}
-      variant={variant === "comment" ? "text" : ""}
+      variant={
+        variant === "comment" || variant === "userCommented" ? "text" : ""
+      }
       size="small"
       hover={"background"}
       icon={<IShare />}

@@ -1,9 +1,12 @@
 import styled from "styled-components";
+import forumData from "../../data/post";
+import PostList from "../Post/PostList";
 
 function Downvoted() {
+  const { posts } = forumData;
   return (
     <StyledContainer>
-      <h1>Downvoted</h1>
+      <PostList postData={posts} />
     </StyledContainer>
   );
 }
