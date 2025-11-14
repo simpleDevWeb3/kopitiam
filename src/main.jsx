@@ -31,9 +31,10 @@ import AccountSetting from "./features/Settings/AccountSetting.jsx";
 import PrivacySetting from "./features/Settings/PrivacySetting.jsx";
 import Dashboardpage from "./pages/Dashboardpage.jsx";
 import Overview from "./features/Dashboard/Overview.jsx";
-import ManageGroup from "./features/Dashboard/ManageGroup.jsx";
+
 import ManageUser from "./features/Dashboard/ManageUser.jsx";
 import ManagePost from "./features/Dashboard/ManagePost.jsx";
+import ManageCommutiy from "./features/Dashboard/ManageCommunity.jsx";
 
 const router = createBrowserRouter([
   {
@@ -103,7 +104,7 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <Overview /> },
           { path: "overview", element: <Overview /> },
-          { path: "groups", element: <ManageGroup /> },
+          { path: "groups", element: <ManageCommutiy /> },
           { path: "users", element: <ManageUser /> },
           { path: "posts", element: <ManagePost /> },
         ],

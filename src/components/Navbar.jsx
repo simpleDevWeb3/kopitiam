@@ -49,6 +49,7 @@ const StyledNavbar = styled.nav`
 
   @media (max-width: 800px) {
     justify-content: center;
+    justify-content: ${({ $isDashboard }) => $isDashboard && "space-between"};
   }
 `;
 
@@ -140,7 +141,7 @@ function Navbar() {
   }, []);
   if (isDashboardRoute)
     return (
-      <StyledNavbar style={{}}>
+      <StyledNavbar $isDashboard={isDashboardRoute} style={{}}>
         <Grouped>
           <Hamburger />
         </Grouped>
@@ -151,20 +152,19 @@ function Navbar() {
             action={toggleMode}
             icon={isDarkMode ? <BiSun /> : <BiMoon />}
           />
-           <ButtonIcon
+          <ButtonIcon
             variant="text"
             size="rounded"
             action={() => navigate("/")}
             icon={<BiUser />}
           />
-           <ButtonIcon
+          <ButtonIcon
             variant="text"
             size="rounded"
             action={() => navigate("/")}
             icon={<IoExitOutline />}
           />
         </Grouped>
-     
       </StyledNavbar>
     );
   return (

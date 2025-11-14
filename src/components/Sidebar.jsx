@@ -16,12 +16,7 @@ import { useModal } from "../context/ModalContext";
 import { BiPieChart } from "react-icons/bi";
 import { TbReportAnalytics } from "react-icons/tb";
 import { SiDatabricks } from "react-icons/si";
-import {
-  HiOutlineArrowDownLeft,
-  HiOutlineArrowLeft,
-  HiOutlineUser,
-  HiOutlineUsers,
-} from "react-icons/hi2";
+import { HiOutlineUsers } from "react-icons/hi2";
 import { useDashboard } from "../hook/useDashboard";
 import Logo from "./Logo";
 import { IoExitOutline } from "react-icons/io5";
@@ -172,7 +167,7 @@ function Sidebar() {
           <div
             style={{
               display: "flex",
-            
+              justifyContent: "center",
               marginTop: "2rem",
             }}
           >
@@ -193,7 +188,7 @@ function Sidebar() {
             </StyledNavLink>
             <StyledNavLink onClick={handleNavigate} to="/dashboard/groups">
               <RiUserCommunityLine />
-              <span>Groups</span>
+              <span>Community</span>
             </StyledNavLink>
             <StyledNavLink onClick={handleNavigate} to="/dashboard/posts">
               <HiOutlineClipboardList />
@@ -231,7 +226,7 @@ function Sidebar() {
               <StyledNavLink
                 key={c.id}
                 onClick={handleNavigate}
-                to={`/manage/${c.name.toLowerCase().replace(/\s+/g, "-")}`}
+                to={`/dashboard`}
               >
                 <HiOutlineUserGroup />
                 <span>{c.name}</span>
@@ -243,7 +238,7 @@ function Sidebar() {
               <StyledNavLink
                 key={c.id}
                 onClick={handleNavigate}
-                to={`/manage/${c.name.toLowerCase().replace(/\s+/g, "-")}`}
+                to={`/dashboard`}
               >
                 <HiOutlineUserGroup />
                 <span>{c.name}</span>
@@ -255,7 +250,7 @@ function Sidebar() {
               <StyledNavLink
                 key={c.id}
                 onClick={handleNavigate}
-                to={`/manage/${c.name.toLowerCase().replace(/\s+/g, "-")}`}
+                to={`/dashboard`}
               >
                 <HiOutlineUserGroup />
                 <span>{c.name}</span>
