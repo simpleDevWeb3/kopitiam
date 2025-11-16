@@ -86,6 +86,7 @@ const Field = styled.p.attrs({ contentEditable: true })`
   &:focus {
     border-color: #0079d3; /* Reddit focus color */
   }
+  cursor: text;
 `;
 
 const Features = styled.div`

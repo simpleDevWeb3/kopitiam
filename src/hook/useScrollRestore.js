@@ -1,10 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 function useScrollRestore() {
   const location = useLocation();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     function handleRestoreScroll() {
       window.scrollTo(0, 0);
     }
