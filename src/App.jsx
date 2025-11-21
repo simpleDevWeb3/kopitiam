@@ -13,6 +13,7 @@ import CommunityForm from "./features/Community/CommunityForm";
 import { Selector } from "./components/Selector";
 import AuthForm from "./features/Auth/AuthForm";
 import EditForm from "./features/Post/EditForm";
+import { AuthProvider } from "./features/Auth/AuthContext";
 
 //import { Menus } from "./components/Menus";
 
@@ -69,33 +70,35 @@ function App() {
   const { isSidebarOpen } = useSidebar();
 
   return (
-    <StyledApp>
-      <Navbar />
+    <AuthProvider>
+      <StyledApp>
+        <Navbar />
 
-      <Layout>
-        <Sidebar />
+        <Layout>
+          <Sidebar />
 
-        <OverlayDiv $isOpen={isSidebarOpen} />
+          <OverlayDiv $isOpen={isSidebarOpen} />
 
-        <Modal id={"Login"}>
-          <AuthForm />
-        </Modal>
-
-        <Selector>
-          <Modal id={"Create Community"}>
-            <CommunityForm />
+          <Modal id={"Login"}>
+            <AuthForm />
           </Modal>
-        </Selector>
-        <Modal id={"Edit Post"}>
-          <EditForm />
-        </Modal>
-        <Menus>
-          <Content>
-            <Outlet />
-          </Content>
-        </Menus>
-      </Layout>
-    </StyledApp>
+
+          <Selector>
+            <Modal id={"Create Community"}>
+              <CommunityForm />
+            </Modal>
+          </Selector>
+          <Modal id={"Edit Post"}>
+            <EditForm />
+          </Modal>
+          <Menus>
+            <Content>
+              <Outlet />
+            </Content>
+          </Menus>
+        </Layout>
+      </StyledApp>
+    </AuthProvider>
   );
 }
 

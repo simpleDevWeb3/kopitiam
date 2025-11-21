@@ -36,6 +36,7 @@ import ManageUser from "./features/Dashboard/ManageUser.jsx";
 import ManagePost from "./features/Dashboard/ManagePost.jsx";
 import ManageCommutiy from "./features/Dashboard/ManageCommunity.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -46,46 +47,44 @@ const queryClient = new QueryClient({
   },
 });
 window.__TANSTACK_QUERY_CLIENT__ = queryClient;
+import ProtectedRoute from "./components/ProtectedRoute"; // adjust path
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
-      {
-        index: true,
-        element: <HomePage />,
-      },
-      {
-        path: "community/:communityId",
-        element: <CommunityPage />,
-      },
-      {
-        path: "Communities",
-        element: <CommunitiesPage />,
-      },
-      {
-        path: "comment/:postId",
-        element: <CommentPage />,
-      },
-      {
-        path: "search",
-        element: <SearchPage />,
-      },
-      {
-        path: "popular",
-        element: <PopularPage />,
-      },
+      { index: true, element: <HomePage /> },
+      { path: "community/:communityId", element: <CommunityPage /> },
+      { path: "Communities", element: <CommunitiesPage /> },
+      { path: "comment/:postId", element: <CommentPage /> },
+      { path: "search", element: <SearchPage /> },
+      { path: "popular", element: <PopularPage /> },
+
+      // Protected Routes
       {
         path: "create",
-        element: <CreatePostPage />,
+        element: (
+          <ProtectedRoute>
+            <CreatePostPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "notification",
-        element: <NotificationPage />,
+        element: (
+          <ProtectedRoute>
+            <NotificationPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "profile",
-        element: <ProfilePage />,
+        element: (
+          <ProtectedRoute>
+            <ProfilePage />
+          </ProtectedRoute>
+        ),
         children: [
           { index: true, element: <PostsTab /> },
           { path: "POST", element: <PostsTab /> },
@@ -97,10 +96,13 @@ const router = createBrowserRouter([
           { path: "DRAFT", element: <Draft /> },
         ],
       },
-
       {
         path: "settings",
-        element: <SettingPage />,
+        element: (
+          <ProtectedRoute>
+            <SettingPage />
+          </ProtectedRoute>
+        ),
         children: [
           { index: true, element: <AccountSetting /> },
           { path: "ACCOUNT", element: <AccountSetting /> },
@@ -110,7 +112,11 @@ const router = createBrowserRouter([
       },
       {
         path: "dashboard",
-        element: <Dashboardpage />,
+        element: (
+          <ProtectedRoute>
+            <Dashboardpage />
+          </ProtectedRoute>
+        ),
         children: [
           { index: true, element: <Overview /> },
           { path: "overview", element: <Overview /> },
@@ -119,10 +125,6 @@ const router = createBrowserRouter([
           { path: "posts", element: <ManagePost /> },
         ],
       },
-      {
-        path: "search",
-        element: <SearchPage />,
-      },
     ],
   },
 ]);
@@ -130,15 +132,15 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <DarkThemeProvider>
-          <ModalProvider>
-            <SidebarProvider>
-              <RouterProvider router={router} />
-            </SidebarProvider>
-          </ModalProvider>
-        </DarkThemeProvider>
-      </AuthProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
+
+      <DarkThemeProvider>
+        <ModalProvider>
+          <SidebarProvider>
+            <RouterProvider router={router} />
+          </SidebarProvider>
+        </ModalProvider>
+      </DarkThemeProvider>
     </QueryClientProvider>
   </StrictMode>
 );

@@ -1,18 +1,24 @@
-import { createContext, useContext, useState } from "react";
-/* eslint-disable react-refresh/only-export-components */
-const AuthContext = createContext();
+import { createContext, useContext } from "react";
+import { useUser } from "./useUser";
+import { useNavigate } from "react-router-dom";
+
+const AuthContext = createContext(undefined);
 
 function AuthProvider({ children }) {
-  const [isAuth, setIsAuth] = useState(false);
+  const { isLoading, isAuthenticated, user, isFetching } = useUser();
 
-  function logIn() {
-    setIsAuth(true);
-  }
-  function logOut() {
-    setIsAuth(false);
-  }
+
+
+
   return (
-    <AuthContext.Provider value={{ isAuth, logIn, logOut }}>
+    <AuthContext.Provider
+      value={{
+        isAuthenticated,
+        isLoading,
+        isFetching,
+        user,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
@@ -20,8 +26,7 @@ function AuthProvider({ children }) {
 
 function useAuth() {
   const ctx = useContext(AuthContext);
-  if (ctx === undefined)
-    throw new Error("useAuth is used outside AuthProvider!");
+  if (!ctx) throw new Error("useAuth must be used inside AuthProvider!");
   return ctx;
 }
 

@@ -31,6 +31,7 @@ import { MdDashboard } from "react-icons/md";
 import useSidebar from "../hook/useSidebar";
 import { useDashboard } from "../hook/useDashboard";
 import { IoExitOutline } from "react-icons/io5";
+import { useLogout } from "../features/Auth/useLogout";
 
 const StyledNavbar = styled.nav`
   position: fixed;
@@ -123,19 +124,20 @@ const Circle = styled.div`
 
 function Navbar() {
   const { isDashboardRoute } = useDashboard();
+  const { logout } = useLogout();
   const navigate = useNavigate();
   const { toggleModal } = useModal();
-  const { isAuth, logOut } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const { isDarkMode, toggleMode } = useDarkTheme();
-  const [searchParams,setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [mobileSearch, setMobileSearch] = useState(false);
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 800);
-
+  console.log("isAuth: ", isAuthenticated);
   function handleSearch(query) {
     setSearchParams({ q: query });
     navigate(`/search?q=${query}`);
   }
-
+  console.log(user);
   useEffect(() => {
     const handleResize = () => {
       setIsDesktop(window.innerWidth >= 800);
@@ -144,6 +146,7 @@ function Navbar() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
   if (isDashboardRoute)
     return (
       <StyledNavbar $isDashboard={isDashboardRoute} style={{}}>
@@ -211,7 +214,7 @@ function Navbar() {
 
       {!mobileSearch && (
         <Grouped>
-          {!isAuth ? (
+          {!isAuthenticated ? (
             <ButtonIcon action={() => toggleModal("Login")}>
               <IconText>Log In</IconText>
             </ButtonIcon>
@@ -266,7 +269,7 @@ function Navbar() {
                     settings
                   </Dropdown.Item>
 
-                  <Dropdown.Item onClick={logOut}>
+                  <Dropdown.Item onClick={() => logout()}>
                     <BiSolidDoorOpen
                       style={{ fontSize: "1.4rem", cursor: "pointer" }}
                     />

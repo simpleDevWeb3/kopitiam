@@ -3,14 +3,17 @@ import { logoutApi } from "../../services/AuthApi";
 
 export function useLogout() {
   const queryClient = useQueryClient();
+
   const { mutate: logout, isPending: isLoading } = useMutation({
-    mutationFn: logoutApi(),
+    mutationFn: () => logoutApi(),
     onSuccess: () => {
-      //remove all cache 
-      queryClient.removeQueries();
+      // Remove cache and localStorage
+      queryClient.setQueryData(["user"], null);
+      localStorage.removeItem("token");
+      localStorage.removeItem("userProfile");
     },
     onError: (err) => {
-      console.log("ERROR: ", err);
+      console.log("Logout error: ", err);
     },
   });
 

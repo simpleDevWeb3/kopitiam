@@ -5,11 +5,13 @@ import { useAuth } from "./AuthContext";
 import { useModal } from "../../context/ModalContext";
 import ButtonIcon from "../../components/ButtonIcon";
 import Input from "../../components/Input";
+import { useLogin } from "./useLogin";
 
 function LoginForm({ onLogin, onClick }) {
-  const [formData, setFormData] = useState({ username: "", password: "" });
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const { logIn } = useAuth();
+  const { login, isLoading } = useLogin();
   const { closeModal } = useModal();
   function handleChange(e, field) {
     const { value } = e.target;
@@ -20,7 +22,7 @@ function LoginForm({ onLogin, onClick }) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (!formData.username || !formData.password) {
+    if (!formData.email || !formData.password) {
       setError("Please fill in all fields");
       return;
     }
@@ -29,7 +31,8 @@ function LoginForm({ onLogin, onClick }) {
     if (onLogin) {
       onLogin(formData);
     }
-    logIn();
+    login(formData);
+
     closeModal();
   }
 
@@ -39,7 +42,7 @@ function LoginForm({ onLogin, onClick }) {
 
       {error && <ErrorMsg>{error}</ErrorMsg>}
 
-      <Input handleInput={(e) => handleChange(e, "username")}>Username</Input>
+      <Input handleInput={(e) => handleChange(e, "email")}>Email</Input>
 
       <Input handleInput={(e) => handleChange(e, "password")}>Password</Input>
 

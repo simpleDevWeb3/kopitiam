@@ -1,23 +1,12 @@
 import axios from "axios";
 
-async function PostReq(apiUrl,data){
-  
-     const res = await axios.post(`${apiUrl}`, 
-      data,
-      {
-        headers: {
-          "Content-Type": "application/json"
-        }
-      }
-    );
-
-    if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`);
-    }
-
-    const apiData = await res.json();
-
-    return apiData;
+export async function PostReq(apiUrl, data) {
+  const token = localStorage.getItem("token"); // read token from storage if needed
+  const res = await axios.post(apiUrl, data, {
+    headers: {
+      "Content-Type": "application/json",
+      ...(token && { Authorization: `Bearer ${token}` }), // attach token if exists
+    },
+  });
+  return res.data;
 }
-
-export {PostReq};
