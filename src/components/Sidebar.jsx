@@ -24,6 +24,7 @@ import { MdExitToApp, MdGroups } from "react-icons/md";
 import Hamburger from "./Hamburger";
 import { CgCommunity } from "react-icons/cg";
 import { RiCommunityFill, RiUserCommunityLine } from "react-icons/ri";
+import { useAuth } from "../features/Auth/AuthContext";
 
 const StyledSidebar = styled.aside`
   overflow-y: scroll;
@@ -102,7 +103,7 @@ const StyledNavAction = styled.div`
 function Sidebar() {
   const { openModal } = useModal();
   const { isDashboardRoute } = useDashboard();
-
+  const { isAuthenticated } = useAuth();
   const {
     isSidebarOpen,
     closeSidebar,
@@ -202,7 +203,6 @@ function Sidebar() {
         </>
       ) : (
         <>
-          {" "}
           <StyledNavLink onClick={handleNavigate} to="/">
             <HiOutlineHome />
             <span>Home</span>
@@ -215,48 +215,59 @@ function Sidebar() {
             <HiOutlineUserGroup />
             <span>Communities</span>
           </StyledNavLink>
-          <StyledNavAction onClick={() => openModal("Create Community")}>
+
+          <StyledNavAction
+            onClick={() =>
+              isAuthenticated
+                ? openModal("Create Community")
+                : openModal("Login")
+            }
+          >
             <HiPlus />
             <span>Start Community</span>
           </StyledNavAction>
           <br />
           <br />
-          <Accordian title={"Manage"}>
-            {userCommunities.map((c) => (
-              <StyledNavLink
-                key={c.id}
-                onClick={handleNavigate}
-                to={`/dashboard`}
-              >
-                <HiOutlineUserGroup />
-                <span>{c.name}</span>
-              </StyledNavLink>
-            ))}
-          </Accordian>
-          <Accordian title={"Joined"}>
-            {userCommunities.map((c) => (
-              <StyledNavLink
-                key={c.id}
-                onClick={handleNavigate}
-                to={`/dashboard`}
-              >
-                <HiOutlineUserGroup />
-                <span>{c.name}</span>
-              </StyledNavLink>
-            ))}
-          </Accordian>
-          <Accordian title={"Followed"}>
-            {userCommunities.map((c) => (
-              <StyledNavLink
-                key={c.id}
-                onClick={handleNavigate}
-                to={`/dashboard`}
-              >
-                <HiOutlineUserGroup />
-                <span>{c.name}</span>
-              </StyledNavLink>
-            ))}
-          </Accordian>
+          {isAuthenticated && (
+            <>
+              <Accordian title={"Manage"}>
+                {userCommunities.map((c) => (
+                  <StyledNavLink
+                    key={c.id}
+                    onClick={handleNavigate}
+                    to={`/dashboard`}
+                  >
+                    <HiOutlineUserGroup />
+                    <span>{c.name}</span>
+                  </StyledNavLink>
+                ))}
+              </Accordian>
+              <Accordian title={"Joined"}>
+                {userCommunities.map((c) => (
+                  <StyledNavLink
+                    key={c.id}
+                    onClick={handleNavigate}
+                    to={`/dashboard`}
+                  >
+                    <HiOutlineUserGroup />
+                    <span>{c.name}</span>
+                  </StyledNavLink>
+                ))}
+              </Accordian>
+              <Accordian title={"Followed"}>
+                {userCommunities.map((c) => (
+                  <StyledNavLink
+                    key={c.id}
+                    onClick={handleNavigate}
+                    to={`/dashboard`}
+                  >
+                    <HiOutlineUserGroup />
+                    <span>{c.name}</span>
+                  </StyledNavLink>
+                ))}
+              </Accordian>
+            </>
+          )}
         </>
       )}
     </StyledSidebar>

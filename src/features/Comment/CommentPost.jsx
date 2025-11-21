@@ -4,6 +4,8 @@ import PostCard from "../Post/PostCard";
 import styled from "styled-components";
 import TextFields from "../../components/TextFields";
 import { useFieldText } from "../../hook/useFieldText";
+import { useAuth } from "../Auth/AuthContext";
+import { useModal } from "../../context/ModalContext";
 
 const ShareYourThougt = styled.div`
   border: solid 1px var(--tertiary-color);
@@ -23,10 +25,10 @@ const ShareYourThougt = styled.div`
 
 function CommentPost() {
   const { isShowTextField, toggleTextField } = useFieldText();
-
+  const { openModal } = useModal();
   const { postId } = useParams();
   const id = postId;
-
+  const { isAuthenticated } = useAuth();
   //Find POST
   const post = forumData.posts.find((post) => post.id === id);
 
@@ -52,7 +54,11 @@ function CommentPost() {
       {isShowTextField === post.id ? (
         <TextFields />
       ) : (
-        <ShareYourThougt onClick={() => toggleTextField(post.id)}>
+        <ShareYourThougt
+          onClick={() =>
+            isAuthenticated ? toggleTextField(post.id) : openModal("Login")
+          }
+        >
           Share Your Thought
         </ShareYourThougt>
       )}

@@ -6,15 +6,15 @@ import PostMenusOther from "./PostMenusOther";
 import { usePost } from "./PostContext";
 import { usePostHandler } from "./usePostHandler";
 
+
 function PostSocialFeatures() {
   const { postData, variant, onClickComment } = usePost();
-  const { id} = postData;
+  const { id } = postData;
   const { handleVote, handleShare } = usePostHandler();
-
 
   return (
     <SocialFeatures $variant={variant}>
-      <VoteBtn  onVote={() => handleVote(id)} />
+      <VoteBtn onVote={() => handleVote(id)} />
       <CommentBtn
         onComment={() => {
           onClickComment();
@@ -26,7 +26,7 @@ function PostSocialFeatures() {
         onClickShare={() => handleShare(id)}
         id={id}
       />
-      {variant === "comment"  && <PostMenusOther variant={"comment"} />}
+      {variant === "comment" && <PostMenusOther variant={"comment"} />}
     </SocialFeatures>
   );
 }

@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect } from "react";
 import { useUser } from "./useUser";
 import { useNavigate } from "react-router-dom";
 
@@ -6,9 +6,11 @@ const AuthContext = createContext(undefined);
 
 function AuthProvider({ children }) {
   const { isLoading, isAuthenticated, user, isFetching } = useUser();
+  const navigate = useNavigate();
 
-
-
+  useEffect(() => {
+    if (!isAuthenticated && !isLoading && !isFetching) navigate("/");
+  }, [navigate, isLoading, isAuthenticated, isFetching]);
 
   return (
     <AuthContext.Provider

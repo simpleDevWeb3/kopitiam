@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { logoutApi } from "../../services/AuthApi";
+import toast from "react-hot-toast";
 
 export function useLogout() {
   const queryClient = useQueryClient();
@@ -11,6 +12,8 @@ export function useLogout() {
       queryClient.setQueryData(["user"], null);
       localStorage.removeItem("token");
       localStorage.removeItem("userProfile");
+
+      toast.success("User Logout Successfully!");
     },
     onError: (err) => {
       console.log("Logout error: ", err);

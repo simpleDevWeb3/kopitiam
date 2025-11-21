@@ -9,6 +9,8 @@ import {
   BiUpvote,
 } from "react-icons/bi";
 import { usePost } from "../features/Post/PostContext";
+import { useAuth } from "../features/Auth/AuthContext";
+import { useModal } from "../context/ModalContext";
 
 const CountVote = styled.span`
   color: var(--primary-color);
@@ -24,6 +26,8 @@ const VoteWrapper = styled.div`
 `;
 
 function VoteBtn({ userVote = null, onVote }) {
+  const { isAuthenticated } = useAuth();
+  const { openModal } = useModal();
   const { postData, variant } = usePost();
   const { votes } = postData;
   const { numUpvote, numDownvote } = votes.reduce(
@@ -42,7 +46,7 @@ function VoteBtn({ userVote = null, onVote }) {
 
   function handleVote(e, type) {
     e.stopPropagation();
-
+    if (!isAuthenticated) return openModal("Login");
     let newTotal = totalVote;
 
     if (currentVote === type) {

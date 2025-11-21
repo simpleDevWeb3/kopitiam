@@ -6,6 +6,8 @@ import {
   HiOutlineChatBubbleOvalLeft,
 } from "react-icons/hi2";
 import { usePost } from "../features/Post/PostContext";
+import { useModal } from "../context/ModalContext";
+import { useAuth } from "../features/Auth/AuthContext";
 
 const IComment = styled(HiOutlineChatBubbleOvalLeft)``;
 const CountComment = styled.span``;
@@ -14,12 +16,18 @@ function CommentBtn({ onComment }) {
   const { postData, variant, onClickComment } = usePost();
   const { postComments } = postData;
   const commentCount = postComments?.length;
+  const { openModal } = useModal();
+  const { isAuthenticated } = useAuth();
   return (
     <ButtonIcon
       data-allowpostclick
       action={() => {
-        onClickComment();
-        onComment?.();
+        if (isAuthenticated) {
+          onClickComment();
+          onComment?.(); 
+        } else {
+          openModal("Login");
+        }
       }}
       variant={
         variant === "comment" || variant === "userCommented" ? "text" : ""

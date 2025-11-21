@@ -14,6 +14,7 @@ import { Selector } from "./components/Selector";
 import AuthForm from "./features/Auth/AuthForm";
 import EditForm from "./features/Post/EditForm";
 import { AuthProvider } from "./features/Auth/AuthContext";
+import { Toaster } from "react-hot-toast";
 
 //import { Menus } from "./components/Menus";
 
@@ -98,6 +99,28 @@ function App() {
           </Menus>
         </Layout>
       </StyledApp>
+
+      <Toaster
+        position="top-center"
+        gutter={12}
+        containerStyle={{ margin: "8px" }}
+        toastOptions={{
+          success: {
+            duration: 3000,
+          },
+          error: {
+            duration: 5000,
+          },
+          style: {
+            fontSize: "16px",
+            maxWidth: "500px",
+            padding: "16px 24px",
+            backgroundColor: "var(--background-color)",
+            color: "var(--text-color)",
+            boxShadow: "1px 5px 5px var(--hover-color)",
+          },
+        }}
+      />
     </AuthProvider>
   );
 }
