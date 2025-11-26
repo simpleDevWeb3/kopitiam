@@ -46,12 +46,17 @@ function validImgFile(
   const isSizeExceed = (size) => size > maxSize;
 
   if (!isAllowImgType(type))
-    return { isValid: false, error: `Only ${allowedTypes} format allowed.` };
+    return {
+      isValid: false,
+      error: `Only ${allowedTypes.map(
+        (type) => type.split("image/")[1]
+      )} format allowed.`,
+    };
 
   if (isSizeExceed(size))
     return {
       isValid: false,
-      error: `Image size exceeded ${maxSize / 1000000}MB`,
+      error: `Image size exceeded ${Math.trunc(maxSize / 1000000)}MB`,
     };
 
   return { isValid: true, error: "" };
@@ -65,15 +70,23 @@ function validImgFile(
  * @param {string} fieldName - Name of the field in formData to update.
  */
 function handleFileImgUpload(event, setPreview, onChange, fieldName) {
+  //1. get file
   const file = event.target.files[0];
   if (!file) return;
+
+  //2. sanitize filename
+  const cleanFileName = file.name.toLowerCase().replace(/[^a-z0-9.-]/g, "_");
+
+  //3. create new File obj
+
+  const editedFile = new File([file], cleanFileName, { type: file.type });
 
   const previewUrl = URL.createObjectURL(file); // generate preview
 
   setPreview?.(previewUrl); // update preview state
 
   //convert file
-  onChange(fieldName, file); // update form data
+  onChange(fieldName, editedFile); // update form data
 }
 
 /**

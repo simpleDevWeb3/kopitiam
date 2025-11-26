@@ -22,7 +22,7 @@ function CommentList({ comments }) {
   return (
     <CommentsContainer>
       {commentsWithLvl.map((comment) => (
-        <CommentItem comment={comment} />
+        <CommentItem comment={comment} key={comment.id} />
       ))}
     </CommentsContainer>
   );
@@ -31,7 +31,7 @@ function CommentList({ comments }) {
 function CommentItem({ comment }) {
   const { toggleTextField } = useFieldText();
   return (
-    <CommentWrapper commentLvl={comment.commentLvl} key={comment.id}>
+    <CommentWrapper $commentLvl={comment.commentLvl}>
       <PostCard
         postData={comment}
         variant="comment"
@@ -39,12 +39,12 @@ function CommentItem({ comment }) {
         onClickComment={() => toggleTextField(comment.id)}
       >
         {comment.repliesCount > 0 && (
-          <CommentRootLevel0 repliesCount={comment.repliesCount} />
+          <CommentRootLevel0 $repliesCount={comment.repliesCount} />
         )}
       </PostCard>
 
       {comment.replies.map((comment) => (
-        <CommentItem comment={comment} />
+        <CommentItem comment={comment} key={comment.id} />
       ))}
 
       {comment.commentLvl > 0 && <CommentRootNested />}
@@ -103,7 +103,7 @@ const CommentWrapper = styled.div`
   transition: background-color 0.15s;
   cursor: pointer;
   gap: 0.5rem;
-  margin-left: ${(props) => (props.commentLvl > 0 ? "1.5" : "0")}rem;
+  margin-left: ${({ $commentLvl }) => ($commentLvl > 0 ? "1.5" : "0")}rem;
 
   width: 100%;
 `;

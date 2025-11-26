@@ -28,12 +28,10 @@ import { useState, useEffect } from "react";
 import { GrDashboard } from "react-icons/gr";
 import { BsDash } from "react-icons/bs";
 import { MdDashboard } from "react-icons/md";
-import useSidebar from "../hook/useSidebar";
 import { useDashboard } from "../hook/useDashboard";
 import { IoExitOutline } from "react-icons/io5";
 import { useLogout } from "../features/Auth/useLogout";
 import Avatar from "./Avatar";
-import { useUser } from "../features/Auth/useUser";
 import UserAvatar from "./UserAvatar";
 
 const StyledNavbar = styled.nav`

@@ -1,4 +1,4 @@
-import { PostReq } from "../helpers/apiHelper";
+import { GetReq, PostReq } from "../helpers/apiHelper";
 
 async function loginApi(formData) {
   try {
@@ -16,7 +16,7 @@ async function loginApi(formData) {
 
 async function registerApi(formData) {
   const fd = new FormData();
-  fd.append("Email", formData.Email); 
+  fd.append("Email", formData.Email);
   fd.append("Password", formData.Password);
   fd.append("name", formData.username);
   fd.append("bio", formData.userDescription);
@@ -69,4 +69,33 @@ async function getCurrentUserApi() {
   }
 }
 
-export { loginApi, registerApi, logoutApi, getCurrentUserApi };
+async function getIsDupUsernameApi(username) {
+  try {
+    return await GetReq(
+      `https://localhost:7071/api/Auth/checkDuplicateUsername?username=${username}`
+    );
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+async function getIsDupEmailApi(email) {
+  try {
+    return await GetReq(
+      `https://localhost:7071/api/Auth/checkDuplicateEmail?email=${email}`
+    );
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export {
+  loginApi,
+  registerApi,
+  logoutApi,
+  getCurrentUserApi,
+  getIsDupEmailApi,
+  getIsDupUsernameApi,
+};

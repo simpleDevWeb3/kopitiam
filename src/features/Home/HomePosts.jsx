@@ -48,7 +48,7 @@ function HomePosts() {
     <StyledContainer
       ref={containerRef}
       $isSidebarOpen={$isSidebarOpen}
-      navType={navType}
+      $navType={navType}
     >
       <PostWrapper>
         <PostList
@@ -73,8 +73,8 @@ const StyledContainer = styled.div`
   @media (min-width: 1000px) {
     transform: ${({ $isSidebarOpen }) =>
       $isSidebarOpen ? "translateX(13rem)" : "translateX(5rem)"};
-    transition: ${(props) =>
-      props.navType === "POP" ? "none" : "all 0.3s ease"};
+    transition: ${({ $navType }) =>
+      $navType === "POP" ? "none" : "all 0.3s ease"};
   }
 
   @media (max-width: 1300px) {

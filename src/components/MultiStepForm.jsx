@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Carousel from "./Carousel";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import ButtonIcon from "./ButtonIcon";
 import { updateFormData } from "../helpers/formHelper";
 import { useDisableTab } from "../hook/useDisableTab";
@@ -12,9 +12,9 @@ function MultiStepForm({ steps = [], initialData = {}, onSuccess, onError }) {
   const [currentSlide, setCurrentSlide] = useState(0);
   useDisableTab(true);
   // Update form data
-  const handleChange = (field, value) => {
+  const handleChange = useCallback((field, value) => {
     setFormData((prev) => updateFormData(prev, field, value));
-  };
+  }, []);
 
   const totalSteps = steps.length;
 
@@ -59,7 +59,12 @@ function MultiStepForm({ steps = [], initialData = {}, onSuccess, onError }) {
         {/* Submit Button */}
         {currentSlide === totalSteps - 1 && (
           <CreateContainer>
-            <ButtonIcon onClick={handleSubmit}>Create</ButtonIcon>
+            <ButtonIcon
+              disabled={!steps[currentSlide]?.validate(formData)}
+              onClick={handleSubmit}
+            >
+              Create
+            </ButtonIcon>
           </CreateContainer>
         )}
       </Carousel>

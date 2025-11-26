@@ -7,7 +7,7 @@ export function useRegister(onHandleSuccess) {
       registerApi(formData);
     },
     onSuccess: () => {
-      toast.success("SUCCESS: User Registered ");
+      toast.success("User registered successfully, please login again.");
       onHandleSuccess?.();
     },
     onError: (err) => {

@@ -15,7 +15,6 @@ import AuthForm from "./features/Auth/AuthForm";
 import EditForm from "./features/Post/EditForm";
 import { AuthProvider } from "./features/Auth/AuthContext";
 import { Toaster } from "react-hot-toast";
-import { useLogout } from "./features/Auth/useLogout";
 import Spinner from "./components/Spinner";
 
 //import { Menus } from "./components/Menus";

@@ -4,14 +4,23 @@ import Avatar from "../../components/Avatar";
 import { PiPictureInPicture } from "react-icons/pi";
 import { FcPicture } from "react-icons/fc";
 import { AiFillPicture } from "react-icons/ai";
-import { handleFileImgUpload, validImgFile } from "../../helpers/formHelper";
+
 import Error from "../../components/Error";
 import { GiIvoryTusks } from "react-icons/gi";
+import UploadImg from "../../components/UploadImg";
 
 function RegisterStyling({ onChange, formData }) {
   const [error, setError] = useState({});
   const [bannerImage, setBannerImage] = useState(null);
   const [iconImage, setIconImage] = useState("/avatar.jpg");
+
+  function OnError(fieldName, errorMsg) {
+    console.log("starting error");
+    setError((prev) => ({
+      ...prev,
+      [fieldName]: errorMsg,
+    }));
+  }
 
   return (
     <Wrapper>
@@ -26,50 +35,29 @@ function RegisterStyling({ onChange, formData }) {
           <SectionTitle>Appearance</SectionTitle>
 
           {/* Banner Upload */}
-          <OptionGroup>
-            <label style={{ flex: 1 }}>Banner Image</label>
-            <UploadInput
-              type="file"
-              accept="image/*"
-              id="bannerUpload"
-              onChange={(e) => {
-                handleFileImgUpload(e, setBannerImage, onChange, "banner");
-                const currentFile = e.target.files[0];
-                const isValidBanner = validImgFile(currentFile);
 
-                console.log(isValidBanner.error);
-                console.log(isValidBanner.isValid);
-                setError((prev) => ({
-                  ...prev,
-                  isValidBanner: !isValidBanner.isValid
-                    ? isValidBanner.error
-                    : "",
-                }));
-              }}
-            />
-            <UploadLabel htmlFor="bannerUpload">
-              {" "}
-              Add
-              <AiFillPicture />
-            </UploadLabel>
-          </OptionGroup>
-          {error.isValidBanner && <Error msg={error.isValidBanner} />}
+          <UploadImg
+            id={"bannerUpload"}
+            setPreview={setBannerImage}
+            onChange={onChange}
+            fieldName={"banner"}
+            onError={(msg) => OnError("banner", msg)}
+            label={"Banner Image"}
+          />
+
+          {error.banner && <Error msg={error.banner} />}
           {/* Icon Upload */}
-          <OptionGroup>
-            <label style={{ flex: 1 }}>Profile Icon</label>
-            <UploadInput
-              type="file"
-              accept="image/*"
-              id="iconUpload"
-              onChange={(e) =>
-                handleFileImgUpload(e, setIconImage, onChange, "icon")
-              }
-            />
-            <UploadLabel htmlFor="iconUpload">
-              Add
-              <AiFillPicture />
-            </UploadLabel>
-          </OptionGroup>
+
+          <UploadImg
+            id={"iconUpload"}
+            setPreview={setIconImage}
+            onChange={onChange}
+            fieldName={"icon"}
+            onError={(msg) => OnError("icon", msg)}
+            label={"Icon Image"}
+          />
+
+          {error.icon && <Error msg={error.icon} />}
         </LeftPanel>
 
         {/* RIGHT PANEL */}

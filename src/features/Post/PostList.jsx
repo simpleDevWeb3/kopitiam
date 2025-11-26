@@ -2,6 +2,7 @@
 
 import styled from "styled-components";
 import PostCard from "./PostCard";
+import React from "react";
 
 const PostWrapper = styled.div`
   width: 100%;
@@ -44,8 +45,8 @@ function PostList({
   return (
     <>
       {postData.map((post) => (
-        <>
-          <PostWrapper key={post.id}>
+        <React.Fragment key={post.id}>
+          <PostWrapper>
             <PostCard
               postData={post}
               variant="post"
@@ -58,7 +59,7 @@ function PostList({
             />
           </PostWrapper>
           <BreakLine />
-        </>
+        </React.Fragment>
       ))}
     </>
   );
