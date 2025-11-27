@@ -118,7 +118,7 @@ function EditForm({ onSubmit }) {
             name="content"
             placeholder="Body Text"
             rows="5"
-            value={formData.content}
+            value={formData.text}
             onChange={handleChange}
           />
         </FormGroup>

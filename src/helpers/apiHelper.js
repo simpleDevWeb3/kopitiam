@@ -1,5 +1,6 @@
 import axios from "axios";
 
+
 export async function PostReq(apiUrl, data) {
   try {
     const token = localStorage.getItem("token");

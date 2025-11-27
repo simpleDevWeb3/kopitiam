@@ -1,18 +1,29 @@
-
 import styled from "styled-components";
 import Search from "../../components/Search";
 import { Dropdown } from "../../components/Dropdown";
 
 import { HiArrowDown } from "react-icons/hi2";
-import { HiChevronDown } from "react-icons/hi";
+import { HiChevronDown, HiPencil } from "react-icons/hi";
 import Filter from "../../components/Filter";
 
 import { BsTrashFill, BsUpload } from "react-icons/bs";
 import { FaTrash } from "react-icons/fa";
 import ButtonIcon from "../../components/ButtonIcon";
 import { usePostForm } from "./usePostForm";
+import { useModal } from "../../context/ModalContext";
+import { Selector } from "../../components/Selector";
+import Modal from "../../components/Modal";
+import SelectTopic from "../../components/SelectTopic";
+import { useState } from "react";
+import { useUser } from "../Auth/useUser";
+import { useCreatePost } from "./useCreatePost";
+import Spinner from "../../components/Spinner";
 
-function PostForm({ onSubmit }) {
+function PostForm() {
+  const { openModal, closeModal } = useModal();
+  const [selectedTopic, setSelectedTopic] = useState(null);
+  const { user } = useUser();
+  const { createPost, isLoadCreatePost, errorCreatePost } = useCreatePost();
   const {
     type,
     formData,
@@ -32,11 +43,50 @@ function PostForm({ onSubmit }) {
     handleMouseLeave,
     handleCancelImage,
     handleSubmit,
-  } = usePostForm(onSubmit);
+  } = usePostForm(handleFinalSubmit);
 
-  
+  // 1. Create a wrapper function to merge data
+  function handleFinalSubmit(formDataFromHook) {
+    if (!selectedTopic) {
+      alert("Please select a topic!");
+      return;
+    }
+
+    const finalData = {
+      ...formDataFromHook,
+      topic_id: selectedTopic.id,
+      user_id: user.id,
+    };
+    //call api here!
+    console.log(finalData);
+
+    setSelectedTopic(null);
+
+    createPost(finalData);
+  }
+
+  function onAdd(topic) {
+    setSelectedTopic(topic);
+    closeModal();
+  }
+
+  function onCancel() {
+    closeModal();
+  }
+
   return (
     <Layout>
+      {isLoadCreatePost && <Spinner />}
+      {errorCreatePost && <div>{errorCreatePost}</div>}
+      <Selector>
+        <Modal id={"Select Topic"}>
+          <SelectTopic
+            selectedTopic={selectedTopic}
+            onAdd={onAdd}
+            onCancel={onCancel}
+          />
+        </Modal>
+      </Selector>
       <FormContainer onSubmit={handleSubmit}>
         <Title>Create a Post</Title>
 
@@ -70,6 +120,20 @@ function PostForm({ onSubmit }) {
             onChange={handleChange}
           />
         </FormGroup>
+        <ActionContainer
+          style={{ justifyContent: "start", alignItems: "center" }}
+        >
+          {selectedTopic && (
+            <SelectedTopicLabel>{selectedTopic?.label}</SelectedTopicLabel>
+          )}
+          <ButtonIcon
+            size={selectedTopic && "rounded"}
+            type="button"
+            action={() => openModal("Select Topic")}
+          >
+            {selectedTopic ? <HiPencil /> : " Select Topic"}
+          </ButtonIcon>
+        </ActionContainer>
 
         {type === "IMAGE" && (
           <>
@@ -116,11 +180,11 @@ function PostForm({ onSubmit }) {
 
         <FormGroup>
           <Textarea
-            id="content"
-            name="content"
+            id="text"
+            name="text"
             placeholder="Body Text"
             rows="5"
-            value={formData.content}
+            value={formData.text}
             onChange={handleChange}
           />
         </FormGroup>
@@ -137,6 +201,12 @@ function PostForm({ onSubmit }) {
 export default PostForm;
 
 /* ---------- Styled Components ---------- */
+const SelectedTopicLabel = styled.div`
+  border-radius: 25px;
+  background-color: rgb(19, 87, 184);
+  padding: 0.5rem 1rem;
+  color: white;
+`;
 const ActionContainer = styled.div`
   display: flex;
   justify-content: right;

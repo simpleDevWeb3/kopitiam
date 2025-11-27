@@ -7,6 +7,8 @@ import { usePostNavigation } from "../Post/usePostNavigation";
 import useSidebar from "../../hook/useSidebar";
 import { useLayoutEffect, useRef } from "react";
 import { useLocation, useNavigationType } from "react-router-dom";
+import { useFetchPosts } from "../Post/useFetchPosts";
+import Spinner from "../../components/Spinner";
 
 // Store scroll positions by path
 const scrollPositions = {};
@@ -17,15 +19,15 @@ function HomePosts() {
   const location = useLocation();
   const navType = useNavigationType();
   const containerRef = useRef(null);
-
+  const { posts, isLoadPost, errorPost } = useFetchPosts();
   // Fetch data
-  const { posts, comments } = forumData;
+  /*const { posts, comments } = forumData;
 
   // Join posts with comments (memoize if large)
   const postData = posts.map((post) => ({
     ...post,
     postComments: comments.filter((c) => c.postId === post.id),
-  }));
+  }));*/
 
   // Save scroll when leaving page
   useLayoutEffect(() => {
@@ -50,13 +52,17 @@ function HomePosts() {
       $isSidebarOpen={$isSidebarOpen}
       $navType={navType}
     >
-      <PostWrapper>
-        <PostList
-          postData={postData}
-          onClickPost={handleClickPost}
-          onClickProfile={handleClickProfile}
-        />
-      </PostWrapper>
+      {isLoadPost && <Spinner />}
+      {errorPost && <p>Error loading posts!</p>}
+      {posts && (
+        <PostWrapper>
+          <PostList
+            postData={posts}
+            onClickPost={handleClickPost}
+            onClickProfile={handleClickProfile}
+          />
+        </PostWrapper>
+      )}
     </StyledContainer>
   );
 }

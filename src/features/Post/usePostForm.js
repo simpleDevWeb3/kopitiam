@@ -13,8 +13,8 @@ export function usePostForm(onSubmit, data) {
 
   const [formData, setFormData] = useState({
     title: data?.title || "",
-    content: data?.content || "",
-    category: data?.category || "",
+    text: data?.text || "",
+    topic_id: data?.topic || "",
     image: data?.image || null,
   });
   const postOptions = [
@@ -75,20 +75,20 @@ export function usePostForm(onSubmit, data) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (!formData.title || !formData.content) {
+    if (!formData.title || !formData.text) {
       setError("Title and content are required");
       return;
     }
 
     setError("");
-
+    console.log(formData);
     if (onSubmit) onSubmit(formData);
 
     // Reset form
     setFormData({
       title: "",
-      content: "",
-      category: "",
+      text: "",
+      topic_id: "",
       image: null,
     });
   }

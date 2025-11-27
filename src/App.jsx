@@ -16,6 +16,7 @@ import EditForm from "./features/Post/EditForm";
 import { AuthProvider } from "./features/Auth/AuthContext";
 import { Toaster } from "react-hot-toast";
 import Spinner from "./components/Spinner";
+import RegisterPreference from "./features/Auth/RegisterPreference";
 
 //import { Menus } from "./components/Menus";
 
@@ -88,6 +89,8 @@ function App() {
           <Modal id={"Login"}>
             <AuthForm />
           </Modal>
+
+        
 
           <Selector>
             <Modal id={"Create Community"}>

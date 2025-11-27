@@ -3,11 +3,12 @@ import { useModal } from "../context/ModalContext";
 import { CgClose } from "react-icons/cg";
 import { HiOutlineXCircle } from "react-icons/hi2";
 import ButtonIcon from "./ButtonIcon";
+import { createPortal } from "react-dom";
 
 function Modal({ children, id }) {
   const { isModalOpen, closeModal } = useModal(null);
   if (isModalOpen !== id) return null;
-  return (
+  return createPortal(
     <>
       {isModalOpen === id && <OverlayDiv onClick={closeModal} />}
 
@@ -24,7 +25,8 @@ function Modal({ children, id }) {
         </CloseButtonWrapper>
         {children || <h1>Modal</h1>}
       </ModalContainer>
-    </>
+    </>,
+    document.body
   );
 }
 

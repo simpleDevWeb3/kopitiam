@@ -5,12 +5,12 @@ import { usePost } from "./PostContext";
 
 function PostContent() {
   const { postData, variant } = usePost();
-  const { title, content, image } = postData; // added optional image support
+  const { title, text, image } = postData; // added optional image support
 
   return (
     <TextWrapper $vertical={true} $variant={variant}>
       {title && <Text as="Title">{title}</Text>}
-      <Text variant={variant}>{content}</Text>
+      <Text variant={variant}>{text}</Text>
 
       {image && (
         <ImageContainer>
@@ -30,8 +30,6 @@ const TextWrapper = styled.div`
   align-items: ${({ $center }) => ($center ? "center" : "stretch")};
   gap: 0.5rem;
   ${({ $variant }) => variantSize[$variant] || ""}
-
-
 `;
 
 const ImageContainer = styled.div`

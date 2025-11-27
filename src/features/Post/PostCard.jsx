@@ -62,7 +62,7 @@ function PostCard({
               <PostMenusOther />
             </PostHeader>
             <PostContent />
-            <PostSocialFeatures />
+            {/* <PostSocialFeatures />*/}
           </PostBody>
         )}
         {variant === "user_post" && <User_Post data={postData} />}
@@ -142,7 +142,7 @@ function User_Post({ data }) {
       </PostHeader>
       <PostContent />
       <StyledAction>
-        <VoteBtn />
+        {/* <VoteBtn />*/}
         <CommentBtn />
         <ButtonIcon size="rounded" action={() => openModal("Edit Post", data)}>
           <HiPencil />
