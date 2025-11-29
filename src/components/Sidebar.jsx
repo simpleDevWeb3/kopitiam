@@ -25,6 +25,7 @@ import Hamburger from "./Hamburger";
 import { CgCommunity } from "react-icons/cg";
 import { RiCommunityFill, RiUserCommunityLine } from "react-icons/ri";
 import { useAuth } from "../features/Auth/AuthContext";
+import { useUser } from "../features/Auth/useUser";
 
 const StyledSidebar = styled.aside`
   overflow-y: scroll;
@@ -103,7 +104,7 @@ const StyledNavAction = styled.div`
 function Sidebar() {
   const { openModal } = useModal();
   const { isDashboardRoute } = useDashboard();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated } = useUser();
   const {
     $isSidebarOpen,
     closeSidebar,

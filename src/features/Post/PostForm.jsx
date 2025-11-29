@@ -18,6 +18,7 @@ import { useState } from "react";
 import { useUser } from "../Auth/useUser";
 import { useCreatePost } from "./useCreatePost";
 import Spinner from "../../components/Spinner";
+import Carousel from "../../components/Carousel";
 
 function PostForm() {
   const { openModal, closeModal } = useModal();
@@ -151,6 +152,7 @@ function PostForm() {
                   </FileLabel>
                   <FileInput
                     type="file"
+                    multiple
                     id="image"
                     accept="image/*"
                     onChange={handleImageChange}
@@ -163,10 +165,25 @@ function PostForm() {
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}
                 >
-                  <ImagePreview
-                    src={URL.createObjectURL(formData.image)}
-                    alt="Preview"
-                  />
+                  {formData.image.length > 0 && (
+                    <Carousel
+                      total={formData.image.length}
+                      hideWhenCurrentSlide={true}
+                    >
+                      <Carousel.Track>
+                        {formData.image.map((img) => (
+                          <Carousel.Card>
+                            <ImagePreview
+                              src={URL.createObjectURL(img)}
+                              alt="Preview"
+                            />
+                          </Carousel.Card>
+                        ))}
+                      </Carousel.Track>
+                      <Carousel.PrevBtn />
+                      <Carousel.NextBtn />
+                    </Carousel>
+                  )}
                   {isShowDeleteBtn && (
                     <ButtonDelete onClick={(e) => handleCancelImage(e)}>
                       <FaTrash />
@@ -334,6 +351,7 @@ const Select = styled.select`
 
 const ImageContainer = styled.div`
   position: relative;
+  overflow-y: hidden;
 `;
 const ImagePreview = styled.img`
   margin-top: 0.5rem;

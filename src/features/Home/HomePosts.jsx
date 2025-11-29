@@ -11,14 +11,13 @@ import { useFetchPosts } from "../Post/useFetchPosts";
 import Spinner from "../../components/Spinner";
 
 // Store scroll positions by path
-const scrollPositions = {};
 
 function HomePosts() {
   const { handleClickPost, handleClickProfile } = usePostNavigation();
   const { $isSidebarOpen } = useSidebar();
-  const location = useLocation();
+
   const navType = useNavigationType();
-  const containerRef = useRef(null);
+
   const { posts, isLoadPost, errorPost } = useFetchPosts();
   // Fetch data
   /*const { posts, comments } = forumData;
@@ -29,29 +28,8 @@ function HomePosts() {
     postComments: comments.filter((c) => c.postId === post.id),
   }));*/
 
-  // Save scroll when leaving page
-  useLayoutEffect(() => {
-    return () => {
-      if (containerRef.current) {
-        scrollPositions[location.pathname] = containerRef.current.scrollTop;
-      }
-    };
-  }, [location.pathname]);
-
-  // Restore scroll when coming back
-  useLayoutEffect(() => {
-    if (containerRef.current) {
-      const y = scrollPositions[location.pathname] || 0;
-      containerRef.current.scrollTo(0, y);
-    }
-  }, [location.pathname]);
-
   return (
-    <StyledContainer
-      ref={containerRef}
-      $isSidebarOpen={$isSidebarOpen}
-      $navType={navType}
-    >
+    <StyledContainer $isSidebarOpen={$isSidebarOpen} $navType={navType}>
       {isLoadPost && <Spinner />}
       {errorPost && <p>Error loading posts!</p>}
       {posts && (
@@ -79,8 +57,7 @@ const StyledContainer = styled.div`
   @media (min-width: 1000px) {
     transform: ${({ $isSidebarOpen }) =>
       $isSidebarOpen ? "translateX(13rem)" : "translateX(5rem)"};
-    transition: ${({ $navType }) =>
-      $navType === "POP" ? "none" : "all 0.3s ease"};
+    transition: transform 0.3s ease-in;
   }
 
   @media (max-width: 1300px) {

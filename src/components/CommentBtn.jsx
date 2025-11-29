@@ -14,8 +14,7 @@ const CountComment = styled.span``;
 
 function CommentBtn({ onComment }) {
   const { postData, variant, onClickComment } = usePost();
-  const { postComments } = postData;
-  const commentCount = postComments?.length;
+  const { total_comment: commentCount } = postData;
   const { openModal } = useModal();
   const { isAuthenticated } = useAuth();
   return (
@@ -24,7 +23,7 @@ function CommentBtn({ onComment }) {
       action={() => {
         if (isAuthenticated) {
           onClickComment();
-          onComment?.(); 
+          onComment?.();
         } else {
           openModal("Login");
         }

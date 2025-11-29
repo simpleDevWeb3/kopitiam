@@ -29,17 +29,8 @@ function VoteBtn({ userVote = null, onVote }) {
   const { isAuthenticated } = useAuth();
   const { openModal } = useModal();
   const { postData, variant } = usePost();
-  const { votes } = postData;
-  const { numUpvote, numDownvote } = votes.reduce(
-    (acc, curr) => {
-      if (curr.type === "up") acc.numUpvote += 1;
-      else if (curr.type === "down") acc.numDownvote += 1;
-      return acc;
-    },
-    { numUpvote: 0, numDownvote: 0 }
-  );
 
-  const baseVote = numUpvote - numDownvote;
+  const baseVote = postData.total_upVote - postData.total_downVote;
 
   const [currentVote, setCurrentVote] = useState(userVote);
   const [totalVote, setTotalVote] = useState(baseVote);

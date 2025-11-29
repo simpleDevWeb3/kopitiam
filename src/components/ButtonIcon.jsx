@@ -162,6 +162,7 @@ const StyledButton = styled.button`
 `;
 
 function ButtonIcon({
+  type,
   disabled,
   icon,
   children,
@@ -176,6 +177,7 @@ function ButtonIcon({
 }) {
   return (
     <StyledButton
+      type={type}
       disabled={disabled}
       onClick={action}
       $size={size}

@@ -23,12 +23,26 @@ function PostContent() {
 
       {/* 2. Carousel Logic (More than 1 image) */}
       {image && image.length > 1 && (
-       
-        <Carousel total={image.length}>
-        
+        <Carousel
+          style={{
+            display: "flex",
+            alignItem: "center",
+            justifyContent: "center",
+          }}
+          hideWhenCurrentSlide={true}
+          total={image.length}
+        >
           <Carousel.Track>
             {image.map((img, index) => (
-              <Carousel.Card key={index}>
+              <Carousel.Card
+                key={index}
+                style={{
+                  display: "flex",
+                  alignItem: "center",
+                  justifyContent: "center",
+                  backgroundSize: "cover",
+                }}
+              >
                 <ImageContainer>
                   <Image src={img} alt={title || "Post image"} />
                 </ImageContainer>
@@ -36,20 +50,29 @@ function PostContent() {
             ))}
           </Carousel.Track>
 
-       
-          <Carousel.PrevBtn positionY="center" />
-          <Carousel.NextBtn positionY="center" />
-
-      
-          <Carousel.Tracker />
+          <Carousel.PrevBtn
+            style={{
+              backgroundColor: "var(--tertiary-color)",
+              borderRadius: "50%",
+            }}
+            positionY="center"
+          />
+          <Carousel.NextBtn
+            style={{
+              backgroundColor: "var(--tertiary-color)",
+              borderRadius: "50%",
+            }}
+            positionY="center"
+          />
+          <Carousel.Tracker type={"img"} />
         </Carousel>
       )}
+      <br />
     </TextWrapper>
   );
 }
 
 export default PostContent;
-
 
 const TextWrapper = styled.div`
   overflow-y: hidden;
@@ -62,12 +85,18 @@ const TextWrapper = styled.div`
 
 const ImageContainer = styled.div`
   margin-top: 0.75rem;
-  border-radius: 10px;
+  border-radius: 25px;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Image = styled.img`
   width: 100%;
+  max-width: 40rem;
+
+  border-radius: 25px;
   height: auto;
   object-fit: cover;
   display: block;

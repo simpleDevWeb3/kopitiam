@@ -13,6 +13,7 @@ function Carousel({
   hideWhenCurrentSlide = false,
   canMoveNext,
   onSlideChange,
+  style,
 }) {
   const [index, setIndex] = useState(0);
 
@@ -50,12 +51,17 @@ function useCarousel() {
   return ctx;
 }
 
-function Track({ children }) {
+function Track({ children, style }) {
   const { index } = useCarousel();
-  return <Section $index={index}>{children}</Section>;
+  return (
+    <Section style={style} $index={index}>
+      {children}
+    </Section>
+  );
 }
 
 function NextBtn({
+  style,
   positionX = "right",
   positionY = "center",
   disabled,
@@ -64,8 +70,9 @@ function NextBtn({
   const { next, index, total, hideWhenCurrentSlide } = useCarousel();
   if (hideWhenCurrentSlide && index + 1 === total) return;
   return (
-    <BtnContainer positionX={positionX} positionY={positionY}>
+    <BtnContainer style={style} positionX={positionX} positionY={positionY}>
       <ButtonIcon
+        type="button"
         disabled={disabled}
         action={() => next()}
         variant="text"
@@ -83,12 +90,13 @@ function NextBtn({
   );
 }
 
-function PrevBtn({ positionX = "left", positionY = "center" }) {
+function PrevBtn({ positionX = "left", positionY = "center", style }) {
   const { prev, index, hideWhenCurrentSlide } = useCarousel();
   if (hideWhenCurrentSlide && index === 0) return;
   return (
-    <BtnContainer positionX={positionX} positionY={positionY}>
+    <BtnContainer style={style} positionX={positionX} positionY={positionY}>
       <ButtonIcon
+        type="button"
         action={() => prev()}
         size="rounded"
         variant="text"
@@ -98,17 +106,21 @@ function PrevBtn({ positionX = "left", positionY = "center" }) {
   );
 }
 
-function Card({ children }) {
-  return <CardContainer>{children}</CardContainer>;
+function Card({ children, style }) {
+  return <CardContainer style={style}>{children}</CardContainer>;
 }
 
-function Tracker() {
+function Tracker({ type }) {
   const { index, total } = useCarousel();
   return (
     <TrackerContainer>
-      <TrackerContainer>
+      <TrackerContainer $type={type}>
         {Array.from({ length: total }).map((_, i) => (
-          <StepBar key={i} $active={i <= index} />
+          <StepBar
+            $type={type}
+            key={i}
+            $active={type === "img" ? i === index : i <= index}
+          />
         ))}
       </TrackerContainer>
     </TrackerContainer>
@@ -164,6 +176,7 @@ const CardContainer = styled.div`
   flex-shrink: 0;
   overflow-y: scroll;
   overflow-x: hidden;
+
   @media (max-width: 800px) {
     width: 80%;
 
@@ -176,14 +189,37 @@ const TrackerContainer = styled.div`
   gap: 4px;
   width: 100%;
   margin-top: 8px;
+
+  ${({ $type }) =>
+    $type === "img"
+      ? css`
+          justify-content: center;
+          align-items: center;
+        `
+      : css``}
 `;
 const StepBar = styled.div`
-  flex: 1;
-  height: 4px;
-  background-color: ${({ $active }) =>
-    $active ? "rgb(17, 127, 195)" : "var(--hover-color)"};
-  border-radius: 2px;
   transition: background-color 0.3s ease;
+
+  ${({ $type }) =>
+    $type === "img"
+      ? css`
+          /* Circle Styles */
+          width: 8px; /* Fixed width */
+          height: 8px; /* Fixed height (same as width) */
+          border-radius: 50%; /* Makes it a circle */
+          flex: 0 0 auto; /* Prevents it from stretching */
+          background-color: ${({ $active }) =>
+            $active ? "rgb(250, 250, 250)" : "var(--hover-color)"};
+        `
+      : css`
+          /* Bar (Default) Styles */
+          height: 4px;
+          border-radius: 2px;
+          flex: 1; /* Stretches to fill space */
+          background-color: ${({ $active }) =>
+            $active ? "rgb(17, 127, 195)" : "var(--hover-color)"};
+        `}
 `;
 Carousel.Track = Track;
 Carousel.Card = Card;

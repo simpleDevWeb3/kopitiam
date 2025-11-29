@@ -34,7 +34,7 @@ export function usePostForm(onSubmit, data) {
   }
 
   function handleImageChange(e) {
-    const file = e.target.files[0];
+    const file = Array.from(e.target.files);
     if (file) {
       setFormData((prev) => ({ ...prev, image: file }));
     }
