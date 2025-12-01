@@ -12,7 +12,6 @@ function CreatePostPage() {
   useScrollRestore();
   return (
     <PageContainer $isSidebarOpen={$isSidebarOpen}>
-     
       <PostForm />
     </PageContainer>
   );
@@ -20,7 +19,6 @@ function CreatePostPage() {
 
 export default CreatePostPage;
 const PageContainer = styled.div`
-  height: 100vh;
   max-width: 80%;
   transform: ${({ $isSidebarOpen }) =>
     $isSidebarOpen ? "translateX(6rem)" : "translateX(3rem)"};

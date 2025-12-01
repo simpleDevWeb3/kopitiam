@@ -1,6 +1,5 @@
 import axios from "axios";
 
-
 export async function PostReq(apiUrl, data) {
   try {
     const token = localStorage.getItem("token");
@@ -13,10 +12,8 @@ export async function PostReq(apiUrl, data) {
 
     return res.data;
   } catch (err) {
-   
     const errorData = err.response?.data;
 
-    
     const backendMsg =
       errorData?.error ||
       errorData?.msg ||

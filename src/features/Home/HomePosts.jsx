@@ -1,14 +1,17 @@
 // HomePosts.jsx
 
 import styled from "styled-components";
-import forumData from "../../data/post";
+
 import PostList from "../Post/PostList";
 import { usePostNavigation } from "../Post/usePostNavigation";
 import useSidebar from "../../hook/useSidebar";
-import { useLayoutEffect, useRef } from "react";
-import { useLocation, useNavigationType } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigationType } from "react-router-dom";
 import { useFetchPosts } from "../Post/useFetchPosts";
 import Spinner from "../../components/Spinner";
+import { useInView } from "react-intersection-observer";
+import SpinnerMini from "../../components/SpinnerMini";
+import { Mosaic } from "react-loading-indicators";
 
 // Store scroll positions by path
 
@@ -17,8 +20,6 @@ function HomePosts() {
   const { $isSidebarOpen } = useSidebar();
 
   const navType = useNavigationType();
-
-  const { posts, isLoadPost, errorPost } = useFetchPosts();
   // Fetch data
   /*const { posts, comments } = forumData;
 
@@ -27,6 +28,26 @@ function HomePosts() {
     ...post,
     postComments: comments.filter((c) => c.postId === post.id),
   }));*/
+  
+  const {
+    posts,
+    isLoadPost,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    errorPost,
+  } = useFetchPosts();
+
+  const { ref, inView } = useInView();
+
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      console.log("hasNextPage?: " + hasNextPage);
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, fetchNextPage, isFetchingNextPage]);
+
+  if (isLoadPost) return <Spinner />;
 
   return (
     <StyledContainer $isSidebarOpen={$isSidebarOpen} $navType={navType}>
@@ -39,6 +60,25 @@ function HomePosts() {
             onClickPost={handleClickPost}
             onClickProfile={handleClickProfile}
           />
+          <div
+            ref={ref}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "10rem",
+              width: "100%",
+            }}
+          >
+            {isFetchingNextPage && (
+              <Mosaic
+                color="rgba(21, 144, 221, 0.889)"
+                size="large"
+                text=""
+                textColor=""
+              />
+            )}
+          </div>
         </PostWrapper>
       )}
     </StyledContainer>

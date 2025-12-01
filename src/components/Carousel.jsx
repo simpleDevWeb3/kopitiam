@@ -3,6 +3,7 @@ import ButtonIcon from "./ButtonIcon";
 import { HiArrowLeft, HiArrowRight } from "react-icons/hi2";
 import styled, { css } from "styled-components";
 import { VscNoNewline } from "react-icons/vsc";
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 
 /* eslint-disable react-refresh/only-export-components */
 const CarouselContext = createContext();
@@ -14,8 +15,15 @@ function Carousel({
   canMoveNext,
   onSlideChange,
   style,
+  scrollLastAuto = false,
 }) {
   const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    if (scrollLastAuto && total > 0) {
+      setIndex(total - 1);
+    }
+  }, [total, scrollLastAuto]);
 
   const next = () => {
     if (canMoveNext && !canMoveNext(index)) return; // block if validation fails
@@ -78,7 +86,7 @@ function NextBtn({
         variant="text"
         size="rounded"
         icon={
-          <HiArrowRight
+          <MdKeyboardArrowRight
             style={{
               opacity: disabled ? 0.3 : 1,
               pointerEvents: disabled ? "none" : "auto",
@@ -100,7 +108,7 @@ function PrevBtn({ positionX = "left", positionY = "center", style }) {
         action={() => prev()}
         size="rounded"
         variant="text"
-        icon={<HiArrowLeft />}
+        icon={<MdKeyboardArrowLeft />}
       ></ButtonIcon>
     </BtnContainer>
   );
@@ -127,7 +135,28 @@ function Tracker({ type }) {
   );
 }
 
+function Count() {
+  const { index, total } = useCarousel();
+  return (
+    <ImgCount>
+      {index + 1}/{total}
+    </ImgCount>
+  );
+}
+
 export default Carousel;
+
+const ImgCount = styled.span`
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.67);
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  font-weight: 600;
+  color: white !important;
+`;
 const positionX = {
   left: css`
     left: 0;
@@ -226,3 +255,4 @@ Carousel.Card = Card;
 Carousel.NextBtn = NextBtn;
 Carousel.PrevBtn = PrevBtn;
 Carousel.Tracker = Tracker;
+Carousel.Count = Count;

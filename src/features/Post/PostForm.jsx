@@ -7,14 +7,14 @@ import { HiChevronDown, HiPencil } from "react-icons/hi";
 import Filter from "../../components/Filter";
 
 import { BsTrashFill, BsUpload } from "react-icons/bs";
-import { FaTrash } from "react-icons/fa";
+import { FaPlus, FaTrash } from "react-icons/fa";
 import ButtonIcon from "../../components/ButtonIcon";
 import { usePostForm } from "./usePostForm";
 import { useModal } from "../../context/ModalContext";
 import { Selector } from "../../components/Selector";
 import Modal from "../../components/Modal";
 import SelectTopic from "../../components/SelectTopic";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useUser } from "../Auth/useUser";
 import { useCreatePost } from "./useCreatePost";
 import Spinner from "../../components/Spinner";
@@ -25,6 +25,7 @@ function PostForm() {
   const [selectedTopic, setSelectedTopic] = useState(null);
   const { user } = useUser();
   const { createPost, isLoadCreatePost, errorCreatePost } = useCreatePost();
+  const fileInputRef = useRef(null);
   const {
     type,
     formData,
@@ -139,6 +140,14 @@ function PostForm() {
         {type === "IMAGE" && (
           <>
             <FormGroup>
+              <FileInput
+                ref={fileInputRef}
+                type="file"
+                multiple
+                id="image"
+                accept="image/*"
+                onChange={handleImageChange}
+              />
               {!formData.image && (
                 <>
                   <FileLabel
@@ -150,13 +159,6 @@ function PostForm() {
                     {isDragging ? "Drop Image Here" : "Drag and Drop Image"}
                     <BsUpload />
                   </FileLabel>
-                  <FileInput
-                    type="file"
-                    multiple
-                    id="image"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                  />
                 </>
               )}
 
@@ -167,27 +169,51 @@ function PostForm() {
                 >
                   {formData.image.length > 0 && (
                     <Carousel
+                      scrollLastAuto={true}
                       total={formData.image.length}
                       hideWhenCurrentSlide={true}
                     >
+                      <Carousel.Count />
                       <Carousel.Track>
                         {formData.image.map((img) => (
                           <Carousel.Card>
                             <ImagePreview
-                              src={URL.createObjectURL(img)}
+                              src={URL?.createObjectURL(img)}
                               alt="Preview"
                             />
                           </Carousel.Card>
                         ))}
                       </Carousel.Track>
-                      <Carousel.PrevBtn />
-                      <Carousel.NextBtn />
+                      <Carousel.PrevBtn
+                        style={{
+                          backgroundColor: "var(--tertiary-color)",
+                          borderRadius: "50%",
+                        }}
+                      />
+                      <Carousel.NextBtn
+                        style={{
+                          backgroundColor: "var(--tertiary-color)",
+                          borderRadius: "50%",
+                        }}
+                      />
                     </Carousel>
                   )}
+
                   {isShowDeleteBtn && (
-                    <ButtonDelete onClick={(e) => handleCancelImage(e)}>
-                      <FaTrash />
-                    </ButtonDelete>
+                    <>
+                      <ButtonDelete onClick={(e) => handleCancelImage(e)}>
+                        <FaTrash />
+                      </ButtonDelete>
+
+                      <ButtonAdd
+                        onClick={(e) => {
+                          e.preventDefault();
+                          fileInputRef.current.click();
+                        }}
+                      >
+                        <FaPlus />
+                      </ButtonAdd>
+                    </>
                   )}
                 </ImageContainer>
               )}
@@ -352,6 +378,7 @@ const Select = styled.select`
 const ImageContainer = styled.div`
   position: relative;
   overflow-y: hidden;
+  border: solid 1px var(--hover-color);
 `;
 const ImagePreview = styled.img`
   margin-top: 0.5rem;
@@ -359,14 +386,13 @@ const ImagePreview = styled.img`
   border-radius: 8px;
   object-fit: contain;
   height: 15rem;
-  border: solid 1px var(--hover-color);
 `;
 
 const ButtonDelete = styled.button`
   position: absolute;
   top: 1rem;
   right: 0.5rem;
-  background-color: #2f2f31;
+  background-color: var(--hover-color);
   color: white;
   border: none;
   border-radius: 50%;
@@ -380,7 +406,29 @@ const ButtonDelete = styled.button`
   transition: background-color 0.2s ease;
 
   &:hover {
-    background-color: #444;
+    opacity: 0.8;
+  }
+`;
+
+const ButtonAdd = styled.button`
+  position: absolute;
+  top: 4rem;
+  right: 0.5rem;
+  background-color: var(--hover-color);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    opacity: 0.8;
   }
 `;
 

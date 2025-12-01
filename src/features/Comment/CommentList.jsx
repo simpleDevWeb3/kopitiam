@@ -5,24 +5,46 @@ import { useFieldText } from "../../hook/useFieldText";
 
 function buildCommentTree(comments, parentId = null, level = 0) {
   return comments
-    .filter((comment) => comment.parentId === parentId)
+    .filter((comment) => {
+      if (parentId === null || parentId === undefined) {
+        return !comment.parent_id;
+      }
+      return comment.parent_id === parentId;
+    })
     .map((comment) => ({
       ...comment,
       commentLvl: level,
-      repliesCount: comments.filter((c) => c.parentId === comment.id).length,
-      replies: buildCommentTree(comments, comment.id, level + 1),
+
+      replies: buildCommentTree(comments, comment.comment_id, level + 1),
     }));
 }
 
-function CommentList({ comments }) {
-  const tree = buildCommentTree(comments);
-  const commentsWithLvl = tree;
-  console.log(tree);
+const flattenComments = (nestedComments) => {
+  return nestedComments.reduce((acc, currentComment) => {
+    // Add the current comment to the flat list
+    acc.push(currentComment);
 
+    // If it has sub_comments, flatten them recursively and add them too
+    if (currentComment.sub_comment && currentComment.sub_comment.length > 0) {
+      const flattenedChildren = flattenComments(currentComment.sub_comment);
+      acc.push(...flattenedChildren);
+    }
+
+    return acc;
+  }, []);
+};
+
+function CommentList({ comments }) {
+  const flatComment = flattenComments(comments);
+  const treeComment = buildCommentTree(flatComment);
+
+  console.log("flat: ", flatComment);
+  console.log("tree:", treeComment);
+  // initial comment lvl
   return (
     <CommentsContainer>
-      {commentsWithLvl.map((comment) => (
-        <CommentItem comment={comment} key={comment.id} />
+      {treeComment.map((comment) => (
+        <CommentItem comment={comment} key={comment.comment_id} />
       ))}
     </CommentsContainer>
   );
@@ -30,24 +52,25 @@ function CommentList({ comments }) {
 
 function CommentItem({ comment }) {
   const { toggleTextField } = useFieldText();
+
   return (
-    <CommentWrapper $commentLvl={comment.commentLvl}>
+    <CommentWrapper $commentLvl={comment?.commentLvl}>
       <PostCard
         postData={comment}
         variant="comment"
         avatarSize="small"
-        onClickComment={() => toggleTextField(comment.id)}
+        onClickComment={() => toggleTextField(comment?.comment_id)}
       >
-        {comment.repliesCount > 0 && (
-          <CommentRootLevel0 $repliesCount={comment.repliesCount} />
+        {comment?.replies.length > 0 && (
+          <CommentRootLevel0 $repliesCount={comment?.replies.length} />
         )}
       </PostCard>
 
-      {comment.replies.map((comment) => (
-        <CommentItem comment={comment} key={comment.id} />
+      {comment?.replies.map((comment) => (
+        <CommentItem comment={comment} key={comment?.id} />
       ))}
 
-      {comment.commentLvl > 0 && <CommentRootNested />}
+      {comment?.commentLvl > 0 && <CommentRootNested />}
     </CommentWrapper>
   );
 }

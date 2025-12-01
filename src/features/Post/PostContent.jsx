@@ -7,12 +7,12 @@ import Carousel from "../../components/Carousel";
 function PostContent() {
   const { postData, variant } = usePost();
   // Ensure image is treated as an array for safety
-  const { title, text, postImage_url: image } = postData;
+  const { title, text, postImage_url: image, content } = postData;
 
   return (
     <TextWrapper $vertical={true} $variant={variant}>
       {title && <Text as="Title">{title}</Text>}
-      <Text variant={variant}>{text}</Text>
+      <Text variant={variant}>{text ?? content}</Text>
 
       {/* 1. Single Image Logic */}
       {image && image.length === 1 && (
@@ -32,6 +32,7 @@ function PostContent() {
           hideWhenCurrentSlide={true}
           total={image.length}
         >
+          <Carousel.Count />
           <Carousel.Track>
             {image.map((img, index) => (
               <Carousel.Card

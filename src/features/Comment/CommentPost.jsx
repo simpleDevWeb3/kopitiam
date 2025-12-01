@@ -6,6 +6,8 @@ import TextFields from "../../components/TextFields";
 import { useFieldText } from "../../hook/useFieldText";
 import { useAuth } from "../Auth/AuthContext";
 import { useModal } from "../../context/ModalContext";
+import { useFetchPostComment } from "../Post/useFetchPostComment";
+import Spinner from "../../components/Spinner";
 
 const ShareYourThougt = styled.div`
   border: solid 1px var(--tertiary-color);
@@ -29,34 +31,41 @@ function CommentPost() {
   const { postId } = useParams();
   const id = postId;
   const { isAuthenticated } = useAuth();
-  //Find POST
-  const post = forumData.posts.find((post) => post.id === id);
+  const { postComment, isLoadComment, errorComment } = useFetchPostComment(id);
+  /*T
+  const post = forumData.posts.find((post) => post.id === id);*/
+  if (isLoadComment) return <Spinner />;
+  if (errorComment) return <div>{errorComment}</div>;
+  if (!postComment) return <div>Post not found</div>;
 
-  if (!post) return <div>Post not found</div>;
-
+  /*
   //Find comment
-  const comments = forumData.comments.filter(
+  const comments = postComment.comments.filter(
     (comment) => comment.postId === post.id
   );
 
   //Join table
   const postData = { ...post, postComments: comments };
+*/
+  console.log(postComment);
 
+  const postData = postComment[0];
+  console.log("post: ", postData);
   return (
     <>
       <PostCard
         postData={postData}
         variant="post"
         avatarSize="medium"
-        onClickComment={() => toggleTextField(post.id)}
+        onClickComment={() => toggleTextField(postData.id)}
       ></PostCard>
 
-      {isAuthenticated && isShowTextField === post.id ? (
+      {isAuthenticated && isShowTextField === postData.id ? (
         <TextFields />
       ) : (
         <ShareYourThougt
           onClick={() =>
-            isAuthenticated ? toggleTextField(post.id) : openModal("Login")
+            isAuthenticated ? toggleTextField(postData.id) : openModal("Login")
           }
         >
           Share Your Thought

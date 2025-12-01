@@ -1,22 +1,31 @@
-//Display recommended Post
-
 import styled from "styled-components";
-import forumData from "../../data/post";
 import { useParams } from "react-router-dom";
 import CommentList from "./CommentList";
+import { useFetchPostComment } from "../Post/useFetchPostComment";
+import Spinner from "../../components/Spinner";
 
 function Comments() {
   const { postId } = useParams();
-  const id = postId;
+  // Simplified: directly use postId
+  const { postComment, isLoadComment, errorComment } =
+    useFetchPostComment(postId);
 
-  //Find comment
-  const comments = forumData.comments.filter(
-    (comment) => comment.postId === id
-  );
+  if (isLoadComment) return <Spinner />;
+  if (errorComment) return <div>{errorComment}</div>;
+  if (!postComment) return <div>Post not found</div>;
+
+  
+  const comment = postComment[0]?.comment ?? [];
+
+
+  if (comment.length === 0) return <div>No Comments</div>;
+ 
+
+  console.log(comment);
 
   return (
     <CommentSection>
-      <CommentList comments={comments} />
+      <CommentList comments={comment} />
     </CommentSection>
   );
 }

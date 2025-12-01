@@ -81,22 +81,24 @@ function PostCard({
 function CommentPost({ children, postData }) {
   const { isShowTextField } = useFieldText();
   const { isAuthenticated } = useAuth();
+  console.log(postData);
 
-  console.log("post id: ", postData.id);
   return (
     <>
       <AvatarContainer>
-        <Avatar src="/avatar.jpg" />
+        <Avatar src={postData.avatar_url} />
         {children}
       </AvatarContainer>
       <PostBody>
         <PostHeader>
-          <UserName>@c/MalaysiaKini</UserName>
+          <UserName>{postData.user_name}</UserName>
         </PostHeader>
         <PostContent />
         <PostSocialFeatures />
 
-        {isAuthenticated && isShowTextField === postData.id && <TextFields />}
+        {isAuthenticated && isShowTextField === postData.comment_id && (
+          <TextFields />
+        )}
       </PostBody>
     </>
   );

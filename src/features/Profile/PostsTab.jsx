@@ -11,7 +11,7 @@ function PostsTab() {
   const { posts, isLoadPost, errorPost } = useFetchCurrUserPost(user.id);
 
   return (
-    <div style={{ position: "relative" }}>
+    <Container style={{ position: "relative" }}>
       {isLoadPost && <Spinner />}
       {errorPost && <div>{errorPost}</div>}
 
@@ -22,11 +22,15 @@ function PostsTab() {
             <br />
           </PostWrapper>
         ))}
-    </div>
+    </Container>
   );
 }
 const PostWrapper = styled.div`
   border-bottom: solid 1px var(--hover-color);
   margin-bottom: 1rem;
+`;
+
+const Container = styled.div`
+  max-width: 700px;
 `;
 export default PostsTab;
