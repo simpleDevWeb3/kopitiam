@@ -65,7 +65,7 @@ function VoteBtn({ userVote = null, onVote }) {
       newTotal += type === "up" ? -1 : 1;
       setCurrentVote(null);
       // Pass null to indicate removal
-      onVote?.(null);
+      onVote?.(type);
     } else if (previousVote === "up" && type === "down") {
       // Switch Up -> Down (-1 to remove up, -1 to add down = -2)
       newTotal -= 2;

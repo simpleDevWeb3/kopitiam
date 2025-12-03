@@ -37,7 +37,7 @@ function CommentPost() {
   const { isAuthenticated } = useAuth();
   const { postComment, isLoadComment, errorComment } = useFetchPostComment(
     id,
-    user.id
+    user?.id
   );
   /*T
   const post = forumData.posts.find((post) => post.id === id);*/

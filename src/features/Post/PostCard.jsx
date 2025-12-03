@@ -114,7 +114,7 @@ function CommentPost({ children, postData }) {
   const { createComment } = useCreateComment();
   const { postId } = useParams();
   const id = postId;
-  const { postComment, isLoadComment } = useFetchPostComment(postId,user.id);
+  const { postComment, isLoadComment } = useFetchPostComment(postId, user?.id);
   const { user_id: op_id } = isLoadComment ? null : postComment[0];
 
   const isOP = function (user_id) {
@@ -155,7 +155,7 @@ function CommentPost({ children, postData }) {
             </span>
           </UserName>
         </PostHeader>
-        {postData.reply_to && (
+        {postData?.reply_to_username && (
           <p
             style={{
               display: "flex",
@@ -171,7 +171,7 @@ function CommentPost({ children, postData }) {
             <>
               <span style={{ fontWeight: "700" }}>
                 replies to{" "}
-                {isOP(postData.user_id) && (
+                {isOP(postData.reply_to_id) && (
                   <label
                     style={{
                       background: "var(--hover-color)",
@@ -184,7 +184,7 @@ function CommentPost({ children, postData }) {
                     OP
                   </label>
                 )}
-                {postData.reply_to}
+                {postData.reply_to_username}
               </span>
               <span
                 style={{
@@ -306,7 +306,7 @@ const AvatarContainer = styled.div`
 const StyledPost = styled.div`
   width: 100%;
   height: 100%;
-  margin-bottom: 1rem;
+
   display: flex;
   flex-direction: ${({ $variant }) =>
     $variant === "comment" ? `columns` : " "};

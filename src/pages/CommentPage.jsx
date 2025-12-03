@@ -21,7 +21,7 @@ function CommentPage() {
   const { user } = useUser();
   const { postComment, isLoadComment, errorComment } = useFetchPostComment(
     id,
-    user.id
+    user?.id
   );
 
   if (isLoadComment) return <Spinner />;

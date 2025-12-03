@@ -37,7 +37,7 @@ function HomePosts() {
     hasNextPage,
     isFetchingNextPage,
     errorPost,
-  } = useFetchPosts(user.id);
+  } = useFetchPosts(user?.id);
 
   const { ref, inView } = useInView();
 

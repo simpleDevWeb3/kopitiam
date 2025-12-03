@@ -22,8 +22,6 @@ export function usePostHandler() {
       userVote = true;
     } else if (voteType === "down") {
       userVote = false;
-    } else {
-      userVote = null;
     }
 
     votePost({
