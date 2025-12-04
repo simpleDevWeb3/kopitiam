@@ -6,12 +6,9 @@ export function useUser() {
     queryKey: ["user"],
     queryFn: getCurrentUserApi,
 
-  
-    staleTime: 1000 * 60 * 10, 
-    
-  
-    gcTime: 1000 * 60 * 15, 
+    staleTime: 1000 * 60 * 10,
 
+    gcTime: 1000 * 60 * 15,
 
     retry: false,
 
@@ -21,7 +18,6 @@ export function useUser() {
     },
 
     refetchOnWindowFocus: false,
-
   });
   if (data === undefined && !isLoading && !isFetching) {
     localStorage.removeItem("userProfile");

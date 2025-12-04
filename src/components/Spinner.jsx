@@ -7,11 +7,16 @@ const spin = keyframes`
 `;
 
 const Overlay = styled.div`
+  /* 1. Fix positioning to cover the whole screen */
   position: fixed;
   inset: 0;
-  /* dark overlay */
-  z-index: 9999;
+  /* 'inset: 0' is shorthand for top: 0, right: 0, bottom: 0, left: 0 */
 
+  /* 2. Add the background color (backdrop) */
+
+  z-index: 10;
+
+  /* 3. Center the spinner */
   display: flex;
   justify-content: center;
   align-items: center;

@@ -4,27 +4,20 @@ import Avatar from "../../components/Avatar";
 import { PiPictureInPicture } from "react-icons/pi";
 import { FcPicture } from "react-icons/fc";
 import { AiFillPicture } from "react-icons/ai";
+import UploadImg from "../../components/UploadImg";
+import Error from "../../components/Error";
 
 function CommunityStyling({ formData, onChange }) {
+  const [error, setError] = useState({});
   const [bannerImage, setBannerImage] = useState(null);
   const [iconImage, setIconImage] = useState("/avatar.jpg");
 
-  function handleBannerUpload(e) {
-    const file = e.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setBannerImage(imageUrl);
-      onChange("banner", imageUrl);
-    }
-  }
-
-  function handleIconUpload(e) {
-    const file = e.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setIconImage(imageUrl);
-      onChange("icon", imageUrl);
-    }
+  function OnError(fieldName, errorMsg) {
+    console.log("starting error");
+    setError((prev) => ({
+      ...prev,
+      [fieldName]: errorMsg,
+    }));
   }
 
   return (
@@ -40,35 +33,27 @@ function CommunityStyling({ formData, onChange }) {
           <SectionTitle>Appearance</SectionTitle>
 
           {/* Banner Upload */}
-          <OptionGroup>
-            <label style={{ flex: 1 }}>Banner Image</label>
-            <UploadInput
-              type="file"
-              accept="image/*"
-              id="bannerUpload"
-              onChange={handleBannerUpload}
-            />
-            <UploadLabel htmlFor="bannerUpload">
-              {" "}
-              Add
-              <AiFillPicture />
-            </UploadLabel>
-          </OptionGroup>
 
+          <UploadImg
+            id={"bannerUpload"}
+            setPreview={setBannerImage}
+            onChange={onChange}
+            fieldName={"banner"}
+            onError={(msg) => OnError("banner", msg)}
+            label={"Banner Image"}
+          />
+          {error.banner && <Error msg={error.banner} />}
           {/* Icon Upload */}
-          <OptionGroup>
-            <label style={{ flex: 1 }}>Community Icon</label>
-            <UploadInput
-              type="file"
-              accept="image/*"
-              id="iconUpload"
-              onChange={handleIconUpload}
-            />
-            <UploadLabel htmlFor="iconUpload">
-              Add
-              <AiFillPicture />
-            </UploadLabel>
-          </OptionGroup>
+
+          <UploadImg
+            id={"iconUpload"}
+            setPreview={setIconImage}
+            onChange={onChange}
+            fieldName={"icon"}
+            onError={(msg) => OnError("icon", msg)}
+            label={"Icon Image"}
+          />
+          {error.icon && <Error msg={error.icon} />}
         </LeftPanel>
 
         {/* RIGHT PANEL */}

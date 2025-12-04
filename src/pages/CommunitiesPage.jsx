@@ -25,9 +25,6 @@ const PageContainer = styled.div`
     transform: none;
     max-width: 100%;
   }
-  @media (min-width: 600px) {
-    height: 100vh;
-  }
 
   @media (max-width: 800px) {
     padding-top: 3rem;

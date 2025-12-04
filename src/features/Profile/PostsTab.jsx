@@ -5,11 +5,29 @@ import { useUser } from "../Auth/useUser";
 import PostCard from "../Post/PostCard";
 import PostList from "../Post/PostList";
 import { useFetchCurrUserPost } from "../Post/useFetchCurrUserPost";
+import { useInView } from "react-intersection-observer";
+import { useEffect } from "react";
+import { Mosaic } from "react-loading-indicators";
 
 function PostsTab() {
   const { user } = useUser();
-  const { posts, isLoadPost, errorPost } = useFetchCurrUserPost(user.id);
+  const {
+    posts,
+    isLoadPost,
+    errorPost,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useFetchCurrUserPost(user.id);
 
+  const { ref, inView } = useInView();
+
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, fetchNextPage, isFetchingNextPage]);
+  if (isLoadPost) return <Spinner />;
   return (
     <Container style={{ position: "relative" }}>
       {isLoadPost && <Spinner />}
@@ -22,6 +40,25 @@ function PostsTab() {
             <br />
           </PostWrapper>
         ))}
+      <div
+        ref={ref}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "10rem",
+          width: "100%",
+        }}
+      >
+        {isFetchingNextPage && (
+          <Mosaic
+            color="rgba(21, 144, 221, 0.889)"
+            size="large"
+            text=""
+            textColor=""
+          />
+        )}
+      </div>
     </Container>
   );
 }

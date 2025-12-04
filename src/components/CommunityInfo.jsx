@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { useFetchPostComment } from "../features/Post/useFetchPostComment";
 import { useParams } from "react-router-dom";
 import ButtonIcon from "./ButtonIcon";
+import Spinner from "./Spinner";
 
 function CommunityInfo() {
   const { postId } = useParams();

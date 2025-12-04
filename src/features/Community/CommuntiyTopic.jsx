@@ -1,44 +1,19 @@
 import { Selector } from "../../components/Selector";
+import Spinner from "../../components/Spinner";
+import { useTopic } from "../Auth/useTopic";
 
 function CommunityTopic({ onChange }) {
-  const topicOptions = [
-    {
-      label: "Uni Life",
-      subTopics: [
-        { label: "Dorms & Housing", value: "dorms" },
-        { label: "Campus Food", value: "campus-food" },
-        { label: "Student Life Tips", value: "student-tips" },
-      ],
-    },
-    {
-      label: "Academics",
-      subTopics: [
-        { label: "Courses & Syllabus", value: "courses" },
-        { label: "Exam Preparation", value: "exams" },
-        { label: "Study Groups", value: "study-groups" },
-        { label: "Assignments & Projects", value: "assignments" },
-      ],
-    },
-    {
-      label: "Events",
-      subTopics: [
-        { label: "Workshops & Seminars", value: "workshops" },
-        { label: "Sports Events", value: "sports" },
-        { label: "Cultural Events", value: "cultural" },
-        { label: "Festivals", value: "festivals" },
-      ],
-    },
-    {
-      label: "Clubs & Societies",
-      subTopics: [
-        { label: "Academic Clubs", value: "academic-clubs" },
-        { label: "Sports Clubs", value: "sports-clubs" },
-        { label: "Art & Music", value: "art-music" },
-        { label: "Volunteer & Social", value: "volunteer" },
-      ],
-    },
-  ];
+  const { topics, isLoading } = useTopic();
 
+  const topicOptions = topics.map((t) => {
+    return {
+      label: t.name,
+      subTopics: t.sub_topic.map((sub_t) => {
+        return { label: sub_t.name, value: sub_t.id };
+      }),
+    };
+  });
+  if (isLoading) return <Spinner />;
   return (
     <>
       <h2>Add Topics</h2>

@@ -1,27 +1,26 @@
 import styled from "styled-components";
-import { useState } from "react";
-import { FiUsers } from "react-icons/fi";
-import { HiOutlineArrowTrendingUp } from "react-icons/hi2";
 import ButtonIcon from "../../components/ButtonIcon";
 import Avatar from "../../components/Avatar";
 import { useFetchAllCommunity } from "./useFetchAllCommunity";
 import Spinner from "../../components/Spinner";
-
-/*
-// Sample community data
-const initialCommunities = [
-  { id: 1, name: "Kopi Lovers", members: 12500, growth: "up" },
-  { id: 2, name: "Tech Nerds", members: 9800, growth: "up" },
-  { id: 3, name: "Cafe Creatives", members: 7200, growth: "down" },
-  { id: 4, name: "Gaming Mamak", members: 5200, growth: "up" },
-  { id: 5, name: "Study Corner", members: 3400, growth: "steady" },
-];*/
+import { useUser } from "../Auth/useUser";
+import { useJoinCommunity } from "../Community/useJoinCommunity";
 
 function CommunitiesLayout() {
   const { communities, isLoadCommunities, errorCommunities } =
     useFetchAllCommunity();
-  if (isLoadCommunities) return <Spinner />;
-  if (errorCommunities) return <div>Error:{errorCommunities}</div>;
+  const { user } = useUser();
+  const { joinCommunity, isLoadingJoinCommunity } = useJoinCommunity();
+
+  if (isLoadCommunities)
+    return (
+      <FullPageLoader>
+        <Spinner />
+      </FullPageLoader>
+    );
+
+  if (errorCommunities) return <div>Error: {errorCommunities}</div>;
+
   return (
     <Container>
       <Header>
@@ -29,28 +28,51 @@ function CommunitiesLayout() {
       </Header>
 
       <List>
-        {communities.map((community, index) => (
+        {communities.map((community) => (
           <CommunityItem key={community.id}>
-            <Group>
-              <AvatarContainer>
-                <Avatar
-                  src={
-                    community.avatarUrl ? community.avatarUrl : "/avatar.jpg"
-                  }
-                />
-              </AvatarContainer>
-              <Info>
-                <Name>{community.name}</Name>
-                <Stats>{community.members} member</Stats>
-              </Info>
+            {/* 1. Banner Image */}
+            <CardBanner $src={community.bannerUrl || "/default-banner.jpg"} />
 
-              <ButtonIcon>Join</ButtonIcon>
-            </Group>
-            <Description>
-              {community.description
-                ? community.description
-                : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde,"}
-            </Description>
+            {/* 2. Wrapper for padding */}
+            <CardContent>
+              <Group>
+                <div style={{ display: "flex", alignItems: "flex-end" }}>
+                  <AvatarContainer>
+                    <Avatar
+                      src={
+                        community.avatarUrl
+                          ? community.avatarUrl
+                          : "/avatar.jpg"
+                      }
+                    />
+                  </AvatarContainer>
+
+                  <Info>
+                    <Name>{community.name}</Name>
+                    <Stats>{community.members} members</Stats>
+                  </Info>
+                </div>
+
+                <ButtonIcon
+                  disabled={isLoadingJoinCommunity}
+                  style={{ padding: "0.5rem 1.2rem", borderRadius: "25px" }}
+                  action={() => {
+                    joinCommunity({
+                      community_id: community.id,
+                      user_id: user.id,
+                    });
+                  }}
+                >
+                  Join
+                </ButtonIcon>
+              </Group>
+
+              <Description>
+                {community.description
+                  ? community.description
+                  : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde,"}
+              </Description>
+            </CardContent>
           </CommunityItem>
         ))}
       </List>
@@ -65,22 +87,10 @@ export default CommunitiesLayout;
 const Container = styled.div`
   padding: 1.5rem;
   padding-top: 0rem;
-  height: 100vh;
   margin: 2rem auto;
   max-width: 80rem;
+`;
 
-  @media (max-width: 1000px) {
-    height: 100%;
-  }
-`;
-const AvatarContainer = styled.div`
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  border: 1px solid var(--tertiary-color);
-  overflow: hidden;
-  flex-shrink: 0;
-`;
 const Header = styled.div`
   display: flex;
   align-items: center;
@@ -89,12 +99,16 @@ const Header = styled.div`
   font-weight: bold;
   color: var(--primary-color);
   margin-bottom: 1rem;
-  svg {
-    font-size: 1.5rem;
-    color: var(--text-color);
-  }
 `;
-
+const FullPageLoader = styled.div`
+  height: 100vh; /* Occupy full viewport height */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Optional: Background color to match your theme if needed */
+  background-color: var(--background-color);
+`;
 const Title = styled.h3`
   font-weight: 600;
 `;
@@ -103,7 +117,8 @@ const List = styled.ul`
   list-style: none;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 0.8rem;
+  gap: 1.5rem; /* Increased gap slightly for larger cards */
+
   @media (max-width: 1000px) {
     grid-template-columns: 1fr 1fr;
   }
@@ -112,42 +127,93 @@ const List = styled.ul`
     grid-template-columns: 1fr;
   }
 `;
-const Group = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
+
 const CommunityItem = styled.li`
   display: flex;
-
   flex-direction: column;
   background: var(--background-color);
   box-shadow: 4px 4px 0px var(--tertiary-color);
-  padding: 1rem;
   border-radius: 10px;
-  justify-content: space-between;
-  transition: background 0.2s ease;
+  border: 1px solid var(--hover-color);
+  overflow: hidden; /* Ensures banner stays within rounded corners */
+  transition: transform 0.2s ease, background 0.2s ease;
+
+  /* Removed padding here, moved to CardContent */
+  padding: 0;
+
   &:hover {
     background: var(--hover-color);
+    transform: translateY(-2px);
   }
-  border: 1px solid var(--hover-color);
+`;
+
+const CardBanner = styled.div`
+  height: 80px;
+  width: 100%;
+  background-color: var(--tertiary-color);
+  background-image: url(${(props) => props.$src});
+  background-size: cover;
+  background-position: center;
+`;
+
+const CardContent = styled.div`
+  padding: 1rem;
+  padding-top: 0;
+  display: flex;
+  flex-direction: column;
   gap: 0.5rem;
+  flex: 1;
+`;
+
+const Group = styled.div`
+  display: flex;
+  align-items: flex-start; /* Align to top to handle the avatar pull-up */
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+`;
+
+const AvatarContainer = styled.div`
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+
+  /* The Magic: Pull it up over the banner */
+  margin-top: -25px;
+
+  /* Create a border matching the card bg to make it "pop" */
+  border: 4px solid var(--background-color);
+  background-color: var(--background-color);
+
+  ${CommunityItem}:hover & {
+    border-color: var(--hover-color); /* Match border color on card hover */
+  }
 `;
 
 const Info = styled.div`
-  flex: 1;
-  margin-left: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  margin-left: 0.8rem;
+  padding-top: 0.2rem; /* Push text down slightly to align with bottom of avatar */
 `;
-const Stats = styled.div`
-  color: var(--text-color);
-`;
+
 const Name = styled.h3`
   font-size: 1.1rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-color);
+  line-height: 1.2;
+`;
+
+const Stats = styled.div`
+  font-size: 0.85rem;
+  color: var(--text-color);
+  opacity: 0.8;
 `;
 
 const Description = styled.p`
   color: var(--text-color);
   opacity: 0.7;
+  font-size: 0.95rem;
+  line-height: 1.4;
 `;

@@ -54,11 +54,6 @@ function PostCard({
     onClickComment,
   };
 
-  const getRandomColor = () => {
-    const hue = Math.floor(Math.random() * 360);
-    return `hsl(${hue}, 70%, 50%)`; // 70% Saturation, 50% Lightness
-  };
-
   return (
     <PostContext.Provider value={contextValue}>
       <StyledPost
@@ -96,7 +91,7 @@ function PostCard({
               </div>
               <PostMenusOther />
             </PostHeader>
-            <Tag $bgColor={getRandomColor}>{postData.topic_name}</Tag>
+            <Tag>{postData.topic_name}</Tag>
 
             <PostContent />
             <PostSocialFeatures />
@@ -109,8 +104,8 @@ function PostCard({
 }
 function CommentPost({ children, postData }) {
   const { isShowTextField } = useFieldText();
-  const { isAuthenticated } = useAuth();
-  const { user } = useUser();
+
+  const { user, isAuthenticated } = useUser();
   const { createComment } = useCreateComment();
   const { postId } = useParams();
   const id = postId;
@@ -326,7 +321,7 @@ const PostBody = styled.div`
 `;
 
 const Tag = styled.span`
-  background-color: ${({ $bgColor }) => $bgColor};
+  background-color: rgb(25, 148, 255);
   padding: 0.5rem 1rem;
   border-radius: 25px;
   margin-bottom: 1rem;

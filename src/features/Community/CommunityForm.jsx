@@ -5,10 +5,15 @@ import CommunityStyling from "./CommunityStyling";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../../context/ModalContext";
 import { Selector } from "../../components/Selector";
+import { useCreateCommunity } from "./useCreateCommunity";
+import { validImgFile } from "../../helpers/formHelper";
+import { useUser } from "../Auth/useUser";
 
 function CommunityForm() {
   const navigate = useNavigate();
   const { closeModal } = useModal();
+  const { createCommunity } = useCreateCommunity(closeModal);
+  const { user } = useUser();
   const steps = [
     {
       key: "topics",
@@ -26,14 +31,18 @@ function CommunityForm() {
           onChange={handleChange}
         />
       ),
-      validate: (formData) => (formData.communityName || "").trim() !== "",
+      validate: (formData) =>
+        formData.communityName && formData.communityDescription,
     },
     {
       key: "styling",
       component: ({ formData, handleChange }) => (
         <CommunityStyling formData={formData} onChange={handleChange} />
       ),
-      validate: () => true,
+      validate: (formData) => {
+        const { icon, banner } = formData;
+        return validImgFile(icon).isValid && validImgFile(banner).isValid;
+      },
     },
   ];
 
@@ -41,10 +50,13 @@ function CommunityForm() {
     <Selector>
       <MultiStepForm
         steps={steps}
-        initialData={{}}
-        onSuccess={() => {
-          closeModal();
-          navigate("/Community/c201");
+        //initialData={{}}
+        onSuccess={(formData) => {
+          const data = {
+            ...formData,
+            AdminId: user.id,
+          };
+          createCommunity(data);
         }}
       />
     </Selector>
