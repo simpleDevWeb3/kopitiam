@@ -83,11 +83,9 @@ function EditForm() {
       new_image: filesToSend,
     };
 
-    console.log("Submitting Clean Data:", finalData);
+  
     editPost(finalData);
 
-    console.log("Submitting:", finalData);
-    editPost(finalData);
   }
   // 1. Convert the image data (Object or Array) into a consistent Array for the UI
   const imagesToDisplay = useMemo(() => {

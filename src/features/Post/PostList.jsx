@@ -10,14 +10,14 @@ const PostWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: start;
-  border-radius: 25px;
-
-  padding: 1rem 1rem 0rem 1rem;
+  border: solid 1px var(--hover-color);
+  background-color: var(--background-glass);
+  padding: 1rem 1rem 1rem 1rem;
   &:hover {
-    background-color: rgba(160, 158, 158, 0.1);
+    background-color: var(--hover-color);
   }
   transition: background-color 0.15s;
-
+  border-radius: 25px;
   cursor: pointer;
   @media (max-width: 1300px) {
     max-width: 100%;
@@ -27,6 +27,7 @@ const PostWrapper = styled.div`
   }
 
   gap: 0.5rem;
+  margin-bottom: 1.5rem;
 `;
 
 const BreakLine = styled.hr`
@@ -58,7 +59,6 @@ function PostList({
               onClickProfile={(e) => onClickProfile?.(e, post.communityId)}
             />
           </PostWrapper>
-          <BreakLine />
         </React.Fragment>
       ))}
     </>

@@ -8,15 +8,19 @@ import { handleFileImgUpload } from "../../helpers/formHelper";
 
 // 1. Import the icon you want (ensure you have installed: npm install react-icons)
 import { FaCamera } from "react-icons/fa";
+import { useEditAccount } from "../Settings/useEditAccount";
+import SpinnerMini from "../../components/SpinnerMini";
 
 function EditProfile() {
+  const { closeModal, modalData } = useModal();
+  const { editAccount, isLoadEditAccount, errorEditAccount } =
+    useEditAccount(closeModal);
   const refUserCard = useRef(null);
 
   // Refs for triggering hidden inputs
   const bannerInputRef = useRef(null);
   const avatarInputRef = useRef(null);
 
-  const { modalData } = useModal();
   const [username, setUserName] = useState("");
   const [description, setDescription] = useState("");
 
@@ -30,7 +34,7 @@ function EditProfile() {
   }
 
   function handleDescription(value) {
-    setUserName(value);
+    setDescription(value);
     refUserCard.current?.updateBio(value);
   }
 
@@ -62,7 +66,17 @@ function EditProfile() {
   }
 
   function handleSubmit() {
+    console.log(modalData);
     console.log("Submit:", { username, description, bannerFile, avatarFile });
+    editAccount({
+      user_id: modalData?.id,
+      formData: {
+        name: username,
+        bio: description,
+        BannerFile: bannerFile,
+        AvatarFile: avatarFile,
+      },
+    });
   }
 
   return (
@@ -122,8 +136,10 @@ function EditProfile() {
       </Input>
       <br />
       <BtnContainer>
-        <ButtonIcon>Cancel</ButtonIcon>
-        <ButtonIcon onClick={handleSubmit}>Confirm</ButtonIcon>
+        <ButtonIcon disabled={isLoadEditAccount}>Cancel</ButtonIcon>
+        <ButtonIcon disabled={isLoadEditAccount} onClick={handleSubmit}>
+          {isLoadEditAccount ? <SpinnerMini /> : "Confirm"}
+        </ButtonIcon>
       </BtnContainer>
     </Container>
   );
@@ -205,6 +221,7 @@ const BtnContainer = styled.div`
   display: flex;
   justify-content: end;
   margin-top: 1rem;
+  gap: 0.5rem;
 `;
 
 export default EditProfile;

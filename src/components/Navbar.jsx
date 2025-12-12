@@ -45,7 +45,7 @@ const StyledNavbar = styled.nav`
   text-align: center;
   padding: 1rem 1rem;
   gap: 0.7rem;
-  background-color: var(--background-color);
+  background-color: var(--background-glass);
   max-height: 3.5rem;
   z-index: 99;
   transition: background-color 0.15s ease-in;
@@ -143,7 +143,7 @@ function Navbar() {
     setSearchParams({ q: query });
     navigate(`/search?q=${query}`);
   }
-  console.log(user);
+  console.log("from NAV: ", user);
   useEffect(() => {
     const handleResize = () => {
       setIsDesktop(window.innerWidth >= 800);
@@ -240,13 +240,7 @@ function Navbar() {
                 <IconText>Create</IconText>
               </ButtonIcon>
 
-              <ButtonIcon
-                size="rounded"
-                variant="text"
-                icon={<Notification />}
-                action={() => navigate("/notification")}
-              />
-
+          
               <Dropdown>
                 <Dropdown.Trigger>
                   <ButtonIcon

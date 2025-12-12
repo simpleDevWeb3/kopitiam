@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useUser } from "../features/Auth/useUser";
-import { useImperativeHandle, useState, forwardRef } from "react";
+import { useImperativeHandle, useState, forwardRef, useEffect } from "react";
 import Avatar from "./Avatar";
 
 const UserCard = forwardRef(({ editAvatarEl, editBannerEl }, ref) => {
@@ -25,6 +25,13 @@ const UserCard = forwardRef(({ editAvatarEl, editBannerEl }, ref) => {
     updateName: (newName) => setPreviewName(newName),
     updateBio: (newBio) => setPreviewBio(newBio),
   }));
+
+  useEffect(() => {
+    setBannerImage(user.banner_url ? encodeURI(user.banner_url) : null);
+    setIconImage(user.avatar_url ? encodeURI(user.avatar_url) : null);
+    setPreviewName(user.name);
+    setPreviewBio(user.bio);
+  }, [user]);
 
   return (
     <PreviewCard>

@@ -1,4 +1,4 @@
-import { DeleteReq, GetReq, PostReq } from "../helpers/apiHelper";
+import { DeleteReq, GetReq, PostReq, PutReq } from "../helpers/apiHelper";
 
 //curl 'https://localhost:7071/api/Community/adminCommunities/{adminId}'
 
@@ -98,6 +98,32 @@ async function getUserJoinedCommunityApi(user_id) {
   );
 }
 
+/**
+ * curl https://localhost:7071/api/Community/update \
+  --request PUT \
+  --header 'Content-Type: multipart/form-data' \
+  --form 'CommunityId=' \
+  --form 'Name=' \
+  --form 'Description=' \
+  --form 'bannerFile=' \
+  --form 'avatarFile='
+ */
+
+async function editCommunityProfileApi(formData) {
+  const form = new FormData();
+  form.append("CommunityId", formData?.id);
+  form.append("Name", formData?.name);
+  form.append("Description", formData?.description);
+  form.append("bannerFile", formData?.bannerUrl);
+  form.append("avatarFile", formData?.avatarUrl);
+
+  return await PutReq(
+    `https://localhost:7071/api/Community/update`,
+    form,
+    "multipart/form-data"
+  );
+}
+
 export {
   getAllCommunityApi,
   getCommunityApi,
@@ -108,4 +134,5 @@ export {
   getUserJoinedCommunityApi,
   getCreatedCommunityApi,
   leaveCommunityApi,
+  editCommunityProfileApi,
 };

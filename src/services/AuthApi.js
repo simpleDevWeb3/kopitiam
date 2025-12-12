@@ -103,18 +103,30 @@ async function getIsDupEmailApi(email) {
   --data-urlencode 'Preference='
  */
 
-async function editAccountApi(user_id, formData) {
-  const encodedParams = new URLSearchParams();
-  encodedParams.set("name", formData?.name || null);
-  encodedParams.set("Password", formData?.Password || null);
-  encodedParams.set("bio", formData?.bio || null);
-  encodedParams.set("AvatarFile", formData?.AvatarFile || null);
-  encodedParams.set("BannerFile", formData?.BannerFile || null);
-  encodedParams.set("Preference", "");
+// services/AuthApi.js
 
+async function editAccountApi(user_id, payload) {
+  // 1. Use FormData (this automatically sets multipart/form-data)
+  const data = new FormData();
+
+  // 2. Append text fields safely
+  if (payload?.name) data.append("name", payload.name);
+  if (payload?.bio) data.append("bio", payload.bio);
+  if (payload?.Password) data.append("Password", payload.Password);
+
+  // 3. Append the actual File objects
+  if (payload?.AvatarFile) {
+    data.append("AvatarFile", payload.AvatarFile);
+  }
+  if (payload?.BannerFile) {
+    data.append("BannerFile", payload.BannerFile);
+  }
+
+  // 4. Send the request
+  // IMPORTANT: Do NOT manually set 'Content-Type'. Let the browser do it.
   return await PostReq(
     `https://localhost:7071/api/Auth/editAccount/${user_id}`,
-    encodedParams
+    data
   );
 }
 

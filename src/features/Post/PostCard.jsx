@@ -56,7 +56,7 @@ function PostCard({
     avatarSize,
     onClickComment,
     owner,
-    user
+    user,
   };
 
   return (
@@ -98,6 +98,7 @@ function PostCard({
 
             <PostContent />
             <PostSocialFeatures post_id={postData?.id || postData?.post_id} />
+            {children}
           </PostBody>
         )}
         {variant === "user_post" && (

@@ -2,14 +2,16 @@ import styled from "styled-components";
 import Avatar from "./Avatar";
 import ButtonIcon from "./ButtonIcon";
 import { BiBell } from "react-icons/bi";
-import { HiPlus } from "react-icons/hi2";
+import { HiPencil, HiPlus } from "react-icons/hi2";
 import { useState, useEffect } from "react";
 import SpinnerMini from "./SpinnerMini";
 import JoinBtn from "./JoinBtn";
 import { useUser } from "../features/Auth/useUser";
+import { useModal } from "../context/ModalContext";
 
 function CommunityProfileCard({ communityData }) {
-  const { name, bannerUrl, avatarUrl, isJoined, id } = communityData;
+  const { openModal } = useModal();
+  const { name, bannerUrl, avatarUrl, isJoined, id, adminId } = communityData;
   const { user } = useUser();
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -18,7 +20,8 @@ function CommunityProfileCard({ communityData }) {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
+  const isAdmin = user?.id === adminId;
+  console.log("isAdmin: ", isAdmin);
   return (
     <StyledContainer>
       <BannerContainer>
@@ -45,20 +48,24 @@ function CommunityProfileCard({ communityData }) {
           <GroupName>{name}</GroupName>
           {windowWidth > 800 && (
             <FeatureRows>
+              {isAdmin && (
+                <ButtonIcon
+                  action={() => openModal("Edit Community", communityData)}
+                  variant="outline"
+                >
+                  <span>Edit Community</span> <HiPencil />
+                </ButtonIcon>
+              )}
               <ButtonIcon icon={<AddIcon />} variant="outline">
                 <span>Create Post</span>
               </ButtonIcon>
-              <JoinBtn
-                community_id={id}
-                user_id={user?.id}
-                isJoined={isJoined}
-              />
-              <ButtonIcon
-                size="rounded"
-                variant="outline"
-                shape={"circle"}
-                icon={<Bell />}
-              />
+              {!isAdmin && (
+                <JoinBtn
+                  community_id={id}
+                  user_id={user?.id}
+                  isJoined={isJoined}
+                />
+              )}
             </FeatureRows>
           )}
         </HorizontalContainer2>
@@ -68,19 +75,21 @@ function CommunityProfileCard({ communityData }) {
           <ButtonIcon icon={<AddIcon />} variant="outline">
             <span>Create Post</span>
           </ButtonIcon>
-          <JoinBtn community_id={id} user_id={user?.id} isJoined={isJoined} />
-          <ButtonIcon
-            size="rounded"
-            variant="outline"
-            shape={"circle"}
-            icon={<Bell />}
-          />
+          {!isAdmin && (
+            <JoinBtn community_id={id} user_id={user?.id} isJoined={isJoined} />
+          )}
         </FeatureRows>
       )}
     </StyledContainer>
   );
 }
-
+const WhitePencil = styled(HiPencil)`
+  color: white; // This is often enough
+  /* If still not working, use a target selector */
+  & path {
+    color: white !important; // Targets the SVG path element
+  }
+`;
 const AddIcon = styled(HiPlus)`
   font-size: 1.3rem;
   @media (max-width: 800px) {

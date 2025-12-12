@@ -15,6 +15,8 @@ import { useUser } from "../Auth/useUser";
 import { useLeaveCommunity } from "./useLeaveCommunity";
 import { useJoinCommunity } from "./useJoinCommunity";
 import NoExist from "../../components/NoExist";
+import Modal from "../../components/Modal";
+import EditCommunityForm from "./EditCommunityForm";
 
 function CommunityPosts() {
   const { communityId } = useParams();
@@ -62,6 +64,9 @@ function CommunityPosts() {
     <>
       {/* Sliding Main Content */}
       <PageContainer $isSidebarOpen={$isSidebarOpen}>
+        <Modal id="Edit Community">
+          <EditCommunityForm />
+        </Modal>
         {/* Banner Section */}
         <BannerWrapper>
           <CommunityProfileCard communityData={community} />

@@ -13,10 +13,10 @@ function ProfileSetting() {
   return (
     <StyledContainer>
       <UserCard />
-      <Input viewOnly={true} initialValue={user.name}>
+      <Input viewOnly={true} initialValue={user.name} key={user.name}>
         username
       </Input>
-      <Input viewOnly={true} initialValue={user.bio}>
+      <Input viewOnly={true} initialValue={user.bio} key={user.bio}>
         description
       </Input>
       <BtnContainer>

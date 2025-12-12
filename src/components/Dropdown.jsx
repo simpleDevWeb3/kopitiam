@@ -84,7 +84,7 @@ const ListContainer = styled.ul`
   ${(props) => position[props.position] || position.left};
   box-shadow: -2px 3px 5px rgba(0, 0, 0, 0.1);
   width: 100%;
-  background-color: var(--secondary-color);
+  background-color: var(--background-glass);
   border: solid 1px var(--tertiary-color);
   border-radius: 8px;
   min-width: 15rem;

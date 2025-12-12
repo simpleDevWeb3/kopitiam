@@ -12,9 +12,9 @@ export function useCreatePost(success) {
     mutationFn: (formData) => {
       return createPostApi(formData);
     },
-    onSuccess: () => {
+    onSuccess: async () => {
+      await queryClient.invalidateQueries();
       toast.success("User created post successfully!.");
-      queryClient.invalidateQueries({ queryKey: ["posts"] });
 
       if (success) success();
     },

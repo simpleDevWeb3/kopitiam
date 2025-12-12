@@ -24,7 +24,6 @@ function CommentPage() {
     id,
     user?.id
   );
- 
 
   if (isLoadComment) return <Spinner />;
   if (errorComment) return <div>{errorComment}</div>;

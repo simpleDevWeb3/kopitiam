@@ -35,7 +35,7 @@ import { useFetchCreatedCommunity } from "../features/Communities/useFetchCreate
 const StyledSidebar = styled.aside`
   overflow-y: scroll;
   position: fixed;
-  background-color: var(--background-color);
+  background-color: var(--background-glass);
   display: flex;
   flex-direction: column;
   padding: 1rem;
@@ -119,7 +119,8 @@ function Sidebar() {
     isManualOpenResize,
     setIsManualOpenResize,
   } = useSidebar();
-  const { communities, isLoadCommunities, errorCommunities } =useFetchJoinedCommunity(user?.id);
+  const { communities, isLoadCommunities, errorCommunities } =
+    useFetchJoinedCommunity(user?.id);
   // Example communities list
   const {
     createdCommunities,
@@ -216,10 +217,7 @@ function Sidebar() {
             <HiOutlineHome />
             <span>Home</span>
           </StyledNavLink>
-          <StyledNavLink onClick={handleNavigate} to="/popular">
-            <HiOutlineFire />
-            <span>Popular</span>
-          </StyledNavLink>
+       
           <StyledNavLink onClick={handleNavigate} to="/communities">
             <HiOutlineUserGroup />
             <span>Communities</span>

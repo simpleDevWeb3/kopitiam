@@ -120,7 +120,6 @@ const PostWrapper = styled.div`
   justify-content: start;
   border-radius: 25px;
   cursor: pointer;
-  gap: 0.2rem;
 
   @media (max-width: 1300px) {
     max-width: 100%;

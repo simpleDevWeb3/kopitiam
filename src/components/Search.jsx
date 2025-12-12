@@ -7,7 +7,7 @@ import Avatar from "./Avatar";
 const StyledSearchBar = styled.form`
   background-color: var(--tertiary-color);
   border-radius: 25px;
-  border: 1px solid #ccc;
+
   padding: 0.2rem 1rem;
   max-height: 2.8rem;
   width: 100%;

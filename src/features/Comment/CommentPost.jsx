@@ -58,37 +58,46 @@ function CommentPost() {
 
   const postData = postComment[0];
   console.log("post: ", postData);
+  // Inside CommentPost.js
+
   return (
-    <>
+    <Wrapper>
       <PostCard
         postData={postData}
         variant="post"
         avatarSize="medium"
         onClickComment={() => toggleTextField(postData.id)}
-      ></PostCard>
-
-      {isAuthenticated && isShowTextField === postData.id ? (
-        <TextFields
-          onSubmit={(content) =>
-            createComment({
-              postId: postData.id,
-              userId: user.id,
-              parentId: null,
-              content,
-            })
-          }
-        />
-      ) : (
-        <ShareYourThougt
-          onClick={() =>
-            isAuthenticated ? toggleTextField(postData.id) : openModal("Login")
-          }
-        >
-          Share Your Thought
-        </ShareYourThougt>
-      )}
-    </>
+      >
+        {/* Now this is INSIDE the PostCard's layout */}
+        {isAuthenticated && isShowTextField === postData.id ? (
+          <TextFields
+            onSubmit={(content) =>
+              createComment({
+                postId: postData.id,
+                userId: user.id,
+                parentId: null,
+                content,
+              })
+            }
+          />
+        ) : (
+          <ShareYourThougt
+            onClick={() =>
+              isAuthenticated
+                ? toggleTextField(postData.id)
+                : openModal("Login")
+            }
+          >
+            Share Your Thought
+          </ShareYourThougt>
+        )}
+      </PostCard>
+    </Wrapper>
   );
 }
-
+const Wrapper = styled.div`
+  background-color: var(--background-glass);
+  padding: 2rem 2rem;
+  border-radius: 8px;
+`;
 export default CommentPost;

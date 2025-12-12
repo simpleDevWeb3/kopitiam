@@ -5,8 +5,10 @@ import { Outlet } from "react-router-dom";
 import Modal from "../components/Modal";
 import EditAccount from "../features/Auth/EditAccount";
 import EditProfile from "../features/Auth/EditProfile";
+import { useScrollRestore } from "../hook/useScrollRestore";
 
 function SettingPage() {
+  useScrollRestore();
   const { $isSidebarOpen } = useSidebar();
   const tabs = [
     {
@@ -24,7 +26,7 @@ function SettingPage() {
       <h1>Settings</h1>
       <br />
       <Tabs basePath={"/Settings"} links={tabs} />
-      
+
       <Modal id={"Setting_Account"}>
         <EditAccount />
       </Modal>

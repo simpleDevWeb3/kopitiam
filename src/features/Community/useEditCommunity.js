@@ -1,22 +1,20 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
-import { editAccountApi } from "../../services/AuthApi";
+import { editCommunityProfileApi } from "../../services/CommunityApi";
 
-export function useEditAccount(success) {
+export function useEditCommunity(success) {
   const queryClient = useQueryClient();
   const {
-    mutate: editAccount,
-    isPending: isLoadEditAccount,
+    mutate: editCommunity,
+    isPending: isEditing,
     error: errorEditAccount,
   } = useMutation({
-    mutationFn: ({ user_id, formData }) => {
-      return editAccountApi(user_id, formData);
-    },
+    mutationFn: (formData) => editCommunityProfileApi(formData),
     onSuccess: async () => {
       await queryClient.invalidateQueries();
 
-      toast.success("Account details updated successfully!");
+      toast.success("Community details updated successfully!");
       success?.();
     },
     onError: (err) => {
@@ -25,5 +23,5 @@ export function useEditAccount(success) {
     },
   });
 
-  return { editAccount, isLoadEditAccount, errorEditAccount };
+  return { editCommunity, isEditing, errorEditAccount };
 }
