@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { useUser } from "../Auth/useUser";
 import { useVotePost } from "../Vote/useVotePost";
 
@@ -18,6 +19,7 @@ export function usePostHandler() {
     console.log("Post", post_id, "voted:", voteType);
     console.log("Comment", comment_id, "voted:", voteType);
     let userVote = null;
+    if (user.is_banned) return;
     if (voteType === "up") {
       userVote = true;
     } else if (voteType === "down") {

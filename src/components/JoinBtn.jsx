@@ -1,10 +1,13 @@
+import toast from "react-hot-toast";
 import { useModal } from "../context/ModalContext";
+import { useUser } from "../features/Auth/useUser";
 import { useJoinCommunity } from "../features/Community/useJoinCommunity";
 import { useLeaveCommunity } from "../features/Community/useLeaveCommunity";
 import ButtonIcon from "./ButtonIcon";
 import SpinnerMini from "./SpinnerMini";
 
 function JoinBtn({ community_id, user_id, isJoined }) {
+  const { user } = useUser();
   const { leaveCommunity, isLoadingleaveCommunity } = useLeaveCommunity();
   const { joinCommunity, isLoadingJoinCommunity } = useJoinCommunity();
   const { openModal } = useModal();
@@ -20,6 +23,8 @@ function JoinBtn({ community_id, user_id, isJoined }) {
     if (isJoined) {
       leaveCommunity({ community_id, user_id });
     } else {
+      if (user?.is_banned)
+        return toast.error("user has been banned by the admin.");
       joinCommunity({ community_id, user_id });
     }
   };

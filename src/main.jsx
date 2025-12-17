@@ -41,6 +41,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import SearchPostResult from "./features/Search/SearchPostResult.jsx";
 import SearchCommunityResult from "./features/Search/SearchCommunityResult.jsx";
 import SearchAccountResult from "./features/Search/SearchAccountResult.jsx";
+import CommunityFeed from "./features/Community/CommunityFeed.jsx";
+import CommunityMembers from "./features/Community/CommunityMembers.jsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -68,7 +70,14 @@ const router = createBrowserRouter([
     ),
     children: [
       { index: true, element: <HomePage /> },
-      { path: "community/:communityId", element: <CommunityPage /> },
+      {
+        path: "community/:communityId",
+        element: <CommunityPage />,
+        children: [
+          { index: true, element: <CommunityFeed /> },
+          { path: "members", element: <CommunityMembers /> },
+        ],
+      },
 
       { path: "Communities", element: <CommunitiesPage /> },
       { path: "comment/:postId", element: <CommentPage /> },

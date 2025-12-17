@@ -11,6 +11,8 @@ import {
 import { usePost } from "../features/Post/PostContext";
 import { useAuth } from "../features/Auth/AuthContext";
 import { useModal } from "../context/ModalContext";
+import { useUser } from "../features/Auth/useUser";
+import toast from "react-hot-toast";
 
 const CountVote = styled.span`
   color: var(--primary-color);
@@ -33,6 +35,7 @@ const getVoteStatus = (userVote) => {
 };
 
 function VoteBtn({ userVote = null, onVote }) {
+  const { user } = useUser();
   const { isAuthenticated } = useAuth();
   const { openModal } = useModal();
   const { postData, variant } = usePost();
@@ -54,8 +57,9 @@ function VoteBtn({ userVote = null, onVote }) {
 
   function handleVote(e, type) {
     e.stopPropagation();
-    if (!isAuthenticated) return openModal("Login");
 
+    if (!isAuthenticated) return openModal("Login");
+    if (user?.is_banned) return toast.error("user is banned by the admin.");
     let newTotal = totalVote; // 1
     const previousVote = currentVote; //UP // Capture current  state before changing // 1
 

@@ -22,6 +22,7 @@ const StyledRow = styled.tr`
   /* With 'border-collapse: separate', we must put the border on the 
      children (td and th), not the tr itself.
   */
+
   & th,
   & td {
     border-bottom: 1px solid var(--hover-color);
@@ -44,6 +45,7 @@ const StyledCol = styled.th`
 
 const StyledData = styled.td`
   padding: 12px 16px;
+  text-align: "center";
 `;
 
 function Table({ children }) {

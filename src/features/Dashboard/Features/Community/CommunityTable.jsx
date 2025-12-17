@@ -21,6 +21,7 @@ import { Dropdown } from "../../../../components/Dropdown";
 import SortBy from "../../../../components/SortBy";
 import { useBanCommunity } from "./useBanCommunity";
 import { useModal } from "../../../../context/ModalContext";
+import { useUnbanCommunity } from "./useUnbanCommunity";
 
 function CommunityTable() {
   const { openModal } = useModal();
@@ -28,6 +29,8 @@ function CommunityTable() {
   const [searchParam, setSearchParam] = useSearchParams();
   const page = searchParam.get("page") ? Number(searchParam.get("page")) : 1;
   const { user } = useUser();
+  const { unbanCommunity, isLoadUnbanCommunity, errorUnbanCommunity } =
+    useUnbanCommunity();
 
   // --- DATA FETCHING ---
   const { community, isLoadCommunity } = useFetchCommunityAdmin(user?.id);
@@ -186,11 +189,18 @@ function CommunityTable() {
                   </MenuTxt>
                 </Menus.MenuBtn>
                 <Menus.MenuBtn
-                  onClickAction={() => openModal("ban-community", item)}
+                  onClickAction={() =>
+                    item.isBanned
+                      ? unbanCommunity({
+                          communityId: item?.id,
+                          adminId: user?.id,
+                        })
+                      : openModal("ban-community", item)
+                  }
                 >
                   <MenuTxt>
                     <FaBan />
-                    <span>Ban</span>
+                    <span>{item.isBanned ? "Unban" : "Ban"}</span>
                   </MenuTxt>
                 </Menus.MenuBtn>
               </Menus.MenuList>

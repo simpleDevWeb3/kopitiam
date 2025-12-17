@@ -56,9 +56,7 @@ function CommunityProfileCard({ communityData }) {
                   <span>Edit Community</span> <HiPencil />
                 </ButtonIcon>
               )}
-              <ButtonIcon icon={<AddIcon />} variant="outline">
-                <span>Create Post</span>
-              </ButtonIcon>
+             
               {!isAdmin && (
                 <JoinBtn
                   community_id={id}

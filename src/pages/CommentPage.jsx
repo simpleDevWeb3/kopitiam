@@ -38,13 +38,7 @@ function CommentPage() {
 
             <Comments />
           </ContentWrapper>
-          {postComment[0].community_id && (
-            <ContentWrapper>
-              <Sidebar>
-                <CommunityInfo />
-              </Sidebar>
-            </ContentWrapper>
-          )}
+       
         </ContentGrid>
       </StyledContainer>
     </FieldTextProvider>

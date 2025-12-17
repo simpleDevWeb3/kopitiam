@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getAllCommunityPostApi } from "../../services/CommunityApi";
 
-export function useFetchComunityPost(community_id) {
+export function useFetchComunityPost(community_id, user_id) {
   const {
     data,
     isLoading: isLoadCommunityPost,
@@ -12,7 +12,8 @@ export function useFetchComunityPost(community_id) {
   } = useInfiniteQuery({
     queryKey: ["communityPost", community_id],
 
-    queryFn: ({ pageParam }) => getAllCommunityPostApi(community_id, pageParam),
+    queryFn: ({ pageParam }) =>
+      getAllCommunityPostApi(user_id, community_id, pageParam),
 
     initialPageParam: 1,
 

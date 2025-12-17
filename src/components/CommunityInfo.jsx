@@ -28,6 +28,7 @@ function CommunityInfo() {
   if (!postComment) return <div>Post not found</div>;
 
   const { community_id, community_name } = postComment[0];
+  console.log("post: ", postComment[0]);
   if (community_id)
     return (
       <Container>

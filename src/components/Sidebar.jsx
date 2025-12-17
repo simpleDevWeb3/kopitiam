@@ -31,6 +31,7 @@ import Spinner from "./Spinner";
 import ListJoinedCommunity from "./ListJoinedCommunity";
 import ListCreatedCommunity from "./ListCreatedCommunity";
 import { useFetchCreatedCommunity } from "../features/Communities/useFetchCreatedCommunity";
+import toast from "react-hot-toast";
 
 const StyledSidebar = styled.aside`
   overflow-y: scroll;
@@ -226,7 +227,9 @@ function Sidebar() {
           <StyledNavAction
             onClick={() =>
               isAuthenticated
-                ? openModal("Create Community")
+                ? user?.is_banned
+                  ? toast.error("user has been banned by admin.")
+                  : openModal("Create Community")
                 : openModal("Login")
             }
           >

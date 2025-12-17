@@ -39,6 +39,7 @@ import { LuDot } from "react-icons/lu";
 import { useCallback } from "react";
 import { truncateText } from "../../helpers/stringHelper";
 import TimeTag from "../../components/TimeTag";
+import toast from "react-hot-toast";
 
 function PostCard({
   postData,
@@ -209,14 +210,16 @@ function CommentPost({ children, postData }) {
 
         {isAuthenticated && isShowTextField === postData.comment_id && (
           <TextFields
-            onSubmit={(content) =>
+            onSubmit={(content) => {
+              if (user.is_banned)
+                return toast.error("user has been banned by the admin.");
               createComment({
                 postId: id,
                 userId: user.id,
                 parentId: postData.comment_id,
                 content,
-              })
-            }
+              });
+            }}
           />
         )}
       </PostBody>

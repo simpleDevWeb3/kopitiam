@@ -10,7 +10,7 @@ import { useFetchUsers } from "../Users/useFetchUsers";
 // --- Styled Components ---
 
 const Container = styled.div`
-  background-color: #fff;
+  background-color: var(--background-glass);
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   max-width: 40rem;
@@ -53,8 +53,8 @@ const Avatar = styled.img`
   height: 80px;
   border-radius: 16px; /* Squircle shape for communities */
   object-fit: cover;
-  border: 4px solid #fff;
-  background-color: #fff;
+  border: 4px solid var(--hover-color);
+  background-color: var(--background-color);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
@@ -66,12 +66,12 @@ const CommunityName = styled.h2`
   margin: 0;
   font-size: 22px;
   font-weight: 700;
-  color: #1a1a1a;
+  color: var(--text-color);
 `;
 
 const MemberCount = styled.span`
   font-size: 13px;
-  color: #666;
+  color: var(--text-color);
   font-weight: 500;
 `;
 
@@ -117,7 +117,7 @@ const ReasonTitle = styled.span`
 
 const Description = styled.p`
   font-size: 15px;
-  color: #4b5563;
+  color: var(--text-color);
   line-height: 1.6;
   margin: 0 0 20px 0;
   white-space: pre-wrap;
@@ -126,7 +126,7 @@ const Description = styled.p`
 const SectionLabel = styled.div`
   font-size: 11px;
   text-transform: uppercase;
-  color: #9ca3af;
+  color:var(--text-color);
   font-weight: 700;
   margin-bottom: 8px;
   letter-spacing: 0.5px;
@@ -215,7 +215,6 @@ function CommunityInsight() {
           </IdentityGroup>
 
           <StatusBadges>
-            {isJoined && <Badge>Member</Badge>}
             {isBanned && <Badge $type="banned">Banned</Badge>}
           </StatusBadges>
         </HeaderSection>

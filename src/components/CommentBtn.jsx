@@ -9,6 +9,7 @@ import { usePost } from "../features/Post/PostContext";
 import { useModal } from "../context/ModalContext";
 import { useAuth } from "../features/Auth/AuthContext";
 
+
 const IComment = styled(HiOutlineChatBubbleOvalLeft)``;
 const CountComment = styled.span``;
 
@@ -21,6 +22,7 @@ function CommentBtn({ onComment }) {
     <ButtonIcon
       data-allowpostclick
       action={() => {
+        
         if (isAuthenticated) {
           onClickComment();
           onComment?.();

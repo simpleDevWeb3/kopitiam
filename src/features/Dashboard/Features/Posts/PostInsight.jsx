@@ -21,6 +21,7 @@ const Header = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 20px;
+  color: var(--text-color);
 `;
 
 const UserGroup = styled.div`
@@ -46,12 +47,12 @@ const UserName = styled.h3`
   margin: 0;
   font-size: 16px;
   font-weight: 600;
-  color: #1a1a1a;
+  color: var(--text-color);
 `;
 
 const TimeStamp = styled.span`
   font-size: 12px;
-  color: #888;
+  color: var(--text-color);
   margin-top: 2px;
 `;
 
@@ -93,13 +94,13 @@ const ContentWrapper = styled.div`
 const PostTitle = styled.h2`
   font-size: 20px;
   font-weight: 700;
-  color: #333;
+  color: var(--text-color);
   margin: 0 0 8px 0;
 `;
 
 const PostText = styled.p`
   font-size: 15px;
-  color: #555;
+  color: var(--text-color);
   line-height: 1.6;
   white-space: pre-wrap;
   margin: 0;
@@ -142,7 +143,7 @@ const MetricItem = styled.div`
   gap: 6px;
   font-size: 14px;
   font-weight: 500;
-  color: #666;
+  color: var(--text-color);
 `;
 
 // --- Main Component ---

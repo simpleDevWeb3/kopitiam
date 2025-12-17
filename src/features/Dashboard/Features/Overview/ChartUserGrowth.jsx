@@ -15,8 +15,8 @@ import { useFetchUsers } from "../Users/useFetchUsers";
 import SpinnerMini from "../../../../components/SpinnerMini";
 import { useSearchParams } from "react-router-dom";
 import { filterDataByDays } from "../../../../helpers/dateHelper";
+import { useMemo } from "react"; // Import useMemo
 
-// Register ChartJS components
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -34,25 +34,41 @@ function ChartUserGrowth() {
 
   const lastDay = Number(searchParam.get("last")) || 7;
 
-  // --- HELPER: Process Data ---
-  const processData = () => {
+  // --- FIX 1: Correct Date Logic ---
+  const today = new Date();
+  const d = new Date(today);
+  d.setDate(today.getDate() - lastDay); // This mutates 'd'
+
+  const todayDate = today.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+  });
+
+  const startingDate = d.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+  });
+  // --------------------------------
+
+  // --- OPTIMIZATION: useMemo ---
+  const { labels, counts } = useMemo(() => {
     if (!users) return { labels: [], counts: [] };
 
-    const today = new Date();
+    const processingDate = new Date(); // Use a local date instance inside
     const dateMap = {};
-    const labels = [];
+    const labelsArr = [];
 
-    // 1. Generate all dates (Standard Logic)
+    // 1. Generate all dates
     for (let i = lastDay - 1; i >= 0; i--) {
-      const d = new Date(today);
-      d.setDate(today.getDate() - i);
+      const iterDate = new Date(processingDate);
+      iterDate.setDate(processingDate.getDate() - i);
 
-      const label = d.toLocaleDateString("en-US", {
+      const label = iterDate.toLocaleDateString("en-US", {
         month: "short",
         day: "numeric",
       });
 
-      labels.push(label);
+      labelsArr.push(label);
       dateMap[label] = 0;
     }
 
@@ -71,14 +87,11 @@ function ChartUserGrowth() {
       }
     });
 
-    const counts = labels.map((label) => dateMap[label]);
+    const countsArr = labelsArr.map((label) => dateMap[label]);
 
-    return { labels, counts };
-  };
+    return { labels: labelsArr, counts: countsArr };
+  }, [users, lastDay]); // Only re-run if users or days change
 
-  const { labels, counts } = processData();
-
-  // --- CHART CONFIG ---
   const data = {
     labels: labels,
     datasets: [
@@ -93,7 +106,6 @@ function ChartUserGrowth() {
         pointBorderColor: "#fff",
         pointHoverBackgroundColor: "#fff",
         pointHoverBorderColor: "rgb(53, 162, 235)",
-        // Only show dots if we have less than 30 data points, otherwise it looks cluttered
         pointRadius: lastDay > 30 ? 0 : 4,
         pointHoverRadius: 6,
       },
@@ -119,37 +131,18 @@ function ChartUserGrowth() {
     scales: {
       y: {
         beginAtZero: true,
-        ticks: {
-          precision: 0,
-        },
+        ticks: { precision: 0 },
       },
       x: {
         grid: { display: false },
         ticks: {
-          // --- THE LOGIC FOR LEAP 5 ---
           maxRotation: 0,
-          autoSkip: false, // We will manually handle skipping via callback
-
+          autoSkip: false,
           callback: function (val, index) {
-            // 'val' is the index in Category scales, but we use 'this.getLabelForValue' to be safe
             const label = this.getLabelForValue(val);
-
-            // 1. If viewing small range (e.g. 7 days), show ALL labels
-            if (lastDay <= 10) {
-              return label;
-            }
-
-            // 2. If viewing large range, show every 5th label ("Leap 5")
-            if (index % 5 === 0) {
-              return label;
-            }
-
-            // 3. Always show the very last date (Today) so the chart has an endpoint
-            if (index === labels.length - 1) {
-              return label;
-            }
-
-            // Hide the rest
+            if (lastDay <= 10) return label;
+            if (index % 5 === 0) return label;
+            if (index === labels.length - 1) return label;
             return null;
           },
         },
@@ -161,7 +154,9 @@ function ChartUserGrowth() {
 
   return (
     <StyledSection>
-      <Header>User Growth (Last {lastDay} Days)</Header>
+      <Header>
+        User Growth from {startingDate} to {todayDate}
+      </Header>
       <ChartBox>
         <Line data={data} options={options} />
       </ChartBox>
@@ -171,7 +166,7 @@ function ChartUserGrowth() {
 
 export default ChartUserGrowth;
 
-// --- STYLES ---
+// Styles remain the same...
 const StyledSection = styled.div`
   background-color: var(--background-glass);
   border: 1px solid var(--hover-color);

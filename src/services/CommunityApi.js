@@ -79,9 +79,14 @@ async function leaveCommunityApi(formData) {
 /**
  * curl 'https://localhost:7071/api/Post/getPost?current_user=null&user_id=null&post_title=null&post_id=null&community_id=null&page=1&pageSize=10'
  */
-async function getAllCommunityPostApi(community_id, page = 1, pageSize = 3) {
+async function getAllCommunityPostApi(
+  current_user,
+  community_id,
+  page = 1,
+  pageSize = 3
+) {
   return await GetReq(
-    `https://localhost:7071/api/Post/getPost?current_user=null&user_id=null&post_title=null&post_id=null&community_id=${community_id}&page=${page}&pageSize=${pageSize}`
+    `https://localhost:7071/api/Post/getPost?current_user=${current_user}&user_id=null&post_title=null&post_id=null&community_id=${community_id}&page=${page}&pageSize=${pageSize}`
   );
 }
 
@@ -145,8 +150,35 @@ async function banCommunityApi(formData) {
     `https://localhost:7071/api/Community/ban?communityId=${communityId}&adminId=${adminId}&reason=${reason}`
   );
 }
+/*curl 'https://localhost:7071/api/Community/unban?communityId=&adminId=' \
+  --request PATCH */
+async function unbanCommunityApi(formData) {
+  const { communityId, adminId } = formData;
+  return await PatchReq(
+    `https://localhost:7071/api/Community/unban?communityId=${communityId}&adminId=${adminId}`
+  );
+}
 
+//curl 'https://localhost:7071/api/Community/getCommunityMembers?communityId='
+
+async function getMembersCommunityApi(community_id) {
+  return await GetReq(
+    `https://localhost:7071/api/Community/getCommunityMembers?communityId=${community_id}`
+  );
+}
+/*
+curl 'https://localhost:7071/api/Community/groupAdminKickMembers?adminId=&userId=&communityId=' \
+  --request DELETE */
+
+async function kickMemberApi(data) {
+  const { adminId, userId, communityId } = data;
+  return await DeleteReq(
+    `https://localhost:7071/api/Community/groupAdminKickMembers?adminId=${adminId}&userId=${userId}&communityId=${communityId}`
+  );
+}
 export {
+  kickMemberApi,
+  unbanCommunityApi,
   getAllCommunityApi,
   getCommunityApi,
   createCommunityApi,
@@ -159,4 +191,5 @@ export {
   editCommunityProfileApi,
   getCommunityByAdminApi,
   banCommunityApi,
+  getMembersCommunityApi,
 };

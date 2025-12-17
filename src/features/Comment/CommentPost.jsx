@@ -10,6 +10,7 @@ import { useFetchPostComment } from "../Post/useFetchPostComment";
 import Spinner from "../../components/Spinner";
 import { useCreateComment } from "./useCreateComment";
 import { useUser } from "../Auth/useUser";
+import toast from "react-hot-toast";
 
 const ShareYourThougt = styled.div`
   border: solid 1px var(--tertiary-color);
@@ -72,14 +73,16 @@ function CommentPost() {
         <br />
         {isAuthenticated && isShowTextField === postData.id ? (
           <TextFields
-            onSubmit={(content) =>
+            onSubmit={(content) => {
+              if (user?.is_banned)
+                return toast.error("user has been banned by the admin");
               createComment({
                 postId: postData.id,
                 userId: user.id,
                 parentId: null,
                 content,
-              })
-            }
+              });
+            }}
           />
         ) : (
           <ShareYourThougt
