@@ -32,7 +32,10 @@ function CommunityForm() {
         />
       ),
       validate: (formData) =>
-        formData.communityName && formData.communityDescription,
+        formData.communityName &&
+        formData.communityDescription &&
+        !formData.groupnameDup &&
+        formData.communitynameValidForm,
     },
     {
       key: "styling",
