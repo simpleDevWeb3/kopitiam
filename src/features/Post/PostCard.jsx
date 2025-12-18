@@ -95,7 +95,7 @@ function PostCard({
               </div>
               {owner && <PostMenusOther />}
             </PostHeader>
-            <Tag>{postData.topic_name}</Tag>
+            <Tag>#{postData.topic_name}</Tag>
 
             <PostContent />
             <PostSocialFeatures post_id={postData?.id || postData?.post_id} />
@@ -471,12 +471,11 @@ const PostBody = styled.div`
 `;
 
 const Tag = styled.span`
-  background-color: rgb(25, 148, 255);
-  padding: 0.5rem 1rem;
+ 
   border-radius: 25px;
-  margin-bottom: 1rem;
+
   display: inline-block;
-  color: white;
+  color: rgb(25, 148, 255);
   font-weight: 600;
 `;
 export default PostCard;
