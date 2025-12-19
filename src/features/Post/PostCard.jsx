@@ -471,11 +471,11 @@ const PostBody = styled.div`
 `;
 
 const Tag = styled.span`
- 
-  border-radius: 25px;
+  border-radius: 18px;
 
+  font-size: 0.8rem;
   display: inline-block;
-  color: rgb(25, 148, 255);
+  color: rgb(25, 113, 255);
   font-weight: 600;
 `;
 export default PostCard;
